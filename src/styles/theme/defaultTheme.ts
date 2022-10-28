@@ -2,7 +2,8 @@ import { extendTheme } from "native-base";
 
 const defaultTheme = {
   colors: {
-    gray: {
+    background: "#262626",
+    grayBrand: {
       50: "#f9fafb",
       100: "#f3f4f6",
       200: "#e5e7eb",
@@ -17,19 +18,19 @@ const defaultTheme = {
       800: "#27272a",
       900: "#18181b",
     },
-    red: {
+    redBrand: {
       400: "#f87171",
       500: "#ef4444",
       600: "#dc2626",
       700: "#b91c1c",
     },
-    green: {
+    greenBrand: {
       400: "#4ade80",
       500: "#22c55e",
       600: "#16a34a",
       700: "#15803d",
     },
-    violet: {
+    violetBrand: {
       400: "#a78bfa",
       500: "#8b5cf6",
       600: "#7c3aed",
