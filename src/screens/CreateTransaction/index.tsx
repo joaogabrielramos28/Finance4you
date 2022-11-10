@@ -4,5 +4,5 @@ import { SecondStep } from "./components/SecondStep";
 import { ThirdStep } from "./components/ThirdStep";
 
 export const CreateTransaction = () => {
-  return <ThirdStep></ThirdStep>;
+  return <FirstStep></FirstStep>;
 };

@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Button, Heading, Image, VStack } from "native-base";
+import { Box, Button, FlatList, Heading, Image, VStack } from "native-base";
 
 import StepOne from "../../../../assets/step1.png";
 import { FormButton } from "../FormButton";
+import { categories } from "../../../../data/category";
 
 export const FirstStep = () => {
   return (
@@ -25,12 +26,18 @@ export const FirstStep = () => {
         </Heading>
         <Image source={StepOne} marginTop={"8px"} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
-          <FormButton />
-          <FormButton variant="secondary" />
-          <FormButton />
-          <FormButton variant="secondary" />
-          <FormButton />
-          <FormButton variant="secondary" />
+          <FlatList
+            data={categories}
+            renderItem={({ item, index }) => (
+              <FormButton
+                variant={index % 2 === 0 ? "primary" : "secondary"}
+                icon={item.icon}
+                key={item.id}
+                name={item.name}
+                selected={false}
+              />
+            )}
+          />
           <Button
             marginTop={"16px"}
             bg={"violetBrand.700"}

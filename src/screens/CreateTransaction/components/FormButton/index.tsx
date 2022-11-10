@@ -3,7 +3,12 @@ import { Gradient, GraduationCap } from "phosphor-react-native";
 import React from "react";
 import { IFormButton } from "./types";
 
-export const FormButton = ({ variant = "primary" }: IFormButton) => {
+export const FormButton = ({
+  variant = "primary",
+  selected,
+  name,
+  icon: Icon,
+}: IFormButton) => {
   const { colors } = useTheme();
   const background = variant === "primary" ? "zinc.800" : "zinc.700";
   return (
@@ -12,11 +17,13 @@ export const FormButton = ({ variant = "primary" }: IFormButton) => {
       bg={background}
       justifyContent={"flex-start"}
       padding={"16px"}
+      borderWidth={selected ? 1 : 0}
+      borderColor={colors.violetBrand[700]}
     >
       <HStack alignItems={"center"} space={4}>
-        <GraduationCap weight="bold" color={colors.grayBrand[200]} />
+        <Icon weight="bold" color={colors.grayBrand[200]} />
         <Text color={"grayBrand.300"} fontWeight={"bold"}>
-          Educação
+          {name}
         </Text>
       </HStack>
     </Button>
