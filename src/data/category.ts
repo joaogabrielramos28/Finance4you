@@ -11,7 +11,6 @@ interface ISubCategories {
 }
 
 import { GraduationCap } from "phosphor-react-native";
-import React, { ReactNode } from "react";
 export const categories: ICategories[] = [
   {
     id: "1",
@@ -73,131 +72,131 @@ export const categories: ICategories[] = [
         name: "Cinema",
       },
       {
-        id: "13",
+        id: "14",
         name: "Teatro",
       },
       {
-        id: "14",
+        id: "15",
         name: "Parque",
       },
       {
-        id: "15",
+        id: "16",
         name: "Restaurante",
       },
       {
-        id: "16",
+        id: "17",
         name: "Bar",
       },
       {
-        id: "17",
+        id: "18",
         name: "Outros",
       },
     ],
   },
   {
-    id: "18",
+    id: "19",
     name: "Automóvel",
     icon: GraduationCap,
     subCategories: [
       {
-        id: "19",
+        id: "20",
         name: "Conserto",
       },
       {
-        id: "20",
+        id: "21",
         name: "Oléo",
       },
       {
-        id: "21",
+        id: "22",
         name: "Oficina",
       },
       {
-        id: "22",
+        id: "23",
         name: "Combustível",
       },
       {
-        id: "23",
+        id: "24",
         name: "Outros",
       },
     ],
   },
   {
-    id: "24",
+    id: "25",
     name: "Moradia",
     icon: GraduationCap,
     subCategories: [
       {
-        id: "25",
+        id: "26",
         name: "Aluguel",
       },
       {
-        id: "26",
+        id: "27",
         name: "Condomínio",
       },
       {
-        id: "27",
+        id: "28",
         name: "IPTU",
       },
       {
-        id: "28",
+        id: "29",
         name: "Obra",
       },
       {
-        id: "29",
+        id: "30",
         name: "Outros",
       },
     ],
   },
   {
-    id: "30",
+    id: "31",
     name: "Contas",
     icon: GraduationCap,
     subCategories: [
       {
-        id: "31",
+        id: "32",
         name: "Água",
       },
       {
-        id: "32",
+        id: "33",
         name: "Luz",
       },
       {
-        id: "33",
+        id: "34",
         name: "Telefone",
       },
       {
-        id: "34",
+        id: "35",
         name: "Internet",
       },
       {
-        id: "35",
+        id: "36",
         name: "Gás",
       },
       {
-        id: "36",
+        id: "37",
         name: "Outros",
       },
     ],
   },
   {
-    id: "37",
+    id: "38",
     name: "Alimentação",
     icon: GraduationCap,
     subCategories: [
       {
-        id: "38",
+        id: "39",
         name: "Mercado",
       },
       {
-        id: "39",
+        id: "40",
         name: "Restaurante",
       },
       {
-        id: "40",
+        id: "41",
         name: "Aplicativo de comida",
       },
       {
-        id: "41",
+        id: "42",
         name: "Outros",
       },
     ],

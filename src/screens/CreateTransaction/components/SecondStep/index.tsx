@@ -1,10 +1,23 @@
-import React from "react";
-import { Box, Button, Heading, Image, VStack } from "native-base";
+import React, { useState } from "react";
+import { Box, Button, FlatList, Heading, Image, VStack } from "native-base";
 
 import StepTwo from "../../../../assets/step2.png";
 import { FormButton } from "../FormButton";
+import { categories } from "../../../../data/category";
+import { useFormContext } from "react-hook-form";
+import { useCreateTransaction } from "../../context/CreateTransactionContext";
 
 export const SecondStep = () => {
+  const { setValue, getValues } = useFormContext();
+  const { nextStep, prevStep } = useCreateTransaction();
+  const [subcategory, setSubCategory] = useState(getValues("subCategory"));
+  const category = getValues("category");
+  const selectedCategory = categories.find((item) => item.name === category);
+
+  const handleAddSubCategory = (subcategory: string) => {
+    setSubCategory(subcategory);
+    setValue("subCategory", subcategory);
+  };
   return (
     <Box flex={1} bg={"background"}>
       <Box
@@ -23,15 +36,24 @@ export const SecondStep = () => {
         <Heading fontSize={"2xl"} color={"grayBrand.200"}>
           Selecione a Subcategoria
         </Heading>
-        <Image source={StepTwo} marginTop={"8px"} />
+        <Image source={StepTwo} marginTop={"8px"} alt={""} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
-          <FormButton />
-          <FormButton variant="secondary" />
-          <FormButton />
-          <FormButton variant="secondary" />
-          <FormButton />
-          <FormButton variant="secondary" />
+          <FlatList
+            data={selectedCategory.subCategories}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item, index }) => (
+              <FormButton
+                onPress={() => handleAddSubCategory(item.name)}
+                variant={index % 2 === 0 ? "primary" : "secondary"}
+                name={item.name}
+                selected={subcategory === item.name}
+                icon={selectedCategory.icon}
+              />
+            )}
+          />
+
           <Button
+            onPress={nextStep}
             marginTop={"16px"}
             bg={"violetBrand.700"}
             _text={{
@@ -40,6 +62,19 @@ export const SecondStep = () => {
             }}
           >
             Avançar
+          </Button>
+          <Button
+            onPress={prevStep}
+            marginTop={"16px"}
+            bg={"transparent"}
+            borderColor={"violetBrand.700"}
+            borderWidth={1}
+            _text={{
+              color: "grayBrand.200",
+              bold: true,
+            }}
+          >
+            Voltar
           </Button>
         </VStack>
       </VStack>

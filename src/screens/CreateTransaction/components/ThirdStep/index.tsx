@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -17,9 +17,38 @@ import {
   CurrencyDollar,
   Money,
 } from "phosphor-react-native";
+import { useCreateTransaction } from "../../context/CreateTransactionContext";
+import { useFormContext } from "react-hook-form";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
+  const { createTransaction, prevStep } = useCreateTransaction();
+  const {
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useFormContext();
+
+  const [type, setType] = useState<"income" | "outcome">(getValues("type"));
+  const [amount, setAmount] = useState(getValues("amount"));
+
+  const handleCreateTransaction = () => {
+    const category = getValues("category");
+    const subCategory = getValues("subCategory");
+  };
+
+  console.log(getValues());
+
+  const handleSelectTransactionType = (type: "income" | "outcome") => {
+    setType(type);
+    setValue("type", type);
+  };
+
+  const handleChangeAmount = (amount: string) => {
+    setAmount(amount);
+    setValue("amount", amount);
+  };
+
   return (
     <Box flex={1} bg={"background"}>
       <Box
@@ -38,15 +67,25 @@ export const ThirdStep = () => {
         <Heading fontSize={"2xl"} color={"grayBrand.200"}>
           Selecione o valor
         </Heading>
-        <Image source={StepThree} marginTop={"8px"} />
+        <Image source={StepThree} marginTop={"8px"} alt={""} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
           <Input
             padding={"12px"}
             InputLeftElement={<CurrencyDollar color={colors.grayBrand[200]} />}
+            value={amount}
+            onChangeText={handleChangeAmount}
+            color={"grayBrand.200"}
           />
 
           <HStack w={"100%"} space={"16px"} justifyContent={"space-between"}>
-            <Button width={"140px"} padding={"16px"} bg={"zinc.700"}>
+            <Button
+              width={"140px"}
+              padding={"16px"}
+              bg={"zinc.700"}
+              borderWidth={type === "income" ? 2 : 0}
+              onPress={() => handleSelectTransactionType("income")}
+              borderColor={"violetBrand.700"}
+            >
               <HStack alignItems={"center"} space={"4px"}>
                 <ArrowCircleUp color={colors.greenBrand[500]} />
 
@@ -54,10 +93,17 @@ export const ThirdStep = () => {
               </HStack>
             </Button>
 
-            <Button width={"140px"} padding={"16px"} bg={"zinc.700"}>
+            <Button
+              width={"140px"}
+              padding={"16px"}
+              bg={"zinc.700"}
+              onPress={() => handleSelectTransactionType("outcome")}
+              borderWidth={type === "outcome" ? 2 : 0}
+              borderColor={"violetBrand.700"}
+            >
               <HStack alignItems={"center"} space={"4px"}>
                 <ArrowCircleDown color={colors.redBrand[500]} />
-                <Text color={"grayBrand.300"}>Entrada</Text>
+                <Text color={"grayBrand.300"}>Saída</Text>
               </HStack>
             </Button>
           </HStack>
@@ -70,6 +116,19 @@ export const ThirdStep = () => {
             }}
           >
             Criar transação
+          </Button>
+          <Button
+            onPress={prevStep}
+            marginTop={"16px"}
+            bg={"transparent"}
+            borderColor={"violetBrand.700"}
+            borderWidth={1}
+            _text={{
+              color: "grayBrand.200",
+              bold: true,
+            }}
+          >
+            Voltar
           </Button>
         </VStack>
       </VStack>

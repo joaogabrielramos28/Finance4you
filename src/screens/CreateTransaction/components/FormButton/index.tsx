@@ -8,11 +8,13 @@ export const FormButton = ({
   selected,
   name,
   icon: Icon,
+  ...rest
 }: IFormButton) => {
   const { colors } = useTheme();
   const background = variant === "primary" ? "zinc.800" : "zinc.700";
   return (
     <Button
+      {...rest}
       width={"100%"}
       bg={background}
       justifyContent={"flex-start"}
