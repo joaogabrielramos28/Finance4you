@@ -53,6 +53,7 @@ export const SecondStep = () => {
           />
 
           <Button
+            isDisabled={!getValues("subCategory")}
             onPress={nextStep}
             marginTop={"16px"}
             bg={"violetBrand.700"}

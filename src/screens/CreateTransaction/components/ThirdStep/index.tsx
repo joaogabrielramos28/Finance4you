@@ -37,8 +37,6 @@ export const ThirdStep = () => {
     const subCategory = getValues("subCategory");
   };
 
-  console.log(getValues());
-
   const handleSelectTransactionType = (type: "income" | "outcome") => {
     setType(type);
     setValue("type", type);
@@ -108,6 +106,7 @@ export const ThirdStep = () => {
             </Button>
           </HStack>
           <Button
+            isDisabled={!getValues("amount") || !getValues("type")}
             marginTop={"16px"}
             bg={"violetBrand.700"}
             _text={{

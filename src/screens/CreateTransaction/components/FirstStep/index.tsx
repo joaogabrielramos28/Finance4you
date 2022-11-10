@@ -64,6 +64,7 @@ export const FirstStep = () => {
             )}
           />
           <Button
+            isDisabled={!getValues("category")}
             onPress={nextStep}
             marginTop={"16px"}
             bg={"violetBrand.700"}
