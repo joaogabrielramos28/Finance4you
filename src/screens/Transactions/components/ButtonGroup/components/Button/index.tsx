@@ -6,11 +6,13 @@ export const Button = ({
   variant = "primary",
   children,
   subtitle,
+  ...rest
 }: IButton) => {
   const size = variant == "primary" ? "52px" : "48px";
   return (
     <VStack alignItems={"center"} space={"8px"}>
       <NativeBaseButton
+        {...rest}
         width={size}
         height={size}
         borderRadius={"4px"}

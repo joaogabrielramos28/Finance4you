@@ -4,6 +4,7 @@ import React from "react";
 import { Home, Transactions } from "../screens";
 
 import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { StackRoutes } from "./stack.routes";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -35,7 +36,7 @@ export const TabsRoutes = () => {
       />
       <Screen
         name="Transações"
-        component={Transactions}
+        component={StackRoutes}
         options={{
           tabBarIcon: ({ color }) => (
             <Feather name="trending-up" size={24} color={color} />

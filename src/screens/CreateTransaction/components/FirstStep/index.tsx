@@ -4,8 +4,11 @@ import {
   Button,
   FlatList,
   Heading,
+  HStack,
+  IconButton,
   Image,
   Text,
+  useTheme,
   VStack,
 } from "native-base";
 
@@ -15,7 +18,12 @@ import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
 import { useCreateTransaction } from "../../context/CreateTransactionContext";
 
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 export const FirstStep = () => {
+  const { colors } = useTheme();
+  const { goBack } = useNavigation();
   const {
     setValue,
     getValues,
@@ -28,6 +36,10 @@ export const FirstStep = () => {
   const handleAddCategory = (category: string) => {
     setCategory(category);
     setValue("category", category);
+  };
+
+  const handleGoBack = () => {
+    goBack();
   };
 
   return (
@@ -48,6 +60,7 @@ export const FirstStep = () => {
         <Heading fontSize={"2xl"} color={"grayBrand.200"}>
           Selecione a categoria
         </Heading>
+
         <Image source={StepOne} marginTop={"8px"} alt={""} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
           <FlatList
@@ -74,6 +87,19 @@ export const FirstStep = () => {
             }}
           >
             Avançar
+          </Button>
+          <Button
+            onPress={handleGoBack}
+            marginTop={"16px"}
+            bg={"transparent"}
+            borderColor={"violetBrand.700"}
+            borderWidth={1}
+            _text={{
+              color: "grayBrand.200",
+              bold: true,
+            }}
+          >
+            Voltar
           </Button>
           {errors.category ? (
             <Text color={"red.500"}>errors.category.message</Text>

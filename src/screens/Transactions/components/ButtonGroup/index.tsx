@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { HStack, useTheme } from "native-base";
 import { CreditCard, MagicWand, Plus } from "phosphor-react-native";
 import React from "react";
@@ -5,6 +6,11 @@ import { Button } from "./components/Button";
 
 export const ButtonGroup = () => {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
+
+  const handleGoToCreateTransaction = () => {
+    navigate("CreateTransaction");
+  };
   return (
     <HStack space={"32px"}>
       <Button
@@ -15,6 +21,7 @@ export const ButtonGroup = () => {
         }
       />
       <Button
+        onPress={handleGoToCreateTransaction}
         subtitle="Adicionar"
         children={
           <Plus size={26} weight={"bold"} color={colors.grayBrand[200]} />
