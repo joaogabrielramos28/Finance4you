@@ -9,194 +9,209 @@ interface ISubCategories {
   id: string;
   name: string;
 }
-
-import { GraduationCap } from "phosphor-react-native";
+import {
+  GraduationCap,
+  Heartbeat,
+  Popcorn,
+  Car,
+  House,
+  Money,
+  Hamburger,
+} from "phosphor-react-native";
 export const categories: ICategories[] = [
   {
-    id: "1",
+    id: "education",
     name: "Educação",
     icon: GraduationCap,
     subCategories: [
       {
-        id: "2",
+        id: "education-1",
         name: "Escola",
       },
       {
-        id: "3",
+        id: "education-2",
         name: "Universidade",
       },
       {
-        id: "4",
+        id: "education-3",
         name: "Cursos",
       },
       {
-        id: "5",
+        id: "education-4",
         name: "Outros",
       },
     ],
   },
   {
-    id: "6",
+    id: "health",
     name: "Saúde",
-    icon: GraduationCap,
+    icon: Heartbeat,
     subCategories: [
       {
-        id: "7",
+        id: "health-1",
         name: "Hospital",
       },
       {
-        id: "8",
+        id: "health-2",
         name: "Veterinário",
       },
       {
-        id: "9",
+        id: "health-3",
         name: "Plano de saúde",
       },
       {
-        id: "10",
+        id: "health-4",
         name: "Farmácia",
       },
       {
-        id: "11",
+        id: "health-5",
         name: "Outros",
       },
     ],
   },
   {
-    id: "12",
+    id: "leisure",
     name: "Lazer",
-    icon: GraduationCap,
+    icon: Popcorn,
     subCategories: [
       {
-        id: "13",
+        id: "leisure-1",
         name: "Cinema",
       },
       {
-        id: "14",
+        id: "leisure-2",
         name: "Teatro",
       },
       {
-        id: "15",
+        id: "leisure-4",
         name: "Parque",
       },
       {
-        id: "16",
+        id: "leisure-5",
         name: "Restaurante",
       },
       {
-        id: "17",
+        id: "leisure-6",
         name: "Bar",
       },
       {
-        id: "18",
+        id: "leisure-7",
         name: "Outros",
       },
     ],
   },
   {
-    id: "19",
+    id: "vehicle",
     name: "Automóvel",
-    icon: GraduationCap,
+    icon: Car,
     subCategories: [
       {
-        id: "20",
+        id: "vehicle-1",
         name: "Conserto",
       },
       {
-        id: "21",
+        id: "vehicle-2",
         name: "Oléo",
       },
       {
-        id: "22",
+        id: "vehicle-3",
         name: "Oficina",
       },
       {
-        id: "23",
+        id: "vehicle-4",
         name: "Combustível",
       },
       {
-        id: "24",
+        id: "vehicle-5",
         name: "Outros",
       },
     ],
   },
   {
-    id: "25",
+    id: "home",
     name: "Moradia",
-    icon: GraduationCap,
+    icon: House,
     subCategories: [
       {
-        id: "26",
+        id: "home-1",
         name: "Aluguel",
       },
       {
-        id: "27",
+        id: "home-2",
         name: "Condomínio",
       },
       {
-        id: "28",
+        id: "home-3",
         name: "IPTU",
       },
       {
-        id: "29",
+        id: "home-4",
         name: "Obra",
       },
       {
-        id: "30",
+        id: "home-5",
         name: "Outros",
       },
     ],
   },
   {
-    id: "31",
+    id: "billing",
     name: "Contas",
-    icon: GraduationCap,
+    icon: Money,
     subCategories: [
       {
-        id: "32",
+        id: "billing-1",
         name: "Água",
       },
       {
-        id: "33",
+        id: "billing-2",
         name: "Luz",
       },
       {
-        id: "34",
+        id: "billing-3",
         name: "Telefone",
       },
       {
-        id: "35",
+        id: "billing-4",
         name: "Internet",
       },
       {
-        id: "36",
+        id: "billing-5",
         name: "Gás",
       },
       {
-        id: "37",
+        id: "billing-6",
+        name: "Salário",
+      },
+      {
+        id: "billing-7",
+        name: "Investimentos",
+      },
+      {
+        id: "billing-8",
         name: "Outros",
       },
     ],
   },
   {
-    id: "38",
+    id: "food",
     name: "Alimentação",
-    icon: GraduationCap,
+    icon: Hamburger,
     subCategories: [
       {
-        id: "39",
+        id: "food-1",
         name: "Mercado",
       },
       {
-        id: "40",
+        id: "food-2",
         name: "Restaurante",
       },
       {
-        id: "41",
+        id: "food-3",
         name: "Aplicativo de comida",
       },
       {
-        id: "42",
+        id: "food-4",
         name: "Outros",
       },
     ],

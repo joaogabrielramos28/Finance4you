@@ -1,8 +1,16 @@
 import { Box, FlatList, Heading, VStack } from "native-base";
 import React from "react";
 import { Transaction } from "../../../../components/Transaction";
+import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const TransactionsList = () => {
+  const { transactions } = useCreateTransaction();
+  const orderedTransactions = transactions.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  console.log(transactions[0]?.date);
+
   return (
     <VStack marginTop={4} paddingX={"32px"}>
       <Heading fontSize={"xl"} color={"grayBrand.300"}>
@@ -14,13 +22,13 @@ export const TransactionsList = () => {
             paddingBottom: 86,
           }}
           marginTop={"24px"}
-          data={[0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]}
-          renderItem={(item) => (
+          data={orderedTransactions}
+          renderItem={({ item }) => (
             <Box marginTop={4}>
-              <Transaction type="Enter" />
+              <Transaction {...item} />
             </Box>
           )}
-          keyExtractor={(item) => String(item)}
+          keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
         />
       </Box>

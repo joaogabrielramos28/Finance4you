@@ -1,9 +1,20 @@
 import React from "react";
 import { Box, Heading, HStack, Text, useTheme, VStack } from "native-base";
 import { GraduationCap } from "phosphor-react-native";
-import { ITransactionProps } from "./types";
 
-export const Transaction = ({ type }: ITransactionProps) => {
+import { ITransaction } from "../../context/types";
+import { categories } from "../../data/category";
+
+export const Transaction = ({
+  amount,
+  category,
+  dateFormatted,
+  subCategory,
+  type,
+}: ITransaction) => {
+  const selectedCategory = categories.find((item) => item.name === category);
+  const Icon = selectedCategory.icon;
+
   const { colors } = useTheme();
   return (
     <Box alignItems={"center"}>
@@ -21,11 +32,7 @@ export const Transaction = ({ type }: ITransactionProps) => {
             justifyContent={"center"}
             borderRadius={4}
           >
-            <GraduationCap
-              color={colors.grayBrand[300]}
-              weight="fill"
-              size={20}
-            />
+            <Icon color={colors.grayBrand[300]} weight="fill" size={20} />
           </Box>
           <VStack>
             <Heading
@@ -33,20 +40,20 @@ export const Transaction = ({ type }: ITransactionProps) => {
               fontSize={"lg"}
               fontWeight={"normal"}
             >
-              Educação
+              {category}
             </Heading>
             <Text color={"grayBrand.400"} fontSize={"xs"}>
-              Faculdade
+              {subCategory}
             </Text>
           </VStack>
         </HStack>
 
         <Text fontSize={"xs"} color={"grayBrand.300"}>
-          07/10/22
+          {dateFormatted}
         </Text>
 
-        <Text color={type === "Enter" ? "greenBrand.500" : "redBrand.500"}>
-          R$600,00
+        <Text color={type === "income" ? "greenBrand.500" : "redBrand.500"}>
+          {amount}
         </Text>
       </HStack>
     </Box>

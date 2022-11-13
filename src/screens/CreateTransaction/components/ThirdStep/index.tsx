@@ -17,38 +17,41 @@ import {
   CurrencyDollar,
   Money,
 } from "phosphor-react-native";
-import { useCreateTransaction } from "../../context/CreateTransactionContext";
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { format } from "date-fns";
+import { format, intlFormat } from "date-fns";
+import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
   const { createTransaction, prevStep } = useCreateTransaction();
-  const {
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useFormContext();
+  const { setValue, getValues, reset } = useFormContext();
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
   const [amount, setAmount] = useState(getValues("amount"));
   const [date, setDate] = useState(getValues("date") || new Date());
 
   const handleCreateTransaction = () => {
-    const amount = getValues("amount");
+    const amount: number = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
     const dateFormatted = format(date, "dd/MM/yyyy");
+
+    const currencyFormatted = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(amount);
     const payload = {
-      amount,
+      id: String(new Date().getTime()),
+      amount: currencyFormatted,
       category,
       subCategory,
-      date: dateFormatted,
+      dateFormatted,
+      date,
       type,
     };
-
     createTransaction(payload);
+    reset();
   };
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {

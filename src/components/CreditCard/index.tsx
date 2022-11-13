@@ -57,7 +57,7 @@ export const CreditCard = ({ type = "purple" }: ICreditCardProps) => {
         </Box>
 
         <Box w={"100%"} alignItems={"flex-end"}>
-          <Image source={Brand} />
+          <Image source={Brand} alt={"Credit Card"} />
         </Box>
       </FactoryLinearGradient>
     </Box>

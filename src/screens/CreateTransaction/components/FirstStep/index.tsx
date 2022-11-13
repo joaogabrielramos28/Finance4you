@@ -16,10 +16,10 @@ import StepOne from "../../../../assets/step1.png";
 import { FormButton } from "../FormButton";
 import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
-import { useCreateTransaction } from "../../context/CreateTransactionContext";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const FirstStep = () => {
   const { colors } = useTheme();

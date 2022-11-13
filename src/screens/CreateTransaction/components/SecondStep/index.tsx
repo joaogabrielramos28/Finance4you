@@ -5,7 +5,7 @@ import StepTwo from "../../../../assets/step2.png";
 import { FormButton } from "../FormButton";
 import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
-import { useCreateTransaction } from "../../context/CreateTransactionContext";
+import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const SecondStep = () => {
   const { setValue, getValues } = useFormContext();
