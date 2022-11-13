@@ -14,9 +14,7 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createTransaction = (transaction: ITransaction) => {
-    const payload = transaction;
-
-    console.log(payload);
+    console.log(transaction);
   };
 
   return (

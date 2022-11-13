@@ -9,10 +9,7 @@ import {
   SecondStepSchemaValidation,
   ThirdStepSchemaValidation,
 } from "./validation/formValidation";
-import {
-  CreateTransactionProvider,
-  useCreateTransaction,
-} from "./context/CreateTransactionContext";
+import { useCreateTransaction } from "./context/CreateTransactionContext";
 export const CreateTransaction = () => {
   const { step } = useCreateTransaction();
 

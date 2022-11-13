@@ -19,6 +19,8 @@ import {
 } from "phosphor-react-native";
 import { useCreateTransaction } from "../../context/CreateTransactionContext";
 import { useFormContext } from "react-hook-form";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { format } from "date-fns";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -31,10 +33,28 @@ export const ThirdStep = () => {
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
   const [amount, setAmount] = useState(getValues("amount"));
+  const [date, setDate] = useState(getValues("date") || new Date());
 
   const handleCreateTransaction = () => {
+    const amount = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
+    const dateFormatted = format(date, "dd/MM/yyyy");
+    const payload = {
+      amount,
+      category,
+      subCategory,
+      date: dateFormatted,
+      type,
+    };
+
+    createTransaction(payload);
+  };
+
+  const handleDateChange = (event: any, selectedDate: Date | undefined) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+    setValue("date", currentDate);
   };
 
   const handleSelectTransactionType = (type: "income" | "outcome") => {
@@ -68,6 +88,7 @@ export const ThirdStep = () => {
         <Image source={StepThree} marginTop={"8px"} alt={""} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
           <Input
+            keyboardType="numeric"
             padding={"12px"}
             InputLeftElement={<CurrencyDollar color={colors.grayBrand[200]} />}
             value={amount}
@@ -105,7 +126,19 @@ export const ThirdStep = () => {
               </HStack>
             </Button>
           </HStack>
+
+          <DateTimePicker
+            accentColor={colors.violetBrand[400]}
+            maximumDate={new Date()}
+            themeVariant={"dark"}
+            value={date}
+            mode={"date"}
+            locale={"pt-Br"}
+            onChange={handleDateChange}
+          />
+
           <Button
+            onPress={handleCreateTransaction}
             isDisabled={!getValues("amount") || !getValues("type")}
             marginTop={"16px"}
             bg={"violetBrand.700"}
