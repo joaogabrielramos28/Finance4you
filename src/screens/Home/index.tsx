@@ -1,16 +1,13 @@
 import { addMonths, subMonths } from "date-fns";
-import { Box, Circle, Heading, VStack } from "native-base";
+import { Box, Circle, Heading, Text, VStack } from "native-base";
 import React, { useState } from "react";
-import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import { useAuth } from "../../context/Auth/AuthContext";
 
 import { CircularChart } from "./components/CircularChart";
 import { LastTransactions } from "./components/LastTransactions";
-import { LineChart } from "./components/LineChart";
 import { MonthSelect } from "./components/MonthSelect";
 
 export const Home = () => {
-  const { transactions } = useTransactions();
-
   return (
     <VStack
       flex={1}

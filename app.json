@@ -3,8 +3,7 @@
     "name": "finance4you",
     "slug": "finance4you",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-apple-authentication"]
   }
 }

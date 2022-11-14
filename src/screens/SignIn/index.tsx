@@ -3,8 +3,10 @@ import SignInImage from "../../assets/signinImage.png";
 
 import React from "react";
 import { SignInButton } from "./components/SignInButton";
+import { useAuth } from "../../context/Auth/AuthContext";
 
 export const SignIn = () => {
+  const { loginWithApple, loading } = useAuth();
   return (
     <Box
       safeAreaTop
@@ -13,15 +15,19 @@ export const SignIn = () => {
       paddingX={"32px"}
       justifyContent={"center"}
     >
-      <Image source={SignInImage} />
+      <Image source={SignInImage} alt={""} />
 
       <Heading color={"grayBrand.200"} fontSize={"3xl"} marginTop={"22px"}>
         Controle suas {"\n"}finanças {"\n"}com {"\n"}facilidade
       </Heading>
 
       <VStack marginTop={"22px"} space={"22px"}>
-        <SignInButton title="Entrar com apple" type="apple" />
-        <SignInButton title="Entrar com google" type="google" />
+        <SignInButton
+          isLoading={loading}
+          title="Entrar com apple"
+          type="apple"
+          onPress={loginWithApple}
+        />
       </VStack>
     </Box>
   );

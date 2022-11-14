@@ -3,7 +3,7 @@ import React from "react";
 import { ISignInButtonProps } from "./types";
 import { AppleLogo, GoogleLogo } from "phosphor-react-native";
 
-export const SignInButton = ({ title, type }: ISignInButtonProps) => {
+export const SignInButton = ({ title, type, ...rest }: ISignInButtonProps) => {
   const theme = useTheme();
   const props = {
     color: theme.colors.grayBrand[300],
@@ -13,6 +13,7 @@ export const SignInButton = ({ title, type }: ISignInButtonProps) => {
     type === "apple" ? <AppleLogo {...props} /> : <GoogleLogo {...props} />;
   return (
     <Button
+      {...rest}
       background={"zinc.900"}
       padding={"12px"}
       leftIcon={icon}
