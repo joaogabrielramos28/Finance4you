@@ -3,10 +3,10 @@ import { ptBR } from "date-fns/locale";
 import { Box, HStack, IconButton, Text, useTheme } from "native-base";
 import { CaretLeft, CaretRight } from "phosphor-react-native";
 import React, { useState } from "react";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 export const MonthSelect = () => {
-  const { handleChangePeriod, actualPeriod } = useCreateTransaction();
+  const { handleChangePeriod, actualPeriod } = useTransactions();
   const { colors } = useTheme();
 
   return (

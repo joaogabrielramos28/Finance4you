@@ -20,11 +20,11 @@ import {
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format, intlFormat } from "date-fns";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
-  const { createTransaction, prevStep } = useCreateTransaction();
+  const { createTransaction, prevStep } = useTransactions();
   const { setValue, getValues, reset } = useFormContext();
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));

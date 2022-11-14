@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import CardOne from "../../../../assets/card1.png";
 import CardTwo from "../../../../assets/card2.png";
 import CardThree from "../../../../assets/card3.png";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 import { IModalCardConfig } from "./types";
 
 export const ModalCardConfig = ({ onClose, isOpen }: IModalCardConfig) => {
-  const { creditCardStyle, changeCreditCard } = useCreateTransaction();
+  const { creditCardStyle, changeCreditCard } = useTransactions();
   const [draftCreditCardValue, setDraftCreditCardValue] = useState<
     "purple" | "pink" | "blue"
   >("purple");

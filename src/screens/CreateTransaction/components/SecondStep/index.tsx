@@ -5,11 +5,11 @@ import StepTwo from "../../../../assets/step2.png";
 import { FormButton } from "../FormButton";
 import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 export const SecondStep = () => {
   const { setValue, getValues } = useFormContext();
-  const { nextStep, prevStep } = useCreateTransaction();
+  const { nextStep, prevStep } = useTransactions();
   const [subcategory, setSubCategory] = useState(getValues("subCategory"));
   const category = getValues("category");
   const selectedCategory = categories.find((item) => item.name === category);

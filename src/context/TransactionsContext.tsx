@@ -4,12 +4,12 @@ import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ICreateTransactionContext, ITransaction } from "./types";
 
-const CreateTransactionContext = createContext({} as ICreateTransactionContext);
+const TransactionsContext = createContext({} as ICreateTransactionContext);
 
 const TRANSACTION_KEY_STORAGE = "@finance4you:transactions";
 const CREDITCARD_KEY_STORAGE = "@finance4you:creditcards";
 
-const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
+const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [step, setStep] = useState(1);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [actualPeriod, setActualPeriod] = useState(new Date());
@@ -79,7 +79,7 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <CreateTransactionContext.Provider
+    <TransactionsContext.Provider
       value={{
         nextStep,
         prevStep,
@@ -94,18 +94,18 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </CreateTransactionContext.Provider>
+    </TransactionsContext.Provider>
   );
 };
 
-const useCreateTransaction = () => {
-  const context = React.useContext(CreateTransactionContext);
+const useTransactions = () => {
+  const context = React.useContext(TransactionsContext);
   if (context === undefined) {
     throw new Error(
-      "useCreateTransaction must be used within a CreateTransactionProvider"
+      "useTransactions must be used within a CreateTransactionProvider"
     );
   }
   return context;
 };
 
-export { CreateTransactionProvider, useCreateTransaction };
+export { TransactionsProvider, useTransactions };

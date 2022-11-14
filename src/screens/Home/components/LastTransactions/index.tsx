@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, FlatList, Heading } from "native-base";
 import { Transaction } from "../../../../components/Transaction";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 export const LastTransactions = () => {
-  const { transactionsByPeriod } = useCreateTransaction();
+  const { transactionsByPeriod } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );

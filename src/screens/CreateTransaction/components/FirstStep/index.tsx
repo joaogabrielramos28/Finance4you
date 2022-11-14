@@ -20,7 +20,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 export const FirstStep = () => {
   const { colors } = useTheme();
@@ -32,7 +32,7 @@ export const FirstStep = () => {
   } = useFormContext();
   const [category, setCategory] = useState(getValues("category"));
 
-  const { nextStep } = useCreateTransaction();
+  const { nextStep } = useTransactions();
 
   const handleAddCategory = (category: string) => {
     setCategory(category);

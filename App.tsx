@@ -1,6 +1,6 @@
 import { NativeBaseProvider } from "native-base";
 import React from "react";
-import { CreateTransactionProvider } from "./src/context/CreateTransactionContext";
+import { TransactionsProvider } from "./src/context/TransactionsContext";
 import { Routes } from "./src/routes/index.routes";
 
 import { theme } from "./src/styles/theme/defaultTheme";
@@ -8,9 +8,9 @@ import { theme } from "./src/styles/theme/defaultTheme";
 export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
-      <CreateTransactionProvider>
+      <TransactionsProvider>
         <Routes />
-      </CreateTransactionProvider>
+      </TransactionsProvider>
     </NativeBaseProvider>
   );
 }

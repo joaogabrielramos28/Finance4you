@@ -1,7 +1,7 @@
 import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
+import { useTransactions } from "../../../../context/TransactionsContext";
 
 interface ITotal {
   income: {
@@ -17,7 +17,7 @@ interface ITotal {
 
 export const CircularChart = () => {
   const { colors } = useTheme();
-  const { transactionsByPeriod } = useCreateTransaction();
+  const { transactionsByPeriod } = useTransactions();
 
   const [total, setTotal] = useState<ITotal>({} as ITotal);
 
