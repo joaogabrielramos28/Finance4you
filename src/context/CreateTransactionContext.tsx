@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addMonths, subMonths } from "date-fns";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ICreateTransactionContext, ITransaction } from "./types";
@@ -6,9 +7,12 @@ import { ICreateTransactionContext, ITransaction } from "./types";
 const CreateTransactionContext = createContext({} as ICreateTransactionContext);
 
 const TRANSACTION_KEY_STORAGE = "@finance4you:transactions";
+const CREDITCARD_KEY_STORAGE = "@finance4you:creditcards";
+
 const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
   const [step, setStep] = useState(1);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [actualPeriod, setActualPeriod] = useState(new Date());
 
   const nextStep = () => {
     setStep((prevState) => prevState + 1);
@@ -30,6 +34,20 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
     setStep(1);
   };
 
+  const handleChangePeriod = (action: "next" | "prev") => {
+    if (action === "next") {
+      setActualPeriod(addMonths(actualPeriod, 1));
+    } else {
+      setActualPeriod(subMonths(actualPeriod, 1));
+    }
+  };
+
+  const transactionsByPeriod = transactions.filter(
+    (item) =>
+      new Date(item.date).getMonth() === actualPeriod.getMonth() &&
+      new Date(item.date).getFullYear() === actualPeriod.getFullYear()
+  );
+
   useEffect(() => {
     async function loadTransactions() {
       const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
@@ -41,7 +59,16 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CreateTransactionContext.Provider
-      value={{ nextStep, prevStep, step, createTransaction, transactions }}
+      value={{
+        nextStep,
+        prevStep,
+        step,
+        createTransaction,
+        transactions,
+        actualPeriod,
+        handleChangePeriod,
+        transactionsByPeriod,
+      }}
     >
       {children}
     </CreateTransactionContext.Provider>

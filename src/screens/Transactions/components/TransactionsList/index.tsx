@@ -4,12 +4,10 @@ import { Transaction } from "../../../../components/Transaction";
 import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const TransactionsList = () => {
-  const { transactions } = useCreateTransaction();
-  const orderedTransactions = transactions.sort(
+  const { transactionsByPeriod } = useCreateTransaction();
+  const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
-
-  console.log(transactions[0]?.date);
 
   return (
     <VStack marginTop={4} paddingX={"32px"}>

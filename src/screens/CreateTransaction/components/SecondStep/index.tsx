@@ -40,6 +40,7 @@ export const SecondStep = () => {
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
           <FlatList
             data={selectedCategory.subCategories}
+            height={"360px"}
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => (
               <FormButton

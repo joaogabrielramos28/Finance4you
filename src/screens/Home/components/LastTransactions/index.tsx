@@ -4,8 +4,8 @@ import { Transaction } from "../../../../components/Transaction";
 import { useCreateTransaction } from "../../../../context/CreateTransactionContext";
 
 export const LastTransactions = () => {
-  const { transactions } = useCreateTransaction();
-  const orderedTransactions = transactions.sort(
+  const { transactionsByPeriod } = useCreateTransaction();
+  const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
@@ -20,6 +20,13 @@ export const LastTransactions = () => {
             <Transaction {...item} />
           </Box>
         )}
+        ListEmptyComponent={
+          <Box flex={1} alignItems={"center"}>
+            <Heading color={"grayBrand.400"} size={"md"}>
+              Nenhuma movimentação
+            </Heading>
+          </Box>
+        }
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />

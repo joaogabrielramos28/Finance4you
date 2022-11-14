@@ -9,6 +9,7 @@ export const Transaction = ({
   amount,
   category,
   dateFormatted,
+  amountFormatted,
   subCategory,
   type,
 }: ITransaction) => {
@@ -53,7 +54,7 @@ export const Transaction = ({
         </Text>
 
         <Text color={type === "income" ? "greenBrand.500" : "redBrand.500"}>
-          {amount}
+          {amountFormatted}
         </Text>
       </HStack>
     </Box>

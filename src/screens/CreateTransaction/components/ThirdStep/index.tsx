@@ -32,7 +32,7 @@ export const ThirdStep = () => {
   const [date, setDate] = useState(getValues("date") || new Date());
 
   const handleCreateTransaction = () => {
-    const amount: number = getValues("amount");
+    const amount = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
     const dateFormatted = format(date, "dd/MM/yyyy");
@@ -43,7 +43,8 @@ export const ThirdStep = () => {
     }).format(amount);
     const payload = {
       id: String(new Date().getTime()),
-      amount: currencyFormatted,
+      amountFormatted: currencyFormatted,
+      amount: Number(amount),
       category,
       subCategory,
       dateFormatted,

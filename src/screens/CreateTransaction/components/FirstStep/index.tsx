@@ -7,6 +7,7 @@ import {
   HStack,
   IconButton,
   Image,
+  ScrollView,
   Text,
   useTheme,
   VStack,
@@ -65,6 +66,7 @@ export const FirstStep = () => {
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
           <FlatList
             data={categories}
+            h={"360px"}
             keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => (
               <FormButton
