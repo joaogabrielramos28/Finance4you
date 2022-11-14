@@ -32,8 +32,6 @@ export const CircularChart = () => {
     }, 0);
 
     const outcome = spends.reduce((acc, transaction) => {
-      console.log(transaction.amount);
-
       return acc + transaction.amount;
     }, 0);
 
