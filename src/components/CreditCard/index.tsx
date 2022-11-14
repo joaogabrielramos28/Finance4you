@@ -5,7 +5,7 @@ import { Box, Text, Factory, Image } from "native-base";
 import { Dimensions } from "react-native";
 
 import Brand from "../../assets/brand.png";
-import { useTransactions } from "../../context/TransactionsContext";
+import { useTransactions } from "../../context/Transactions/TransactionsContext";
 
 const width = Dimensions.get("window").width - 20;
 const height = 200;

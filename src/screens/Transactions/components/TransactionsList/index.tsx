@@ -1,7 +1,7 @@
 import { Box, FlatList, Heading, VStack } from "native-base";
 import React from "react";
 import { Transaction } from "../../../../components/Transaction";
-import { useTransactions } from "../../../../context/TransactionsContext";
+import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const TransactionsList = () => {
   const { transactionsByPeriod } = useTransactions();

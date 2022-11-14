@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CardOne from "../../../../assets/card1.png";
 import CardTwo from "../../../../assets/card2.png";
 import CardThree from "../../../../assets/card3.png";
-import { useTransactions } from "../../../../context/TransactionsContext";
+import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 import { IModalCardConfig } from "./types";
 
 export const ModalCardConfig = ({ onClose, isOpen }: IModalCardConfig) => {

@@ -1,7 +1,7 @@
 import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { useTransactions } from "../../../../context/TransactionsContext";
+import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 interface ITotal {
   income: {

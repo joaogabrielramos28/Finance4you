@@ -1,7 +1,7 @@
 import { addMonths, subMonths } from "date-fns";
 import { Box, Circle, Heading, VStack } from "native-base";
 import React, { useState } from "react";
-import { useTransactions } from "../../context/TransactionsContext";
+import { useTransactions } from "../../context/Transactions/TransactionsContext";
 
 import { CircularChart } from "./components/CircularChart";
 import { LastTransactions } from "./components/LastTransactions";

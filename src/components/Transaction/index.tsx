@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Heading, HStack, Text, useTheme, VStack } from "native-base";
-import { GraduationCap } from "phosphor-react-native";
 
-import { ITransaction } from "../../context/types";
+import { ITransaction } from "../../context/Transactions/types";
 import { categories } from "../../data/category";
 
 export const Transaction = ({

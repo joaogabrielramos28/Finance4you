@@ -20,7 +20,7 @@ import {
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format, intlFormat } from "date-fns";
-import { useTransactions } from "../../../../context/TransactionsContext";
+import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();

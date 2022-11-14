@@ -20,7 +20,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useTransactions } from "../../../../context/TransactionsContext";
+import { useTransactions } from "../../../..//context/Transactions/TransactionsContext";
 
 export const FirstStep = () => {
   const { colors } = useTheme();

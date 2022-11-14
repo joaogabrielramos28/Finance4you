@@ -1,6 +1,6 @@
 import { NativeBaseProvider } from "native-base";
 import React from "react";
-import { TransactionsProvider } from "./src/context/TransactionsContext";
+import { TransactionsProvider } from "./src//context/Transactions/TransactionsContext";
 import { Routes } from "./src/routes/index.routes";
 
 import { theme } from "./src/styles/theme/defaultTheme";
