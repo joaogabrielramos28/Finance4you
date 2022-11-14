@@ -13,6 +13,9 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
   const [step, setStep] = useState(1);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [actualPeriod, setActualPeriod] = useState(new Date());
+  const [creditCardStyle, setCreditCardStyle] = useState<
+    "purple" | "pink" | "blue"
+  >("purple");
 
   const nextStep = () => {
     setStep((prevState) => prevState + 1);
@@ -48,6 +51,14 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
       new Date(item.date).getFullYear() === actualPeriod.getFullYear()
   );
 
+  const changeCreditCard = async (creditCard: "purple" | "pink" | "blue") => {
+    await AsyncStorage.setItem(
+      CREDITCARD_KEY_STORAGE,
+      JSON.stringify(creditCard)
+    );
+    setCreditCardStyle(creditCard);
+  };
+
   useEffect(() => {
     async function loadTransactions() {
       const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
@@ -55,6 +66,16 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
       setTransactions(data);
     }
     loadTransactions();
+  }, []);
+
+  useEffect(() => {
+    async function loadCreditCard() {
+      const response = await AsyncStorage.getItem(CREDITCARD_KEY_STORAGE);
+      const data = response ? JSON.parse(response) : 0;
+      setCreditCardStyle(data);
+    }
+
+    loadCreditCard();
   }, []);
 
   return (
@@ -68,6 +89,8 @@ const CreateTransactionProvider = ({ children }: { children: ReactNode }) => {
         actualPeriod,
         handleChangePeriod,
         transactionsByPeriod,
+        changeCreditCard,
+        creditCardStyle,
       }}
     >
       {children}

@@ -5,17 +5,18 @@ import { Box, Text, Factory, Image } from "native-base";
 import { Dimensions } from "react-native";
 
 import Brand from "../../assets/brand.png";
-import { ICreditCardProps } from "./types";
+import { useCreateTransaction } from "../../context/CreateTransactionContext";
 
 const width = Dimensions.get("window").width - 20;
 const height = 200;
 
-export const CreditCard = ({ type = "purple" }: ICreditCardProps) => {
+export const CreditCard = () => {
+  const { creditCardStyle } = useCreateTransaction();
   const FactoryLinearGradient = Factory(LinearGradient);
   const colors =
-    type === "blue"
+    creditCardStyle === "blue"
       ? ["#2290B3", "#7E22CE"]
-      : type === "purple"
+      : creditCardStyle === "purple"
       ? ["#8404F3", "#7E22CE"]
       : ["#F30469", "#7E22CE"];
 

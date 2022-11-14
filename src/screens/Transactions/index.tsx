@@ -23,7 +23,7 @@ export const Transactions = () => {
           transform: [{ translateY: -150 }],
         }}
       >
-        <CreditCard type="blue" />
+        <CreditCard />
       </Box>
 
       <Box alignItems={"center"}>
