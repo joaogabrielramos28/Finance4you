@@ -6,16 +6,7 @@ import { TransactionsList } from "./components/TransactionsList";
 
 export const Transactions = () => {
   return (
-    <Box bg={"background"} flex={1}>
-      <Box
-        w={"100%"}
-        bg={"background"}
-        shadow={8}
-        safeAreaY
-        alignItems={"center"}
-      >
-        <Heading color={"grayBrand.300"}>App</Heading>
-      </Box>
+    <Box bg={"background"} flex={1} safeAreaY>
       <Box
         alignItems={"center"}
         zIndex={-1}

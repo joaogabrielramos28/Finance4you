@@ -44,8 +44,8 @@ export const FirstStep = () => {
   };
 
   return (
-    <Box flex={1} bg={"background"}>
-      <Box
+    <Box flex={1} bg={"background"} safeAreaY>
+      {/* <Box
         w={"100%"}
         bg={"background"}
         shadow={8}
@@ -55,7 +55,7 @@ export const FirstStep = () => {
         justifyContent={"center"}
       >
         <Heading color={"grayBrand.300"}>App</Heading>
-      </Box>
+      </Box> */}
 
       <VStack alignItems={"center"} marginTop={"8px"}>
         <Heading fontSize={"2xl"} color={"grayBrand.200"}>

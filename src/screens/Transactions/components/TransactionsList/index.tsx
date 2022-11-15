@@ -26,6 +26,13 @@ export const TransactionsList = () => {
               <Transaction {...item} />
             </Box>
           )}
+          ListEmptyComponent={
+            <Box flex={1} alignItems={"center"}>
+              <Heading color={"grayBrand.400"} size={"md"}>
+                Nenhuma movimentação
+              </Heading>
+            </Box>
+          }
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
         />
