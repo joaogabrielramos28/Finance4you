@@ -9,17 +9,19 @@ import {
   useTheme,
   HStack,
   Text,
+  TextArea,
+  ScrollView,
 } from "native-base";
 import StepThree from "../../../../assets/step3.png";
 import {
   ArrowCircleDown,
   ArrowCircleUp,
   CurrencyDollar,
-  Money,
+  Info,
 } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { format, intlFormat } from "date-fns";
+import { format } from "date-fns";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const ThirdStep = () => {
@@ -30,12 +32,14 @@ export const ThirdStep = () => {
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
   const [amount, setAmount] = useState(getValues("amount"));
   const [date, setDate] = useState(getValues("date") || new Date());
+  const [description, setDescription] = useState(getValues("description"));
 
   const handleCreateTransaction = () => {
     const amount = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
     const dateFormatted = format(date, "dd/MM/yyyy");
+    const description = getValues("description");
 
     const currencyFormatted = new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -50,6 +54,7 @@ export const ThirdStep = () => {
       dateFormatted,
       date,
       type,
+      description,
     };
     createTransaction(payload);
     reset();
@@ -71,26 +76,22 @@ export const ThirdStep = () => {
     setValue("amount", amount);
   };
 
-  return (
-    <Box flex={1} bg={"background"} safeAreaY>
-      {/* <Box
-        w={"100%"}
-        bg={"background"}
-        shadow={8}
-        safeAreaY={6}
-        paddingY={4}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
-        <Heading color={"grayBrand.300"}>App</Heading>
-      </Box> */}
+  const handleChangeDescription = (description: string) => {
+    setDescription(description);
+    setValue("description", description);
+  };
 
-      <VStack alignItems={"center"} marginTop={"8px"}>
+  return (
+    <ScrollView flex={1} bg={"background"}>
+      <VStack alignItems={"center"} marginTop={"8px"} safeAreaY>
         <Heading fontSize={"2xl"} color={"grayBrand.200"}>
-          Selecione o valor
+          Detalhes da transação
         </Heading>
         <Image source={StepThree} marginTop={"8px"} alt={""} />
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
+          <Heading color={"grayBrand.300"} size={"sm"}>
+            Valor
+          </Heading>
           <Input
             keyboardType="numeric"
             padding={"12px"}
@@ -98,7 +99,15 @@ export const ThirdStep = () => {
             value={amount}
             onChangeText={handleChangeAmount}
             color={"grayBrand.200"}
+            _focus={{
+              borderColor: "violetBrand.700",
+              backgroundColor: "transparent",
+            }}
           />
+
+          <Heading color={"grayBrand.300"} size={"sm"}>
+            Tipo de transação
+          </Heading>
 
           <HStack w={"100%"} space={"16px"} justifyContent={"space-between"}>
             <Button
@@ -130,6 +139,9 @@ export const ThirdStep = () => {
               </HStack>
             </Button>
           </HStack>
+          <Heading color={"grayBrand.300"} size={"sm"}>
+            Data da transação
+          </Heading>
 
           <DateTimePicker
             accentColor={colors.violetBrand[400]}
@@ -139,6 +151,24 @@ export const ThirdStep = () => {
             mode={"date"}
             locale={"pt-Br"}
             onChange={handleDateChange}
+          />
+          <HStack alignItems={"center"} space={2}>
+            <Info color={colors.grayBrand[200]} size={20} />
+            <Heading color={"grayBrand.300"} size={"sm"} alignItems={"center"}>
+              Observação
+            </Heading>
+          </HStack>
+
+          <TextArea
+            autoCompleteType={"off"}
+            padding={"12px"}
+            value={description}
+            onChangeText={handleChangeDescription}
+            color={"grayBrand.200"}
+            _focus={{
+              borderColor: "violetBrand.700",
+              backgroundColor: "transparent",
+            }}
           />
 
           <Button
@@ -168,6 +198,6 @@ export const ThirdStep = () => {
           </Button>
         </VStack>
       </VStack>
-    </Box>
+    </ScrollView>
   );
 };

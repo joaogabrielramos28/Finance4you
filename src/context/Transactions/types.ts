@@ -29,4 +29,5 @@ export interface ITransaction {
   type: "income" | "outcome";
   date: string;
   dateFormatted: string;
+  description?: string;
 }

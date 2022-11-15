@@ -12,4 +12,5 @@ export const ThirdStepSchemaValidation = Yup.object().shape({
   amount: Yup.string().required("Valor é obrigatório"),
   date: Yup.string().required("Data é obrigatório"),
   type: Yup.string().required("Tipo é obrigatório"),
+  description: Yup.string().required("Descrição é obrigatório"),
 });
