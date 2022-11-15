@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "native-base";
 import React from "react";
-import { Home, Transactions } from "../screens";
+import { Analytics, Home, Transactions } from "../screens";
 
 import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StackRoutes } from "./stack.routes";
@@ -45,7 +45,7 @@ export const TabsRoutes = () => {
       />
       <Screen
         name="Analytics"
-        component={Home}
+        component={Analytics}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
