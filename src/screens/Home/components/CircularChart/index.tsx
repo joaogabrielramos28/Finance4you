@@ -1,5 +1,6 @@
 import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
+import { Easing } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
@@ -59,6 +60,8 @@ export const CircularChart = () => {
   return (
     <Box position={"relative"}>
       <AnimatedCircularProgress
+        duration={1500}
+        easing={Easing.in(Easing.ease)}
         size={220}
         width={15}
         backgroundWidth={5}
