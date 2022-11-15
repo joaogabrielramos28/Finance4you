@@ -5,13 +5,15 @@ import { ButtonGroup } from "./components/ButtonGroup";
 import { TransactionsList } from "./components/TransactionsList";
 import Animated, {
   useAnimatedStyle,
-  interpolate,
   useSharedValue,
   withTiming,
+  useAnimatedGestureHandler,
+  withSpring,
 } from "react-native-reanimated";
 
 export const Transactions = () => {
   const creditCardAnimation = useSharedValue(-300);
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
