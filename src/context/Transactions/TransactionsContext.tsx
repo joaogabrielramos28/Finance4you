@@ -17,6 +17,28 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     "purple" | "pink" | "blue"
   >("purple");
 
+  const [filterTransactions, setFilterTransactions] = useState({
+    category: "all",
+    amount: 10000,
+  });
+
+  const handleSetFilterTransactions = (data: {
+    category: string;
+    amount: number;
+  }) => {
+    setFilterTransactions({
+      category: data.category,
+      amount: data.amount,
+    });
+  };
+
+  const resetFilterTransactions = () => {
+    setFilterTransactions({
+      category: "all",
+      amount: 10000,
+    });
+  };
+
   const nextStep = () => {
     setStep((prevState) => prevState + 1);
   };
@@ -91,6 +113,9 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         transactionsByPeriod,
         changeCreditCard,
         creditCardStyle,
+        filterTransactions,
+        handleSetFilterTransactions,
+        resetFilterTransactions,
       }}
     >
       {children}

@@ -5,6 +5,7 @@ export declare global {
       Home: undefined;
       Transactions: undefined;
       CreateTransaction: undefined;
+      FilterTransactions: undefined;
     }
   }
 }
