@@ -4,6 +4,7 @@ import { Transactions } from "./Transactions";
 import { CreateTransaction } from "./CreateTransaction";
 import { Analytics } from "./Analytics";
 import { FilterTransactions } from "./FilterTransactions";
+import { TransactionDetails } from "./TransactionDetails";
 
 export {
   Home,
@@ -12,4 +13,5 @@ export {
   CreateTransaction,
   Analytics,
   FilterTransactions,
+  TransactionDetails,
 };

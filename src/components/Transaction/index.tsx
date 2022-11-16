@@ -1,8 +1,17 @@
 import React from "react";
-import { Box, Heading, HStack, Text, useTheme, VStack } from "native-base";
+import {
+  Box,
+  Heading,
+  HStack,
+  Pressable,
+  Text,
+  useTheme,
+  VStack,
+} from "native-base";
 
 import { ITransaction } from "../../context/Transactions/types";
 import { categories } from "../../data/category";
+import { useNavigation } from "@react-navigation/native";
 
 export const Transaction = ({
   amount,
@@ -14,10 +23,16 @@ export const Transaction = ({
 }: ITransaction) => {
   const selectedCategory = categories.find((item) => item.name === category);
   const Icon = selectedCategory.icon;
+  const { navigate } = useNavigation();
 
   const { colors } = useTheme();
+
+  const handleGoToTransactionDetails = () => {
+    navigate("TransactionDetails");
+  };
+
   return (
-    <Box alignItems={"center"}>
+    <Pressable alignItems={"center"} onPress={handleGoToTransactionDetails}>
       <HStack
         width={"100%"}
         justifyContent={"space-between"}
@@ -56,6 +71,6 @@ export const Transaction = ({
           {amountFormatted}
         </Text>
       </HStack>
-    </Box>
+    </Pressable>
   );
 };

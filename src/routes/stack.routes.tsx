@@ -3,6 +3,7 @@ import React from "react";
 import {
   CreateTransaction,
   FilterTransactions,
+  TransactionDetails,
   Transactions,
 } from "../screens";
 
@@ -18,6 +19,7 @@ export const StackRoutes = () => {
       <Screen name="Transactions" component={Transactions} />
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />
+      <Screen name="TransactionDetails" component={TransactionDetails} />
     </Navigator>
   );
 };
