@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { FirstStep } from "./components/FirstStep";
 import { SecondStep } from "./components/SecondStep";
@@ -11,9 +11,14 @@ import {
 } from "./validation/formValidation";
 import { useTransactions } from "../..//context/Transactions/TransactionsContext";
 
+import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
+import StepIndicator from "react-native-step-indicator";
+
 export const CreateTransaction = () => {
   const { step } = useTransactions();
+  const { colors } = useTheme();
 
+  const StepIndicatorFactory = Factory(StepIndicator);
   const schemaValidationByStep =
     step === 1
       ? FirstStepSchemaValidation
@@ -23,11 +28,80 @@ export const CreateTransaction = () => {
   const CreateTransactionForm = useForm<FormData>({
     resolver: yupResolver(schemaValidationByStep),
   });
+
+  const labels = ["Categoria", "Subcategoria", "Detalhes"];
+  const customStyles = {
+    stepIndicatorSize: 25,
+    currentStepIndicatorSize: 30,
+    separatorStrokeWidth: 2,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: colors.violetBrand[400],
+    stepStrokeWidth: 3,
+    stepStrokeFinishedColor: colors.violetBrand[700],
+    stepStrokeUnFinishedColor: "#aaaaaa",
+    separatorFinishedColor: colors.violetBrand[700],
+    separatorUnFinishedColor: "#aaaaaa",
+    stepIndicatorFinishedColor: colors.violetBrand[700],
+    stepIndicatorUnFinishedColor: "#ffffff",
+    stepIndicatorCurrentColor: "#ffffff",
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: colors.violetBrand[700],
+    stepIndicatorLabelFinishedColor: "#ffffff",
+    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
+    labelColor: "#999999",
+    labelSize: 13,
+    currentStepLabelColor: colors.violetBrand[700],
+  };
   return (
     <FormProvider {...CreateTransactionForm}>
-      {step === 1 && <FirstStep />}
-      {step === 2 && <SecondStep />}
-      {step === 3 && <ThirdStep />}
+      {step !== 2 ? (
+        <Box flex={1} bg={"background"} safeAreaY>
+          <Heading
+            fontSize={"2xl"}
+            color={"grayBrand.200"}
+            textAlign={"center"}
+          >
+            {step === 0
+              ? "Selecione a categoria"
+              : step === 1
+              ? "Selecione a subcategoria"
+              : "Detalhes da transação"}
+          </Heading>
+          <Box mt={4}>
+            <StepIndicatorFactory
+              customStyles={customStyles}
+              currentPosition={step}
+              labels={labels}
+              stepCount={3}
+            />
+          </Box>
+
+          {step === 0 && <FirstStep />}
+          {step === 1 && <SecondStep />}
+        </Box>
+      ) : (
+        <Box flex={1} bg={"background"} safeAreaY>
+          <ScrollView flex={1} bg={"background"}>
+            <Heading
+              fontSize={"2xl"}
+              color={"grayBrand.200"}
+              textAlign={"center"}
+            >
+              Detalhes da transação
+            </Heading>
+            <Box mt={4}>
+              <StepIndicatorFactory
+                customStyles={customStyles}
+                currentPosition={step}
+                labels={labels}
+                stepCount={3}
+              />
+            </Box>
+            <ThirdStep />
+          </ScrollView>
+        </Box>
+      )}
     </FormProvider>
   );
 };

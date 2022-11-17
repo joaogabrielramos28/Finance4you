@@ -10,7 +10,7 @@ const TRANSACTION_KEY_STORAGE = "@finance4you:transactions";
 const CREDITCARD_KEY_STORAGE = "@finance4you:creditcards";
 
 const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [actualPeriod, setActualPeriod] = useState(new Date());
   const [creditCardStyle, setCreditCardStyle] = useState<
