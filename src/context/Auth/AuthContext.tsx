@@ -1,7 +1,5 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import * as AppleAuthentication from "expo-apple-authentication";
-import * as GoogleSignIn from "expo-google-sign-in";
-import * as Google from "expo-auth-session/providers/google";
 
 import { IAuthContext, IUser } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
