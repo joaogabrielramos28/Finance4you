@@ -3,6 +3,7 @@ import React from "react";
 import {
   CreateTransaction,
   FilterTransactions,
+  Home,
   TransactionDetails,
   Transactions,
 } from "../screens";
@@ -16,6 +17,7 @@ export const StackRoutes = () => {
         headerShown: false,
       }}
     >
+      <Screen name="Home" component={Home} />
       <Screen name="Transactions" component={Transactions} />
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />

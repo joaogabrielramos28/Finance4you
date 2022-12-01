@@ -57,8 +57,6 @@ export const CircularChart = () => {
     });
   }, [transactionsByPeriod]);
 
-  console.log(total);
-
   return (
     <Box position={"relative"}>
       <AnimatedCircularProgress
