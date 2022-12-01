@@ -38,13 +38,13 @@ export const PieChart = () => {
     if (totalByCategory.some((item) => item.name === transaction.category)) {
       totalByCategory.map((item) => {
         if (item.category === transaction.category) {
-          item.total += Number(transaction.amount);
+          item.total += Number(transaction.amountWithoutMask) / 100;
         }
       });
     } else {
       totalByCategory.push({
         name: transaction.category,
-        amount: transaction.amount,
+        amount: Number(transaction.amountWithoutMask) / 100,
         color: categoryColors[transaction.category],
         legendFontColor: categoryColors[transaction.category],
         legendFontSize: 15,

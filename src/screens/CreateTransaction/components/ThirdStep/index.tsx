@@ -1,27 +1,20 @@
 import React, { useState } from "react";
 import {
-  Box,
   Button,
   Heading,
-  Image,
-  Input,
   VStack,
   useTheme,
   HStack,
   Text,
   TextArea,
-  ScrollView,
 } from "native-base";
-import {
-  ArrowCircleDown,
-  ArrowCircleUp,
-  CurrencyDollar,
-  Info,
-} from "phosphor-react-native";
+import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+import { MaskInput } from "../../../../components/MaskInput";
+import { createNumberMask, Masks } from "react-native-mask-input";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -32,6 +25,7 @@ export const ThirdStep = () => {
   const [amount, setAmount] = useState(getValues("amount"));
   const [date, setDate] = useState(getValues("date") || new Date());
   const [description, setDescription] = useState(getValues("description"));
+  const [amountWithoutMask, setAmountWithoutMask] = useState("");
 
   const handleCreateTransaction = () => {
     const amount = getValues("amount");
@@ -40,14 +34,10 @@ export const ThirdStep = () => {
     const dateFormatted = format(date, "dd/MM/yyyy");
     const description = getValues("description");
 
-    const currencyFormatted = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(amount);
     const payload = {
       id: String(new Date().getTime()),
-      amountFormatted: currencyFormatted,
-      amount: Number(amount),
+      amount,
+      amountWithoutMask,
       category,
       subCategory,
       dateFormatted,
@@ -56,6 +46,7 @@ export const ThirdStep = () => {
       description,
     };
     createTransaction(payload);
+
     reset();
   };
 
@@ -70,9 +61,10 @@ export const ThirdStep = () => {
     setValue("type", type);
   };
 
-  const handleChangeAmount = (amount: string) => {
-    setAmount(amount);
-    setValue("amount", amount);
+  const handleChangeAmount = (masked: string, unmasked: string) => {
+    setAmount(masked);
+    setAmountWithoutMask(unmasked);
+    setValue("amount", masked);
   };
 
   const handleChangeDescription = (description: string) => {
@@ -86,17 +78,11 @@ export const ThirdStep = () => {
         <Heading color={"grayBrand.300"} size={"sm"}>
           Valor
         </Heading>
-        <Input
+        <MaskInput
           keyboardType="numeric"
-          padding={"12px"}
-          InputLeftElement={<CurrencyDollar color={colors.grayBrand[200]} />}
           value={amount}
           onChangeText={handleChangeAmount}
-          color={"grayBrand.200"}
-          _focus={{
-            borderColor: "violetBrand.700",
-            backgroundColor: "transparent",
-          }}
+          mask={Masks.BRL_CURRENCY}
         />
 
         <Heading color={"grayBrand.300"} size={"sm"}>

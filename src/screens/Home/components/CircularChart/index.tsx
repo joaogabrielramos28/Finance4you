@@ -26,14 +26,15 @@ export const CircularChart = () => {
     transactionsByPeriod.filter((item) => item.type === "outcome") || [];
   const received =
     transactionsByPeriod.filter((item) => item.type === "income") || [];
+  console.log(transactionsByPeriod);
 
   useEffect(() => {
     const income = received.reduce((acc, transaction) => {
-      return acc + transaction.amount;
+      return acc + Number(transaction.amountWithoutMask) / 100;
     }, 0);
 
     const outcome = spends.reduce((acc, transaction) => {
-      return acc + transaction.amount;
+      return acc + Number(transaction.amountWithoutMask) / 100;
     }, 0);
 
     const percentage = income > 0 ? (outcome / income) * 100 : 0;
@@ -56,6 +57,8 @@ export const CircularChart = () => {
       percentage,
     });
   }, [transactionsByPeriod]);
+
+  console.log(total);
 
   return (
     <Box position={"relative"}>

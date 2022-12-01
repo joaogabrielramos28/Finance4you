@@ -24,8 +24,8 @@ export interface ITransaction {
   id: string;
   category: string;
   subCategory: string;
-  amount: number;
-  amountFormatted: string;
+  amount: string;
+  amountWithoutMask: string;
   type: "income" | "outcome";
   date: string;
   dateFormatted: string;

@@ -31,7 +31,7 @@ export const LineChart = () => {
       actualMonth.getMonth() === new Date(transaction.date).getMonth() &&
       actualMonth.getFullYear() === new Date(transaction.date).getFullYear()
     ) {
-      return (acc = acc + transaction.amount);
+      return (acc = acc + Number(transaction.amountWithoutMask) / 100);
     }
     return 0;
   }, 0);
@@ -41,7 +41,7 @@ export const LineChart = () => {
       sub1Month.getMonth() === new Date(transaction.date).getMonth() &&
       sub1Month.getFullYear() === new Date(transaction.date).getFullYear()
     ) {
-      return (acc = acc + transaction.amount);
+      return (acc = acc + Number(transaction.amountWithoutMask) / 100);
     }
     return 0;
   }, 0);
@@ -51,7 +51,7 @@ export const LineChart = () => {
       sub2Month.getMonth() === new Date(transaction.date).getMonth() &&
       sub2Month.getFullYear() === new Date(transaction.date).getFullYear()
     ) {
-      return (acc = acc + transaction.amount);
+      return (acc = Number(transaction.amountWithoutMask) / 100);
     }
     return 0;
   }, 0);
