@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { HStack, useTheme } from "native-base";
-import { CreditCard, MagicWand, Plus } from "phosphor-react-native";
+import { Barricade, CreditCard, MagicWand, Plus } from "phosphor-react-native";
 import React, { useState } from "react";
 import { ModalCardConfig } from "../ModalCardConfig";
 import { Button } from "./components/Button";
@@ -45,10 +45,11 @@ export const ButtonGroup = () => {
           }
         />
         <Button
-          subtitle="Pensar"
+          isDisabled={true}
+          subtitle="Em breve"
           variant="secondary"
           children={
-            <MagicWand
+            <Barricade
               size={26}
               weight={"bold"}
               color={colors.grayBrand[200]}
