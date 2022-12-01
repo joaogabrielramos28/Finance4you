@@ -1,3 +1,4 @@
+import { StatusBar } from "native-base";
 import React from "react";
 import { AppProvider } from "./src/context";
 import { useAuth } from "./src/context/Auth/AuthContext";
@@ -7,6 +8,7 @@ import { SignIn } from "./src/screens";
 export default function App() {
   return (
     <AppProvider>
+      <StatusBar barStyle="light-content" animated showHideTransition="fade" />
       <Routes />
     </AppProvider>
   );
