@@ -8,6 +8,12 @@ import { useTransactions } from "../../../../context/Transactions/TransactionsCo
 export const LineChart = () => {
   const screenWidth = Dimensions.get("window").width;
   const [clickedData, setClickedData] = useState(null);
+  const [chartData, setChartData] = useState({
+    current: 0,
+    previous: 0,
+    previous2: 0,
+  });
+
   const { transactions } = useTransactions();
 
   const chartConfig: ChartConfig = {
@@ -26,35 +32,33 @@ export const LineChart = () => {
   const sub2Month = subMonths(new Date(), 2);
   const actualMonth = new Date();
 
-  const actualMonthTransactions = totalSpend.reduce((acc, transaction) => {
-    if (
-      actualMonth.getMonth() === new Date(transaction.date).getMonth() &&
-      actualMonth.getFullYear() === new Date(transaction.date).getFullYear()
-    ) {
-      return (acc = acc + Number(transaction.amountWithoutMask) / 100);
-    }
-    return 0;
-  }, 0);
-
-  const sub1MonthTransactions = totalSpend.reduce((acc, transaction) => {
-    if (
-      sub1Month.getMonth() === new Date(transaction.date).getMonth() &&
-      sub1Month.getFullYear() === new Date(transaction.date).getFullYear()
-    ) {
-      return (acc = acc + Number(transaction.amountWithoutMask) / 100);
-    }
-    return 0;
-  }, 0);
-
-  const sub2MonthTransactions = totalSpend.reduce((acc, transaction) => {
-    if (
-      sub2Month.getMonth() === new Date(transaction.date).getMonth() &&
-      sub2Month.getFullYear() === new Date(transaction.date).getFullYear()
-    ) {
-      return (acc = Number(transaction.amountWithoutMask) / 100);
-    }
-    return 0;
-  }, 0);
+  const totalSpendActualMonth = totalSpend
+    .filter(
+      (transaction) =>
+        format(new Date(transaction.date), "MM-yyyy") ===
+        format(actualMonth, "MM-yyyy")
+    )
+    .reduce((acc, transaction) => {
+      return acc + Number(transaction.amountWithoutMask) / 100;
+    }, 0);
+  const totalSpendPreviousMonth = totalSpend
+    .filter(
+      (transaction) =>
+        format(new Date(transaction.date), "MM-yyyy") ===
+        format(sub1Month, "MM-yyyy")
+    )
+    .reduce((acc, transaction) => {
+      return acc + Number(transaction.amountWithoutMask) / 100;
+    }, 0);
+  const totalSpendPrevious2Month = totalSpend
+    .filter(
+      (transaction) =>
+        format(new Date(transaction.date), "MM-yyyy") ===
+        format(sub2Month, "MM-yyyy")
+    )
+    .reduce((acc, transaction) => {
+      return acc + Number(transaction.amountWithoutMask) / 100;
+    }, 0);
 
   const lineData = {
     labels: [
@@ -65,9 +69,9 @@ export const LineChart = () => {
     datasets: [
       {
         data: [
-          sub2MonthTransactions,
-          sub1MonthTransactions,
-          actualMonthTransactions,
+          totalSpendPrevious2Month,
+          totalSpendPreviousMonth,
+          totalSpendActualMonth,
         ],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
         strokeWidth: 2,

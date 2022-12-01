@@ -55,6 +55,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       JSON.stringify([...data, transaction])
     );
     setTransactions([...data, transaction]);
+    setStep(0);
   };
 
   const handleChangePeriod = (action: "next" | "prev") => {
