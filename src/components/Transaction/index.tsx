@@ -19,6 +19,7 @@ export const Transaction = ({
   dateFormatted,
   subCategory,
   type,
+  description,
 }: ITransaction) => {
   const selectedCategory = categories.find((item) => item.name === category);
   const Icon = selectedCategory.icon;
@@ -27,7 +28,14 @@ export const Transaction = ({
   const { colors } = useTheme();
 
   const handleGoToTransactionDetails = () => {
-    navigate("TransactionDetails");
+    navigate("TransactionDetails", {
+      amount,
+      category,
+      date: dateFormatted,
+      subCategory,
+      description,
+      type,
+    });
   };
 
   return (

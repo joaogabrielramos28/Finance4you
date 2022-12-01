@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Box,
   Heading,
@@ -9,10 +9,19 @@ import {
   useTheme,
   VStack,
 } from "native-base";
-import { ArrowLeft, Calendar, GraduationCap } from "phosphor-react-native";
+import { ArrowLeft, Calendar, ArrowCircleUp } from "phosphor-react-native";
 import React from "react";
+import { ITransactionDetailsScreenProps } from "../../@types/navigation";
+import { categories } from "../../data/category";
 
 export const TransactionDetails = () => {
+  const { params } = useRoute();
+
+  const { amount, category, date, description, subCategory, type } =
+    params as ITransactionDetailsScreenProps;
+
+  const selectedCategory = categories.find((item) => item.name === category);
+
   const { colors } = useTheme();
   const { goBack } = useNavigation();
   const handleGoBack = () => {
@@ -41,7 +50,7 @@ export const TransactionDetails = () => {
             justifyContent={"center"}
             borderRadius={27}
           >
-            <GraduationCap
+            <selectedCategory.icon
               color={colors.grayBrand[300]}
               weight="fill"
               size={32}
@@ -50,9 +59,9 @@ export const TransactionDetails = () => {
 
           <VStack space={1}>
             <Heading size={"md"} color={colors.grayBrand[200]}>
-              Educação
+              {category}
             </Heading>
-            <Text color={colors.grayBrand[300]}>Faculdade</Text>
+            <Text color={colors.grayBrand[300]}>{subCategory}</Text>
           </VStack>
         </HStack>
         <HStack space={4} alignItems="center">
@@ -71,7 +80,7 @@ export const TransactionDetails = () => {
             <Heading size={"md"} color={colors.grayBrand[200]}>
               Data
             </Heading>
-            <Text color={colors.grayBrand[300]}>31/10/22</Text>
+            <Text color={colors.grayBrand[300]}>{date}</Text>
           </VStack>
         </HStack>
       </HStack>
@@ -80,9 +89,14 @@ export const TransactionDetails = () => {
           <Heading color={"grayBrand.200"} size={"md"}>
             Valor
           </Heading>
-          <Text color={"grayBrand.300"} fontSize={"xl"}>
-            R$ 1000.00
-          </Text>
+          <HStack alignItems={"center"} space={2}>
+            <Text
+              color={type === "outcome" ? "redBrand.500" : "greenBrand.500"}
+              fontSize={"xl"}
+            >
+              {type === "outcome" ? "-" : "+"} {amount}
+            </Text>
+          </HStack>
         </VStack>
 
         <VStack mt={4} space={2}>
@@ -91,7 +105,7 @@ export const TransactionDetails = () => {
           </Heading>
 
           <Text fontSize={"md"} color={"grayBrand.300"}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+            {description}
           </Text>
         </VStack>
       </VStack>

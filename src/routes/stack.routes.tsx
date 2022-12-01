@@ -10,17 +10,29 @@ import {
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const StackRoutes = () => {
+export const TransactionStackRoutes = () => {
   return (
     <Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Screen name="Home" component={Home} />
       <Screen name="Transactions" component={Transactions} />
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />
+      <Screen name="TransactionDetails" component={TransactionDetails} />
+    </Navigator>
+  );
+};
+
+export const HomeStackRoutes = () => {
+  return (
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Screen name="HomeStack" component={Home} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
     </Navigator>
   );
