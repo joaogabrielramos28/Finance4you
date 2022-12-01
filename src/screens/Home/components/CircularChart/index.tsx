@@ -26,7 +26,6 @@ export const CircularChart = () => {
     transactionsByPeriod.filter((item) => item.type === "outcome") || [];
   const received =
     transactionsByPeriod.filter((item) => item.type === "income") || [];
-  console.log(transactionsByPeriod);
 
   useEffect(() => {
     const income = received.reduce((acc, transaction) => {

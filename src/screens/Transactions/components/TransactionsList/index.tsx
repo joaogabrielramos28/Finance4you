@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
 import { Box, FlatList, Heading, useTheme, VStack } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import { Transaction } from "../../../../components/Transaction";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
@@ -20,7 +20,7 @@ export const TransactionsList = () => {
     .filter(
       (transaction) =>
         filterTransactions.amount === 0 ||
-        transaction.amount <= filterTransactions.amount
+        Number(transaction.amountWithoutMask) / 100 <= filterTransactions.amount
     );
 
   return (

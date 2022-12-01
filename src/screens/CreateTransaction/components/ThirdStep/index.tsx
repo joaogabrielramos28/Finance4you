@@ -15,11 +15,13 @@ import { format } from "date-fns";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 import { MaskInput } from "../../../../components/MaskInput";
 import { createNumberMask, Masks } from "react-native-mask-input";
+import { useNavigation } from "@react-navigation/native";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
   const { createTransaction, prevStep } = useTransactions();
   const { setValue, getValues, reset } = useFormContext();
+  const { navigate } = useNavigation();
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
   const [amount, setAmount] = useState(getValues("amount"));
@@ -46,8 +48,8 @@ export const ThirdStep = () => {
       description,
     };
     createTransaction(payload);
-
     reset();
+    navigate("Transactions");
   };
 
   const handleDateChange = (event: any, selectedDate: Date | undefined) => {
