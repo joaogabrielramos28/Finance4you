@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -18,6 +18,7 @@ import { BorderlessButton } from "react-native-gesture-handler";
 import { Trash } from "phosphor-react-native";
 import { View } from "react-native";
 import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import { ConfirmModal } from "../ConfirmModal";
 
 export const Transaction = ({
   id,
@@ -28,6 +29,8 @@ export const Transaction = ({
   type,
   description,
 }: ITransaction) => {
+  const [confirmationIsVisible, setConfirmationIsVisible] = useState(false);
+
   const selectedCategory = categories.find((item) => item.name === category);
   const Icon = selectedCategory.icon;
   const { navigate } = useNavigation();
@@ -45,6 +48,10 @@ export const Transaction = ({
       description,
       type,
     });
+  };
+
+  const handleToggleConfirmationModal = () => {
+    setConfirmationIsVisible((prevState) => !prevState);
   };
 
   const handleDeleteTransaction = () => {
@@ -66,7 +73,7 @@ export const Transaction = ({
           }}
         >
           <Box>
-            <BorderlessButton onPress={handleDeleteTransaction}>
+            <BorderlessButton onPress={handleToggleConfirmationModal}>
               <Trash size={24} weight="fill" color={colors.grayBrand[200]} />
             </BorderlessButton>
           </Box>
@@ -113,6 +120,11 @@ export const Transaction = ({
           </Text>
         </HStack>
       </Pressable>
+      <ConfirmModal
+        isVisible={confirmationIsVisible}
+        onDismiss={handleToggleConfirmationModal}
+        onSuccessful={handleDeleteTransaction}
+      />
     </Swipeable>
   );
 };
