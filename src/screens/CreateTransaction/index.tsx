@@ -13,6 +13,7 @@ import { useTransactions } from "../..//context/Transactions/TransactionsContext
 
 import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
 import StepIndicator from "react-native-step-indicator";
+import { useWindowDimensions } from "react-native";
 
 export const CreateTransaction = () => {
   const { step } = useTransactions();
@@ -53,6 +54,12 @@ export const CreateTransaction = () => {
     labelSize: 13,
     currentStepLabelColor: colors.violetBrand[700],
   };
+
+  const { height } = useWindowDimensions();
+
+  const isMd = height > 700;
+
+  const maxH = isMd ? "360px" : "280px";
   return (
     <FormProvider {...CreateTransactionForm}>
       {step !== 2 ? (
@@ -77,8 +84,8 @@ export const CreateTransaction = () => {
             />
           </Box>
 
-          {step === 0 && <FirstStep />}
-          {step === 1 && <SecondStep />}
+          {step === 0 && <FirstStep maxH={maxH} />}
+          {step === 1 && <SecondStep maxH={maxH} />}
         </Box>
       ) : (
         <Box flex={1} bg={"background"} safeAreaY>

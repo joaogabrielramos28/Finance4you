@@ -9,6 +9,7 @@ import {
   Image,
   ScrollView,
   Text,
+  useBreakpointValue,
   useTheme,
   VStack,
 } from "native-base";
@@ -18,12 +19,11 @@ import { FormButton } from "../FormButton";
 import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
 
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useTransactions } from "../../../..//context/Transactions/TransactionsContext";
+import { IStepProps } from "../../types";
 
-export const FirstStep = () => {
-  const { colors } = useTheme();
+export const FirstStep = ({ maxH }: IStepProps) => {
   const { goBack } = useNavigation();
   const {
     setValue,
@@ -52,7 +52,7 @@ export const FirstStep = () => {
       <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
         <FlatList
           data={categories}
-          h={"360px"}
+          maxHeight={maxH}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <FormButton

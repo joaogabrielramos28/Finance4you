@@ -19,13 +19,13 @@ export const PieChart = () => {
     },
   };
   const categoryColors = {
-    Educação: colors.violetBrand[400],
-    Saúde: colors.violetBrand[500],
-    Lazer: colors.violetBrand[600],
+    Educação: colors.blue[500],
+    Saúde: colors.greenBrand[500],
+    Lazer: colors.yellow[500],
     Automóvel: colors.violetBrand[700],
-    Moradia: colors.redBrand[500],
-    Contas: colors.greenBrand[500],
-    Alimentação: colors.yellow[500],
+    Moradia: colors.primary[500],
+    Contas: colors.orange[500],
+    Alimentação: colors.redBrand[500],
   };
 
   const spend = transactionsByPeriod.filter(
