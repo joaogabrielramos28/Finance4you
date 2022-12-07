@@ -58,6 +58,19 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setStep(0);
   };
 
+  const deleteTransaction = async (id: string) => {
+    const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
+    const data = response ? JSON.parse(response) : [];
+
+    const newData = data.filter((item: ITransaction) => item.id !== id);
+
+    await AsyncStorage.setItem(
+      TRANSACTION_KEY_STORAGE,
+      JSON.stringify(newData)
+    );
+    setTransactions(newData);
+  };
+
   const handleChangePeriod = (action: "next" | "prev") => {
     if (action === "next") {
       setActualPeriod(addMonths(actualPeriod, 1));
@@ -115,6 +128,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         filterTransactions,
         handleSetFilterTransactions,
         resetFilterTransactions,
+        deleteTransaction,
       }}
     >
       {children}

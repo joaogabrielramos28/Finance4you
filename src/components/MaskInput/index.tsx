@@ -3,9 +3,15 @@ import React from "react";
 import MaskInputLib, { MaskInputProps } from "react-native-mask-input";
 const MaskInputFactory = Factory(MaskInputLib);
 
-export const MaskInput = ({ value, onChangeText, mask }: MaskInputProps) => {
+export const MaskInput = ({
+  value,
+  onChangeText,
+  mask,
+  ...rest
+}: MaskInputProps) => {
   return (
     <MaskInputFactory
+      keyboardType="numeric"
       value={value}
       onChangeText={onChangeText}
       mask={mask}
