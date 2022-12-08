@@ -1,4 +1,5 @@
 export interface ITransactionDetailsScreenProps {
+  id: string;
   category: string;
   subCategory: string;
   amount: string;

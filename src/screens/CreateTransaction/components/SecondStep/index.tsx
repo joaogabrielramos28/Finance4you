@@ -6,8 +6,9 @@ import { FormButton } from "../FormButton";
 import { categories } from "../../../../data/category";
 import { useFormContext } from "react-hook-form";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+import { IStepProps } from "../../types";
 
-export const SecondStep = () => {
+export const SecondStep = ({ maxH }: IStepProps) => {
   const { setValue, getValues } = useFormContext();
   const { nextStep, prevStep } = useTransactions();
   const [subcategory, setSubCategory] = useState(getValues("subCategory"));
@@ -24,7 +25,7 @@ export const SecondStep = () => {
       <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
         <FlatList
           data={selectedCategory.subCategories}
-          height={"360px"}
+          maxH={maxH}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <FormButton

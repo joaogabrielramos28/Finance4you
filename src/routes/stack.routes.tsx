@@ -3,10 +3,9 @@ import React from "react";
 import {
   CreateTransaction,
   FilterTransactions,
-  Home,
   TransactionDetails,
-  Transactions,
 } from "../screens";
+import { TabsRoutes } from "./tabs.routes";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -17,7 +16,7 @@ export const TransactionStackRoutes = () => {
         headerShown: false,
       }}
     >
-      <Screen name="Transactions" component={Transactions} />
+      <Screen name="Transactions" component={TabsRoutes} />
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
@@ -32,7 +31,7 @@ export const HomeStackRoutes = () => {
         headerShown: false,
       }}
     >
-      <Screen name="HomeStack" component={Home} />
+      <Screen name="HomeStack" component={TabsRoutes} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
     </Navigator>
   );

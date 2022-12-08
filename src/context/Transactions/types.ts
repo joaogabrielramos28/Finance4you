@@ -18,6 +18,7 @@ export interface ICreateTransactionContext {
     amount: number;
   }) => void;
   resetFilterTransactions: () => void;
+  deleteTransaction: (id: string) => Promise<void>;
 }
 
 export interface ITransaction {

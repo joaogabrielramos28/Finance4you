@@ -53,9 +53,13 @@ const defaultTheme = {
       sm: "0.75rem",
     },
   },
+  breakpoints: {
+    lg: "820px",
+  },
 } as const;
 
 export const theme = extendTheme({
   colors: defaultTheme.colors,
   fontSizes: defaultTheme.fonts,
+  breakpoints: defaultTheme.breakpoints,
 });

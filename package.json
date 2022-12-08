@@ -1,6 +1,6 @@
 {
   "name": "finance4you",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
@@ -18,6 +18,7 @@
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
     "add": "^2.0.6",
+    "appcenter": "^4.4.5",
     "date-fns": "^2.29.3",
     "expo": "~46.0.16",
     "expo-apple-authentication": "~4.3.0",

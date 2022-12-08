@@ -1,4 +1,10 @@
 PODS:
+  - appcenter-core (4.4.5):
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - AppCenter/Core (4.4.3)
+  - AppCenterReactNativeShared (4.4.5):
+    - AppCenter/Core (= 4.4.3)
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
   - EXAppleAuthentication (4.3.0):
@@ -353,6 +359,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - appcenter-core (from `../node_modules/appcenter`)
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXAppleAuthentication (from `../node_modules/expo-apple-authentication/ios`)
@@ -406,9 +413,13 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppCenter
+    - AppCenterReactNativeShared
     - fmt
 
 EXTERNAL SOURCES:
+  appcenter-core:
+    :path: "../node_modules/appcenter"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -509,6 +520,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  AppCenter: 3fd04aa1b166e16fdb03ec81dabe488aece83fbd
+  appcenter-core: c593b2e4ac28d6a21b6a217c4a5e6b3de7b0b00f
+  AppCenterReactNativeShared: f395caeabde0dc3a11609dbcb737d0f14cd40e79
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXAppleAuthentication: b9e9d8fa9b0cc5277b2121eb809cf0f57c2496a7

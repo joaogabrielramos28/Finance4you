@@ -81,7 +81,6 @@ export const ThirdStep = () => {
           Valor
         </Heading>
         <MaskInput
-          keyboardType="numeric"
           value={amount}
           onChangeText={handleChangeAmount}
           mask={Masks.BRL_CURRENCY}
