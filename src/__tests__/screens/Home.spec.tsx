@@ -7,6 +7,7 @@ import { getMonthsName } from "../../utils/formatMonth";
 import { AppProvider } from "../../context/";
 import { format, subMonths } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { debug } from "react-native-reanimated";
 
 jest.mock("@invertase/react-native-apple-authentication", () => {
   return {
@@ -42,5 +43,18 @@ describe("Home Screen", () => {
       expect(getByText(prevMonth)).toBeTruthy();
     });
   });
-  // it("Shouldn`t can ");
+  it("Shouldn't be able to go to the next month when selected month is current", async () => {
+    const { getByTestId, debug } = render(<Home />, {
+      wrapper: AppProvider,
+    });
+
+    const nextMonthButton = getByTestId("next-month-button");
+    debug(nextMonthButton);
+
+    await waitFor(() => {
+      expect(nextMonthButton.props.accessibilityState["disabled"]).toEqual(
+        true
+      );
+    });
+  });
 });
