@@ -48,7 +48,8 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@testing-library/react-native": "^11.5.0"
   },
   "private": true
 }
