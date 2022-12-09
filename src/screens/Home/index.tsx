@@ -16,7 +16,9 @@ export const Home = () => {
       alignItems={"center"}
       space={4}
     >
-      <Heading color={"grayBrand.200"}>Resumo de gastos</Heading>
+      <Heading color={"grayBrand.200"} testID="teste">
+        Resumo de gastos
+      </Heading>
       <MonthSelect />
       <CircularChart />
 
