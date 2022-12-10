@@ -188,6 +188,10 @@ export const categories: ICategories[] = [
         name: "Investimentos",
       },
       {
+        id: "billing-9",
+        name: "Fatura cartão",
+      },
+      {
         id: "billing-8",
         name: "Outros",
       },
