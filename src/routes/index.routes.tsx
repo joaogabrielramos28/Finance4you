@@ -8,7 +8,7 @@ export const Routes = () => {
   const { user } = useAuth();
   return (
     <NavigationContainer>
-      {!user?.id ? <TransactionStackRoutes /> : <SignIn />}
+      {user?.id ? <TransactionStackRoutes /> : <SignIn />}
     </NavigationContainer>
   );
 };

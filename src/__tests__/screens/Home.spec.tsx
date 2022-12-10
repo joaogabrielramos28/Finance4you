@@ -6,14 +6,6 @@ import { AppProvider } from "../../context/";
 import { format, subMonths } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-jest.mock("@invertase/react-native-apple-authentication", () => {
-  return {
-    AppleAuthentication: {
-      appleAuth: jest.fn(),
-    },
-  };
-});
-
 const currentMonth = format(new Date(), "MMMM/yyyy", { locale: ptBR });
 const prevMonth = format(subMonths(new Date(), 1), "MMMM/yyyy", {
   locale: ptBR,
