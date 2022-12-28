@@ -200,7 +200,7 @@ export const categories: ICategories[] = [
   },
   {
     id: "mall",
-    name: "compras",
+    name: "Compras",
     icon: ShoppingBagOpen,
     subCategories: [
       {
