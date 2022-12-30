@@ -1,8 +1,10 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 
+import auth from "@react-native-firebase/auth";
 import { IAuthContext, IUser } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const AuthContext = React.createContext({} as IAuthContext);
 
 const USER_STORAGE_KEY = "@finance4you:user";
@@ -31,7 +33,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
           name,
           photo,
         };
+
+        auth().signInWithCredential(
+          auth.AppleAuthProvider.credential(
+            appleAuthRequestResponse.identityToken,
+            appleAuthRequestResponse.nonce
+          )
+        );
+
         setUser(userLogged);
+
         await AsyncStorage.setItem(
           USER_STORAGE_KEY,
           JSON.stringify(userLogged)
@@ -93,7 +104,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loginWithApple, user, loading }}>
+    <AuthContext.Provider value={{ loginWithApple, user, loading, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -17,6 +17,9 @@ export declare global {
       CreateTransaction: undefined;
       FilterTransactions: undefined;
       TransactionDetails: ITransactionDetailsScreenProps;
+      Options: undefined;
+      ScheduleCreate: undefined;
+      ScheduleList: undefined;
     }
   }
 }

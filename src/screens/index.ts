@@ -5,6 +5,7 @@ import { CreateTransaction } from "./CreateTransaction";
 import { Analytics } from "./Analytics";
 import { FilterTransactions } from "./FilterTransactions";
 import { TransactionDetails } from "./TransactionDetails";
+import { Options } from "./Options";
 
 export {
   Home,
@@ -14,4 +15,5 @@ export {
   Analytics,
   FilterTransactions,
   TransactionDetails,
+  Options,
 };
