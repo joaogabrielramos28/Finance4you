@@ -14,6 +14,10 @@ export const Options = () => {
   const handleGoToScheduleCreate = () => {
     navigate("ScheduleCreate");
   };
+
+  const handleGoToScheduleList = () => {
+    navigate("ScheduleList");
+  };
   return (
     <VStack safeAreaY bg={"background"} flex padding={6}>
       <Heading color={colors.grayBrand[200]}>Opções</Heading>
@@ -24,7 +28,7 @@ export const Options = () => {
           leftIcon={<BellRinging size={24} color={colors.grayBrand[300]} />}
         />
         <MenuItem
-          onPress={() => {}}
+          onPress={handleGoToScheduleList}
           text={"Listagem de alertas"}
           leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
         />

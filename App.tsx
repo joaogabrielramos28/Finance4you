@@ -26,16 +26,7 @@ export default function App() {
         });
     }
 
-    // const add5min = addMinutes(new Date(), 1);
-
-    // PushNotificationIOS.addNotificationRequest({
-    //   id: "1",
-    //   badge: 1,
-    //   body: "Teste",
-    //   category: "teste",
-    //   fireDate: add5min,
-    //   title: "Teste",
-    // });
+  
   }, []);
 
   useEffect(() => {

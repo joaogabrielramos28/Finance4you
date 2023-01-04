@@ -13,16 +13,23 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import { ArrowLeft } from "phosphor-react-native";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export const ScheduleCreate = () => {
   const { colors } = useTheme();
-  const [date, setDate] = useState(new Date());
+  const [schedule, setSchedule] = useState<{
+    name: string;
+    date: Date;
+  }>({
+    name: "",
+    date: new Date(),
+  });
 
   const { goBack } = useNavigation();
 
   const handleChangeDate = (event: any, selectedDate: any) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
+    const currentDate = selectedDate || schedule.date;
+    setSchedule({ ...schedule, date: currentDate });
   };
 
   const handleGoBack = () => {
@@ -30,8 +37,26 @@ export const ScheduleCreate = () => {
   };
 
   const handleCreateSchedule = () => {
-    console.log(date);
+    PushNotificationIOS.addNotificationRequest({
+      id: String(new Date().getTime()),
+      badge: 1,
+      body: `Ei não esqueça de pagar ${schedule.name}`,
+      category: "SCHEDULE",
+      fireDate: schedule.date,
+      repeats: true,
+      repeatsComponent: {
+        hour: true,
+        day: false,
+        minute: false,
+        dayOfWeek: false,
+        month: false,
+        second: true,
+        year: false,
+      },
+      title: "Lembrete de pagamento",
+    });
   };
+
   return (
     <VStack
       flex={1}
@@ -51,12 +76,24 @@ export const ScheduleCreate = () => {
         <Text fontSize={"lg"} color={"grayBrand.300"} mt={4}>
           Nome do alerta
         </Text>
-        <Input marginY={4} />
+        <Input
+          padding={4}
+          _focus={{
+            borderWidth: 1,
+            borderColor: "violetBrand.700",
+            bg: "transparent",
+          }}
+          color={colors.grayBrand[300]}
+          marginY={4}
+          value={schedule.name}
+          placeholder={"Conta de luz"}
+          onChangeText={(text) => setSchedule({ ...schedule, name: text })}
+        />
         <DateTimePicker
           accentColor={colors.violetBrand[400]}
           minimumDate={new Date()}
           themeVariant={"dark"}
-          value={date}
+          value={schedule.date}
           mode={"datetime"}
           locale={"pt-Br"}
           onChange={handleChangeDate}
