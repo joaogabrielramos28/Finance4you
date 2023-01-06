@@ -37,24 +37,29 @@ export const ScheduleCreate = () => {
   };
 
   const handleCreateSchedule = () => {
-    PushNotificationIOS.addNotificationRequest({
-      id: String(new Date().getTime()),
-      badge: 1,
-      body: `Ei não esqueça de pagar ${schedule.name}`,
-      category: "SCHEDULE",
-      fireDate: schedule.date,
-      repeats: true,
-      repeatsComponent: {
-        hour: true,
-        day: false,
-        minute: false,
-        dayOfWeek: false,
-        month: false,
-        second: true,
-        year: false,
-      },
-      title: "Lembrete de pagamento",
-    });
+    try {
+      PushNotificationIOS.addNotificationRequest({
+        id: String(new Date().getTime()),
+        badge: 1,
+        body: `Ei não esqueça de pagar ${schedule.name}`,
+        category: schedule.name,
+        fireDate: schedule.date,
+        repeats: true,
+        repeatsComponent: {
+          hour: true,
+          day: true,
+          minute: true,
+          dayOfWeek: false,
+          month: false,
+          second: false,
+          year: false,
+        },
+        title: "Lembrete de pagamento",
+      });
+      console.log("com sucesso");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -91,7 +96,6 @@ export const ScheduleCreate = () => {
         />
         <DateTimePicker
           accentColor={colors.violetBrand[400]}
-          minimumDate={new Date()}
           themeVariant={"dark"}
           value={schedule.date}
           mode={"datetime"}
