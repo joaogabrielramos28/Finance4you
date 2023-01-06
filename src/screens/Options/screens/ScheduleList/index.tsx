@@ -16,7 +16,7 @@ import { ArrowLeft } from "phosphor-react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
-import { formatDistance } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const ScheduleList = () => {
@@ -54,14 +54,10 @@ export const ScheduleList = () => {
                     <Heading color={"grayBrand.200"}>
                       Próximo alerta{" "}
                       <Text color={"violetBrand.500"}>
-                        {formatDistance(
-                          new Date(schedules[0].date),
-                          new Date(),
-                          {
-                            addSuffix: true,
-                            locale: ptBR,
-                          }
-                        )}
+                        {formatDistanceToNow(new Date(schedules[0].date), {
+                          addSuffix: true,
+                          locale: ptBR,
+                        })}
                       </Text>
                     </Heading>
                     <ScheduleItem {...schedules[0]} />
