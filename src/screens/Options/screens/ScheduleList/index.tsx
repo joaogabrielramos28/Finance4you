@@ -16,7 +16,7 @@ import { ArrowLeft } from "phosphor-react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, closestIndexTo } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const ScheduleList = () => {
@@ -33,6 +33,11 @@ export const ScheduleList = () => {
       setIsLoading(false);
     });
   }, []);
+
+  const nextSchedule = closestIndexTo(
+    new Date(),
+    schedules.map((schedule) => new Date(schedule.date))
+  );
 
   return (
     <Box flex bg="background" safeAreaY>
@@ -54,13 +59,16 @@ export const ScheduleList = () => {
                     <Heading color={"grayBrand.200"}>
                       Próximo alerta{" "}
                       <Text color={"violetBrand.500"}>
-                        {formatDistanceToNow(new Date(schedules[0].date), {
-                          addSuffix: true,
-                          locale: ptBR,
-                        })}
+                        {formatDistanceToNow(
+                          new Date(schedules[nextSchedule].date),
+                          {
+                            addSuffix: true,
+                            locale: ptBR,
+                          }
+                        )}
                       </Text>
                     </Heading>
-                    <ScheduleItem {...schedules[0]} />
+                    <ScheduleItem {...schedules[nextSchedule]} />
                   </VStack>
                   <Divider mt={4} bg={"zinc.600"} />
                   <Heading mt={4} color={"grayBrand.200"}>
