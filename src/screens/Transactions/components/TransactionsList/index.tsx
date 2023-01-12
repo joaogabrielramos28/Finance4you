@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
+import { useToast } from "native-base";
 import {
   Box,
   FlatList,
   Heading,
   HStack,
-  Tooltip,
+  IconButton,
+  Toast,
   useTheme,
   VStack,
 } from "native-base";
@@ -15,6 +17,7 @@ import { Transaction } from "../../../../components/Transaction";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const TransactionsList = () => {
+  const toast = useToast();
   const { transactionsByPeriod, filterTransactions } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -34,6 +37,8 @@ export const TransactionsList = () => {
         Number(transaction.amountWithoutMask) / 100 <= filterTransactions.amount
     );
 
+  const id = "test-toast";
+
   return (
     <VStack marginTop={4} paddingX={"32px"}>
       <HStack alignItems={"center"} space={8}>
@@ -41,9 +46,32 @@ export const TransactionsList = () => {
           Lista de transações
         </Heading>
 
-        <Tooltip label="Deslize pro lado para apagar a transação">
-          <Info color={colors.grayBrand[300]} />
-        </Tooltip>
+        <IconButton
+          size={"md"}
+          icon={<Info color={colors.grayBrand[200]} size={24} />}
+          onPress={() => {
+            if (!toast.isActive(id)) {
+              Toast.show({
+                id,
+                placement: "bottom",
+                render: () => (
+                  <Box
+                    bg="violetBrand.500"
+                    px="2"
+                    py="1"
+                    rounded="sm"
+                    mb={5}
+                    _text={{
+                      color: "grayBrand.100",
+                    }}
+                  >
+                    Deslize pro lado para apagar a transação
+                  </Box>
+                ),
+              });
+            }
+          }}
+        />
       </HStack>
 
       <Box safeAreaBottom>
