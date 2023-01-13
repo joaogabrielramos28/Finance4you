@@ -9,6 +9,7 @@ import {
   Button,
   HStack,
   IconButton,
+  Toast,
 } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
@@ -60,6 +61,7 @@ export const ScheduleCreate = () => {
 
   const handleGoBack = () => {
     goBack();
+    Toast.closeAll();
   };
 
   const hasTitle = !!watch("title");
@@ -87,6 +89,24 @@ export const ScheduleCreate = () => {
         title: "Lembrete de pagamento",
       });
       reset();
+      Toast.show({
+        placement: "top",
+        duration: 3000,
+        render: () => (
+          <Box
+            bg="violetBrand.500"
+            px="2"
+            py="2"
+            rounded="sm"
+            mb={5}
+            _text={{
+              color: "grayBrand.100",
+            }}
+          >
+            Alerta criado com sucesso
+          </Box>
+        ),
+      });
     } catch (error) {
       console.log(error);
     }

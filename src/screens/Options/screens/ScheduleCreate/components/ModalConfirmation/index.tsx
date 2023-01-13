@@ -14,7 +14,6 @@ export const ModalConfirmation = ({
   const handleConfirm = () => {
     onCreate();
     onCancel();
-    navigate("ScheduleList");
   };
   return (
     <Modal isOpen={isOpen}>
@@ -58,7 +57,8 @@ export const ModalConfirmation = ({
             Você está prestes a criar um alerta para o dia{" "}
             <Text color={"violetBrand.400"}>{String(date?.getDate())}</Text> às{" "}
             <Text color={"violetBrand.400"}>
-              {String(date?.getHours())}:{String(date?.getMinutes())}
+              {String(date?.getHours()).padStart(2, "0")}:
+              {String(date?.getMinutes()).padStart(2, "0")}
             </Text>{" "}
             todo mês.
           </Text>
