@@ -41,7 +41,7 @@ export const TransactionsList = () => {
 
   return (
     <VStack marginTop={4} paddingX={"32px"}>
-      <HStack alignItems={"center"} space={8}>
+      <HStack alignItems={"center"} space={0}>
         <Heading fontSize={"xl"} color={"grayBrand.300"}>
           Lista de transações
         </Heading>
