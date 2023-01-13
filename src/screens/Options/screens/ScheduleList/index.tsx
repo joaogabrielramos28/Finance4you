@@ -18,6 +18,7 @@ import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { log } from "react-native-reanimated";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
