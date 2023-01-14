@@ -1,9 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "native-base";
 import React from "react";
-import { Analytics, Home, Transactions } from "../screens";
+import { Analytics, Home, Options, Transactions } from "../screens";
 
-import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Entypo,
+  Feather,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import { OptionsNavigator } from "../screens/Options/navigator";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -52,6 +58,16 @@ export const TabsRoutes = () => {
               size={24}
               color={color}
             />
+          ),
+        }}
+      />
+
+      <Screen
+        name="Opções"
+        component={OptionsNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="gear" size={24} color={color} />
           ),
         }}
       />

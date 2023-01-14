@@ -17,6 +17,7 @@ import {
   House,
   Money,
   Hamburger,
+  ShoppingBagOpen,
 } from "phosphor-react-native";
 export const categories: ICategories[] = [
   {
@@ -188,7 +189,38 @@ export const categories: ICategories[] = [
         name: "Investimentos",
       },
       {
+        id: "billing-9",
+        name: "Fatura cartão",
+      },
+      {
         id: "billing-8",
+        name: "Outros",
+      },
+    ],
+  },
+  {
+    id: "mall",
+    name: "Compras",
+    icon: ShoppingBagOpen,
+    subCategories: [
+      {
+        id: "mall-1",
+        name: "Roupas",
+      },
+      {
+        id: "mall-2",
+        name: "Eletrônicos",
+      },
+      {
+        id: "mall-3",
+        name: "Cosméticos",
+      },
+      {
+        id: "mall-4",
+        name: "Maquiagem",
+      },
+      {
+        id: "mall-5",
         name: "Outros",
       },
     ],

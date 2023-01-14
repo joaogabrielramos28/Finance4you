@@ -32,7 +32,7 @@ export const Transaction = ({
   const [confirmationIsVisible, setConfirmationIsVisible] = useState(false);
 
   const selectedCategory = categories.find((item) => item.name === category);
-  const Icon = selectedCategory.icon;
+  const Icon = selectedCategory?.icon;
   const { navigate } = useNavigation();
   const { deleteTransaction } = useTransactions();
 

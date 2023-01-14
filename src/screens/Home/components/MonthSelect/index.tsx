@@ -12,6 +12,7 @@ export const MonthSelect = () => {
   return (
     <HStack alignItems={"center"} space={4}>
       <IconButton
+      testID="prev-month-button"
         onPress={() => handleChangePeriod("prev")}
         icon={<CaretLeft size={20} color={colors.grayBrand[200]} />}
       />
@@ -19,6 +20,7 @@ export const MonthSelect = () => {
         {format(actualPeriod, "MMMM/yyyy", { locale: ptBR })}
       </Text>
       <IconButton
+         testID="next-month-button"
         isDisabled={
           actualPeriod.getMonth() === new Date().getMonth() &&
           actualPeriod.getFullYear() === new Date().getFullYear()

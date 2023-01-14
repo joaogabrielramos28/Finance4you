@@ -26,6 +26,7 @@ export const PieChart = () => {
     Moradia: colors.primary[500],
     Contas: colors.orange[500],
     Alimentação: colors.redBrand[500],
+    Compras: colors.pink[500],
   };
 
   const spend = transactionsByPeriod.filter(

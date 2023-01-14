@@ -1,13 +1,15 @@
 #import "AppDelegate.h"
+#import <Firebase.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <React/RCTConvert.h>
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
 #import "RNSplashScreen.h"
 #import <React/RCTAppSetupUtils.h>
-#import <AppCenterReactNative.h>
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -15,6 +17,8 @@
 #import <React/RCTSurfacePresenter.h>
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
+
+
 
 #import <react/config/ReactNativeConfig.h>
 
@@ -33,7 +37,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [AppCenterReactNative register];
+  [FIRApp configure];
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [self.reactDelegate createBridgeWithDelegate:self launchOptions:launchOptions];
@@ -57,7 +61,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [self.window makeKeyAndVisible];
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
-  [RNSplashScreen show]; 
+  [RNSplashScreen show];
+
+  UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+  center.delegate = self; 
   return YES;
 }
 
@@ -112,6 +119,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 // Explicitly define remote notification delegates to ensure compatibility with some third-party libraries
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+
   return [super application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
@@ -126,6 +134,13 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 {
   return [super application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+  completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
+}
+
+
 
 #if RCT_NEW_ARCH_ENABLED
 

@@ -1,15 +1,29 @@
 import { useNavigation } from "@react-navigation/native";
 import { format } from "date-fns";
-import { Box, FlatList, Heading, useTheme, VStack } from "native-base";
+import { useToast } from "native-base";
+import {
+  Box,
+  FlatList,
+  Heading,
+  HStack,
+  IconButton,
+  Toast,
+  useTheme,
+  VStack,
+} from "native-base";
+import { Info } from "phosphor-react-native";
 import React, { useEffect } from "react";
 import { Transaction } from "../../../../components/Transaction";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const TransactionsList = () => {
+  const toast = useToast();
   const { transactionsByPeriod, filterTransactions } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
+
+  const { colors } = useTheme();
 
   const filteredTransactions = orderedTransactions
     .filter(
@@ -23,11 +37,42 @@ export const TransactionsList = () => {
         Number(transaction.amountWithoutMask) / 100 <= filterTransactions.amount
     );
 
+  const id = "test-toast";
+
   return (
     <VStack marginTop={4} paddingX={"32px"}>
-      <Heading fontSize={"xl"} color={"grayBrand.300"}>
-        Lista de transações
-      </Heading>
+      <HStack alignItems={"center"} space={0}>
+        <Heading fontSize={"xl"} color={"grayBrand.300"}>
+          Lista de transações
+        </Heading>
+
+        <IconButton
+          size={"md"}
+          icon={<Info color={colors.grayBrand[200]} size={24} />}
+          onPress={() => {
+            if (!toast.isActive(id)) {
+              Toast.show({
+                id,
+                placement: "bottom",
+                render: () => (
+                  <Box
+                    bg="violetBrand.500"
+                    px="2"
+                    py="1"
+                    rounded="sm"
+                    mb={5}
+                    _text={{
+                      color: "grayBrand.100",
+                    }}
+                  >
+                    Deslize pro lado para apagar a transação
+                  </Box>
+                ),
+              });
+            }
+          }}
+        />
+      </HStack>
 
       <Box safeAreaBottom>
         <FlatList

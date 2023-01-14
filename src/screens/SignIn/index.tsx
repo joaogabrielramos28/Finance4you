@@ -15,7 +15,13 @@ export const SignIn = () => {
       paddingX={"32px"}
       justifyContent={"center"}
     >
-      <Image source={SignInImage} alt={""} />
+      <Image
+        source={SignInImage}
+        alt={
+          "Uma mão segurando uma carteira e outra segurando um bolo de dinheiro"
+        }
+        testID={"logo"}
+      />
 
       <Heading color={"grayBrand.200"} fontSize={"3xl"} marginTop={"22px"}>
         Controle suas {"\n"}finanças {"\n"}com {"\n"}facilidade
