@@ -13,7 +13,7 @@ import Animated, {
 import { useNavigation } from "@react-navigation/native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Funnel } from "phosphor-react-native";
-import { CsvService } from "../../services/Csv";
+import { ExportInCsvService } from "../../services/ExportInCsv";
 import { useTransactions } from "../../context/Transactions/TransactionsContext";
 
 const FabAnimated = Animated.createAnimatedComponent(Fab);
@@ -27,7 +27,9 @@ export const Transactions = () => {
   const positionY = useSharedValue(0);
   const positionX = useSharedValue(0);
 
-  const service = new CsvService();
+  const service = new ExportInCsvService();
+
+  service.createCsvFile(transactions, new Date());
 
   const filterButtonStyle = useAnimatedStyle(() => {
     return {
