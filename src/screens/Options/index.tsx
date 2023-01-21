@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Box, Button, Heading, useTheme, VStack } from "native-base";
-import { BellRinging, ListDashes } from "phosphor-react-native";
+import { BellRinging, ListDashes, SignOut } from "phosphor-react-native";
 import React from "react";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { MenuItem } from "./components/MenuItem";
@@ -35,7 +35,7 @@ export const Options = () => {
         <MenuItem
           onPress={signOut}
           text={"Sair da conta"}
-          leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
+          leftIcon={<SignOut size={24} color={colors.grayBrand[300]} />}
         />
       </VStack>
     </VStack>

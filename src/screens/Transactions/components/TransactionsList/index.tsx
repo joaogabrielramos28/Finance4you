@@ -13,6 +13,7 @@ import {
 } from "native-base";
 import { Info } from "phosphor-react-native";
 import React, { useEffect } from "react";
+import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { Transaction } from "../../../../components/Transaction";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
@@ -82,9 +83,16 @@ export const TransactionsList = () => {
           marginTop={"24px"}
           data={filteredTransactions}
           renderItem={({ item }) => (
-            <Box marginTop={4}>
+            <Animated.View
+              layout={Layout}
+              entering={FadeIn}
+              exiting={FadeOut}
+              style={{
+                marginTop: 4,
+              }}
+            >
               <Transaction {...item} />
-            </Box>
+            </Animated.View>
           )}
           ListEmptyComponent={
             <Box flex={1} alignItems={"center"}>
