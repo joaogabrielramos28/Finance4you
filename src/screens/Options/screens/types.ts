@@ -3,4 +3,5 @@ export interface INotification {
   date: string;
   body: string;
   category: string;
+  hasAnimatedView?: boolean;
 }

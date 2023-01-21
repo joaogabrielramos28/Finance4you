@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-import { format } from "date-fns";
 import { useToast } from "native-base";
 import {
   Box,

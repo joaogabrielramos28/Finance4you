@@ -18,7 +18,8 @@ import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { log } from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
+import { HoldItem } from "react-native-hold-menu";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
@@ -33,12 +34,17 @@ export const ScheduleList = () => {
 
       setIsLoading(false);
     });
-  }, []);
+  }, [schedules]);
 
   const nextSchedule = closestIndexTo(
     new Date(),
     schedules.map((schedule) => new Date(schedule.date))
   );
+
+  const handleDeleteSchedule = (id: string) => {
+    PushNotificationIOS.removePendingNotificationRequests([id]);
+    setSchedules(schedules.filter((schedule) => schedule.id !== id));
+  };
 
   return (
     <Box flex bg="background" safeAreaY>
@@ -69,7 +75,10 @@ export const ScheduleList = () => {
                         )}
                       </Text>
                     </Heading>
-                    <ScheduleItem {...schedules[nextSchedule]} />
+                    <ScheduleItem
+                      hasAnimatedView={false}
+                      {...schedules[nextSchedule]}
+                    />
                   </VStack>
                   <Divider mt={4} bg={"zinc.600"} />
                   <Heading mt={4} color={"grayBrand.200"}>
@@ -83,7 +92,25 @@ export const ScheduleList = () => {
           data={schedules}
           contentContainerStyle={{ paddingBottom: 32 }}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <ScheduleItem key={item.id} {...item} />}
+          renderItem={({ item }) => (
+            <HoldItem
+              activateOn="tap"
+              hapticFeedback="Light"
+              items={[
+                {
+                  text: "Deletar",
+                  isDestructive: true,
+                  icon: "trash",
+                  onPress: (id) => handleDeleteSchedule(id),
+                },
+              ]}
+              actionParams={{
+                Deletar: [item.id],
+              }}
+            >
+              <ScheduleItem key={item.id} {...item} />
+            </HoldItem>
+          )}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => (
             <Heading mt={4} color={"grayBrand.200"}>
