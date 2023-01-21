@@ -13,6 +13,8 @@ import Animated, {
 import { useNavigation } from "@react-navigation/native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Funnel } from "phosphor-react-native";
+import { CsvService } from "../../services/Csv";
+import { useTransactions } from "../../context/Transactions/TransactionsContext";
 
 const FabAnimated = Animated.createAnimatedComponent(Fab);
 
@@ -20,8 +22,12 @@ export const Transactions = () => {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
 
+  const { transactions } = useTransactions();
+
   const positionY = useSharedValue(0);
   const positionX = useSharedValue(0);
+
+  const service = new CsvService();
 
   const filterButtonStyle = useAnimatedStyle(() => {
     return {
