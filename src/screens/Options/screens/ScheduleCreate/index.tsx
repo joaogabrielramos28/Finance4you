@@ -20,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { ModalConfirmation } from "./components/ModalConfirmation";
+import { MonthYearPicker } from "../../../../components/MonthYearPicker";
 
 type FormData = {
   title: string;

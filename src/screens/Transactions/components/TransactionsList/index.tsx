@@ -86,7 +86,7 @@ export const TransactionsList = () => {
               entering={FadeIn}
               exiting={FadeOut}
               style={{
-                marginTop: 4,
+                marginTop: 16,
               }}
             >
               <Transaction {...item} />

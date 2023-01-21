@@ -2,11 +2,11 @@ import { format, isSameMonth } from "date-fns";
 import RNBlob from "react-native-blob-util";
 import { ITransaction } from "../context/Transactions/types";
 import { getMonth, isSameYear } from "date-fns";
-import { date } from "yup";
-
 export class ExportInCsvService {
   public async createCsvFile(data: ITransaction[], date: Date) {
-    const fileName = `data-${getMonth(date) + 1}-${date.getFullYear()}.csv`;
+    const fileName = `${new Date().getTime()}-${
+      getMonth(date) + 1
+    }-${date.getFullYear()}.csv`;
     let totalValue = 0;
     const dataFormatted = data.map((transaction) => {
       const dateFormatted = format(new Date(transaction.date), "dd/MM/yyyy");
@@ -21,6 +21,7 @@ export class ExportInCsvService {
         transaction.amount.replace(",", "."),
         transaction.type === "income" ? "Receita" : "Despesa",
       ];
+
       totalValue += Number(transaction.amountWithoutMask) / 100;
       return item;
     });
@@ -40,7 +41,8 @@ export class ExportInCsvService {
       .join(" ");
     const csvString = `${headerString}${rowString}`;
 
-    const pathToWrite = `${RNBlob.fs.dirs.DownloadDir}/${fileName}.csv`;
+    const pathToWrite = `${RNBlob.fs.dirs.DocumentDir}/${fileName}`;
+
     RNBlob.fs
       .writeFile(pathToWrite, csvString, "utf8")
       .then(() => {

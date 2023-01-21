@@ -15,6 +15,7 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import { Funnel } from "phosphor-react-native";
 import { ExportInCsvService } from "../../services/ExportInCsv";
 import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import { ExportInXlsxService } from "../../services/ExportInXlsx";
 
 const FabAnimated = Animated.createAnimatedComponent(Fab);
 
@@ -27,9 +28,9 @@ export const Transactions = () => {
   const positionY = useSharedValue(0);
   const positionX = useSharedValue(0);
 
-  const service = new ExportInCsvService();
+  const service = new ExportInXlsxService();
 
-  service.createCsvFile(transactions, new Date());
+  // service.createXlsxFile(transactions, new Date());
 
   const filterButtonStyle = useAnimatedStyle(() => {
     return {

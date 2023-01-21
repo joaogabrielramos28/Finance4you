@@ -1,6 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { HStack, useTheme } from "native-base";
-import { Barricade, CreditCard, MagicWand, Plus } from "phosphor-react-native";
+import {
+  Barricade,
+  CreditCard,
+  Export,
+  MagicWand,
+  Plus,
+} from "phosphor-react-native";
 import React, { useState } from "react";
 import { ModalCardConfig } from "../ModalCardConfig";
 import { Button } from "./components/Button";
@@ -17,6 +23,10 @@ export const ButtonGroup = () => {
 
   const handleGoToCreateTransaction = () => {
     navigate("CreateTransaction");
+  };
+
+  const handleGoToExportTransactions = () => {
+    navigate("ExportTransactions");
   };
   return (
     <>
@@ -45,15 +55,11 @@ export const ButtonGroup = () => {
           }
         />
         <Button
-          isDisabled={true}
-          subtitle="Em breve"
+          onPress={handleGoToExportTransactions}
+          subtitle="Exportar"
           variant="secondary"
           children={
-            <Barricade
-              size={26}
-              weight={"bold"}
-              color={colors.grayBrand[200]}
-            />
+            <Export size={26} weight={"bold"} color={colors.grayBrand[200]} />
           }
         />
       </HStack>

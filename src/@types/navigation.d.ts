@@ -20,6 +20,7 @@ export declare global {
       Options: undefined;
       ScheduleCreate: undefined;
       ScheduleList: undefined;
+      ExportTransactions: undefined;
     }
   }
 }
