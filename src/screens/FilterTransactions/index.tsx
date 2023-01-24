@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
   Heading,
   HStack,
@@ -15,6 +16,9 @@ import { CaretDown } from "phosphor-react-native";
 import React, { useState } from "react";
 import { categories } from "../../data/category";
 import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 export const FilterTransactions = () => {
   const {
@@ -26,6 +30,11 @@ export const FilterTransactions = () => {
   const { goBack } = useNavigation();
   const [category, setCategory] = useState(filterTransactions.category);
   const [value, setValue] = useState(filterTransactions.amount);
+  const [date, setDate] = useState<Date>(filterTransactions.date || new Date());
+  const [showDateFilter, setShowDateFilter] = useState(
+    filterTransactions.hasDateFilter as "yes" | "no"
+  );
+
   const handleGoBack = () => {
     goBack();
   };
@@ -37,8 +46,17 @@ export const FilterTransactions = () => {
     setValue(value);
   };
 
+  const handleChangeDate = (event: DateTimePickerEvent, date?: Date) => {
+    setDate(date);
+  };
+
   const handleChangeFilter = () => {
-    handleSetFilterTransactions({ amount: value, category });
+    handleSetFilterTransactions({
+      amount: value,
+      category,
+      date: date,
+      hasDateFilter: showDateFilter,
+    });
     goBack();
   };
 
@@ -46,6 +64,8 @@ export const FilterTransactions = () => {
     resetFilterTransactions();
     setCategory("all");
     setValue(10000);
+    setDate(new Date());
+    setShowDateFilter("no");
   };
 
   return (
@@ -150,6 +170,40 @@ export const FilterTransactions = () => {
               <Slider.Thumb bg={"violetBrand.400"} />
             </Slider>
             <Divider mt={2} bg={"grayBrand.500"} />
+          </VStack>
+          <VStack px={4} mt={6} space={2}>
+            <Checkbox
+              onChange={(isSelected) =>
+                setShowDateFilter(isSelected ? "yes" : "no")
+              }
+              value="yes"
+              isChecked={showDateFilter === "yes"}
+              _text={{
+                color: "grayBrand.200",
+              }}
+              _checked={{
+                bg: "violetBrand.400",
+                borderColor: "transparent",
+              }}
+              _pressed={{
+                bg: "transparent",
+                opacity: 0.5,
+              }}
+            >
+              Filtrar por data
+            </Checkbox>
+
+            {showDateFilter === "yes" ? (
+              <DateTimePicker
+                accentColor={colors.violetBrand[400]}
+                maximumDate={new Date()}
+                themeVariant={"dark"}
+                value={date}
+                mode={"date"}
+                locale={"pt-Br"}
+                onChange={handleChangeDate}
+              />
+            ) : null}
           </VStack>
         </Box>
         <Box py={4}>

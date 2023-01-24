@@ -20,15 +20,21 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [filterTransactions, setFilterTransactions] = useState({
     category: "all",
     amount: 10000,
+    date: new Date(),
+    hasDateFilter: "no",
   });
 
   const handleSetFilterTransactions = (data: {
     category: string;
     amount: number;
+    date: Date;
+    hasDateFilter: string;
   }) => {
     setFilterTransactions({
       category: data.category,
       amount: data.amount,
+      date: data.date,
+      hasDateFilter: data.hasDateFilter,
     });
   };
 
@@ -36,6 +42,8 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setFilterTransactions({
       category: "all",
       amount: 10000,
+      date: new Date(),
+      hasDateFilter: "no",
     });
   };
 

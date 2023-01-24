@@ -34,7 +34,19 @@ export const TransactionsList = () => {
       (transaction) =>
         filterTransactions.amount === 0 ||
         Number(transaction.amountWithoutMask) / 100 <= filterTransactions.amount
-    );
+    )
+    .filter((transaction) => {
+      if (filterTransactions.hasDateFilter === "yes") {
+        const date = new Date(transaction.date);
+        const filterDate = filterTransactions.date;
+        return (
+          date.getDate() === filterDate.getDate() &&
+          date.getMonth() === filterDate.getMonth() &&
+          date.getFullYear() === filterDate.getFullYear()
+        );
+      }
+      return true;
+    });
 
   const id = "test-toast";
 
