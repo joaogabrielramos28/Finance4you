@@ -4,10 +4,10 @@ import { appleAuth } from "@invertase/react-native-apple-authentication";
 import auth from "@react-native-firebase/auth";
 import { IAuthContext, IUser } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AsyncStorageKeys } from "../../helpers/types";
 
 const AuthContext = React.createContext({} as IAuthContext);
 
-const USER_STORAGE_KEY = "@finance4you:user";
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userLogged);
 
         await AsyncStorage.setItem(
-          USER_STORAGE_KEY,
+          AsyncStorageKeys.USER_STORAGE_KEY,
           JSON.stringify(userLogged)
         );
         setLoading(false);
@@ -90,12 +90,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   async function signOut() {
     setUser({} as IUser);
 
-    await AsyncStorage.removeItem(USER_STORAGE_KEY);
+    await AsyncStorage.removeItem(AsyncStorageKeys.USER_STORAGE_KEY);
   }
 
   useEffect(() => {
     async function loadUserStorageData() {
-      const response = await AsyncStorage.getItem(USER_STORAGE_KEY);
+      const response = await AsyncStorage.getItem(
+        AsyncStorageKeys.USER_STORAGE_KEY
+      );
       const data = response ? JSON.parse(response) : {};
 
       setUser(data);

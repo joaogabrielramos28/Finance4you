@@ -21,6 +21,7 @@ export declare global {
       ScheduleCreate: undefined;
       ScheduleList: undefined;
       ExportTransactions: undefined;
+      AccountConfig: undefined;
     }
   }
 }

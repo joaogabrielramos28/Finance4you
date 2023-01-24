@@ -1,6 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { Box, Button, Heading, useTheme, VStack } from "native-base";
-import { BellRinging, ListDashes, SignOut } from "phosphor-react-native";
+import {
+  BellRinging,
+  ListDashes,
+  SignOut,
+  UserGear,
+} from "phosphor-react-native";
 import React from "react";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { MenuItem } from "./components/MenuItem";
@@ -18,6 +23,10 @@ export const Options = () => {
   const handleGoToScheduleList = () => {
     navigate("ScheduleList");
   };
+
+  const handleGoToAccountConfig = () => {
+    navigate("AccountConfig");
+  };
   return (
     <VStack safeAreaY bg={"background"} flex padding={6}>
       <Heading color={colors.grayBrand[200]}>Opções</Heading>
@@ -31,6 +40,11 @@ export const Options = () => {
           onPress={handleGoToScheduleList}
           text={"Listagem de alertas"}
           leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
+        />
+        <MenuItem
+          onPress={handleGoToAccountConfig}
+          text={"Configurações da conta"}
+          leftIcon={<UserGear size={24} color={colors.grayBrand[300]} />}
         />
         <MenuItem
           onPress={signOut}
