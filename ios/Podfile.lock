@@ -369,8 +369,6 @@ PODS:
     - Firebase/Auth (= 10.2.0)
     - React-Core
     - RNFBApp
-  - RNFS (2.20.0):
-    - React-Core
   - RNGestureHandler (2.5.0):
     - React-Core
   - RNReanimated (2.9.1):
@@ -458,7 +456,6 @@ DEPENDENCIES:
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
-  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -580,8 +577,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
-  RNFS:
-    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -652,7 +647,6 @@ SPEC CHECKSUMS:
   RNDateTimePicker: 30e6733efc179d1e49d6008ea5fce42cdc9aeeca
   RNFBApp: a61f530d08a0f5996b1fbdcbd1b8bb077d5d61a1
   RNFBAuth: 4ca816efc990ef69e9ca9fed57348a876470b821
-  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNReanimated: 2cf7451318bb9cc430abeec8d67693f9cf4e039c
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8

@@ -95,7 +95,7 @@ export const MonthYearPicker = ({
               )
             }
             alignItems={"center"}
-            width={"60px"}
+            width={"55px"}
             height={"40px"}
             marginTop={"10px"}
             marginLeft={"10px"}
