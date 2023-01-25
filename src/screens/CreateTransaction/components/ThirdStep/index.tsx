@@ -9,6 +9,7 @@ import {
   Text,
   TextArea,
   KeyboardAvoidingView,
+  Select,
 } from "native-base";
 import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
@@ -136,6 +137,9 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
+          <VStack>
+            <Select />
+          </VStack>
           <HStack alignItems={"center"} space={2}>
             <Info color={colors.grayBrand[200]} size={20} />
             <Heading color={"grayBrand.300"} size={"sm"} alignItems={"center"}>

@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import {
   Box,
@@ -13,60 +12,36 @@ import {
   useTheme,
   VStack,
 } from "native-base";
-import { ArrowLeft, Minus, Plus } from "phosphor-react-native";
-import React, { useEffect, useState } from "react";
+import { ArrowLeft, Plus } from "phosphor-react-native";
+import React, { useState } from "react";
 import { useAuth } from "../../../../context/Auth/AuthContext";
+import { SharedUserList } from "../../../../context/Auth/types";
 import {
   deleteItemFromAsyncStorage,
-  getItemFromAsyncStorage,
   setItemToAsyncStorage,
-  setItemWhenDataIsBoolean,
 } from "../../../../helpers/AsyncStorage";
 import { AsyncStorageKeys } from "../../../../helpers/types";
 import { ActiveList } from "./components/ActiveList";
 import { DisableList } from "./components/DisableList";
-import { SharedUserList } from "./types";
 
 export const AccountConfig = () => {
   const { colors } = useTheme();
   const { goBack } = useNavigation();
-  const { user } = useAuth();
-  const [hasAccountShared, setHasAccountShared] = useState(false);
-  const [sharedUserNameList, setSharedUserNameList] = useState<
-    SharedUserList[]
-  >([]);
+  const {
+    sharedUserNameList,
+    changeUserSharedList,
+    hasAccountShared,
+    changeHasAccountShared,
+  } = useAuth();
+
   const [sharedUserName, setSharedUserName] = useState<string>("");
-
-  useEffect(() => {
-    const loadAccountShared = async () => {
-      const response = await getItemFromAsyncStorage(
-        AsyncStorageKeys.ACCOUNT_SHARED
-      );
-
-      setHasAccountShared(response);
-    };
-    loadAccountShared();
-  }, []);
-
-  useEffect(() => {
-    const loadSharedUserNameList = async () => {
-      const response = await getItemFromAsyncStorage(
-        AsyncStorageKeys.SHARED_USER_LIST
-      );
-
-      setSharedUserNameList(response);
-    };
-
-    loadSharedUserNameList();
-  }, []);
 
   const handleGoBack = () => {
     goBack();
   };
 
   const handleChangeAccountShared = (value: boolean) => {
-    setHasAccountShared(value);
-    setItemWhenDataIsBoolean(AsyncStorageKeys.ACCOUNT_SHARED, value);
+    changeHasAccountShared(value);
   };
 
   const handleAddSharedUser = () => {
@@ -81,9 +56,10 @@ export const AccountConfig = () => {
       (user) => user.name === newUser.name
     );
     if (!hasUserInList) {
-      setSharedUserNameList([...sharedUserNameList, newUser]);
+      changeUserSharedList([...sharedUserNameList, newUser]);
       setItemToAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newUser);
       setSharedUserName("");
+      return;
     }
     return Toast.show({
       placement: "bottom",
@@ -120,7 +96,7 @@ export const AccountConfig = () => {
       return item;
     });
 
-    setSharedUserNameList(newList);
+    changeUserSharedList(newList);
     deleteItemFromAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newList);
   };
 
@@ -134,7 +110,7 @@ export const AccountConfig = () => {
       }
       return item;
     });
-    setSharedUserNameList(newList);
+    changeUserSharedList(newList);
     deleteItemFromAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newList);
   };
 
