@@ -10,6 +10,7 @@ import {
   TextArea,
   KeyboardAvoidingView,
   Select,
+  Avatar,
 } from "native-base";
 import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
@@ -19,6 +20,8 @@ import { useTransactions } from "../../../../context/Transactions/TransactionsCo
 import { MaskInput } from "../../../../components/MaskInput";
 import { Masks } from "react-native-mask-input";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../../../context/Auth/AuthContext";
+import { AvatarImage } from "../../../../utils/AvatarImage";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -31,13 +34,16 @@ export const ThirdStep = () => {
   const [date, setDate] = useState(getValues("date") || new Date());
   const [description, setDescription] = useState(getValues("description"));
   const [amountWithoutMask, setAmountWithoutMask] = useState("");
+  const [responsible, setResponsible] = useState(getValues("responsible"));
 
+  const { hasAccountShared, user, sharedUserNameList } = useAuth();
   const handleCreateTransaction = () => {
     const amount = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
     const dateFormatted = format(date, "dd/MM/yyyy");
     const description = getValues("description");
+    const responsible = getValues("responsible");
 
     const payload = {
       id: String(new Date().getTime()),
@@ -49,6 +55,7 @@ export const ThirdStep = () => {
       date,
       type,
       description,
+      responsible,
     };
     createTransaction(payload);
     reset();
@@ -76,6 +83,13 @@ export const ThirdStep = () => {
     setDescription(description);
     setValue("description", description);
   };
+
+  const handleChangeResponsible = (value: string) => {
+    setResponsible(value);
+    setValue("responsible", value);
+  };
+
+  const actives = sharedUserNameList.filter((sharedUser) => sharedUser.active);
 
   return (
     <VStack alignItems={"center"}>
@@ -137,9 +151,59 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
-          <VStack>
-            <Select />
-          </VStack>
+          {hasAccountShared ? (
+            <VStack>
+              <Text fontSize={"md"} color={"grayBrand.100"}>
+                Responsável
+              </Text>
+              <Select
+                _actionSheetContent={{
+                  backgroundColor: "background",
+                }}
+                _actionSheetBody={{
+                  backgroundColor: "background",
+                }}
+                color={"grayBrand.200"}
+                padding={2}
+                mt={2}
+                onValueChange={handleChangeResponsible}
+                selectedValue={responsible}
+              >
+                <Select.Item
+                  _text={{ color: "grayBrand.200" }}
+                  background={"background"}
+                  justifyContent={"center"}
+                  startIcon={
+                    <Avatar
+                      size={"sm"}
+                      source={{
+                        uri: user.photo,
+                      }}
+                    />
+                  }
+                  label={user.name}
+                  value={user.name}
+                />
+                {actives.map((sharedUser) => (
+                  <Select.Item
+                    key={sharedUser.id}
+                    _text={{ color: "grayBrand.200" }}
+                    background={"background"}
+                    startIcon={
+                      <Avatar
+                        size={"sm"}
+                        source={{
+                          uri: AvatarImage(sharedUser.name),
+                        }}
+                      />
+                    }
+                    label={sharedUser.name}
+                    value={sharedUser.name}
+                  />
+                ))}
+              </Select>
+            </VStack>
+          ) : null}
           <HStack alignItems={"center"} space={2}>
             <Info color={colors.grayBrand[200]} size={20} />
             <Heading color={"grayBrand.300"} size={"sm"} alignItems={"center"}>
@@ -161,7 +225,11 @@ export const ThirdStep = () => {
 
           <Button
             onPress={handleCreateTransaction}
-            isDisabled={!getValues("amount") || !getValues("type")}
+            isDisabled={
+              !getValues("amount") ||
+              !getValues("type") ||
+              (!getValues("responsible") && hasAccountShared)
+            }
             marginTop={"16px"}
             bg={"violetBrand.700"}
             _text={{

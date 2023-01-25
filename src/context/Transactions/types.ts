@@ -35,4 +35,5 @@ export interface ITransaction {
   date: string;
   dateFormatted: string;
   description?: string;
+  responsible?: string;
 }

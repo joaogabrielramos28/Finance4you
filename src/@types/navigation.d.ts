@@ -6,6 +6,7 @@ export interface ITransactionDetailsScreenProps {
   description: string;
   date: string;
   type: "outcome" | "income";
+  responsible?: string;
 }
 
 export declare global {

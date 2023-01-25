@@ -13,4 +13,9 @@ export const ThirdStepSchemaValidation = Yup.object().shape({
   date: Yup.string().required("Data é obrigatório"),
   type: Yup.string().required("Tipo é obrigatório"),
   description: Yup.string().required("Descrição é obrigatório"),
+  hasSharedAccount: Yup.boolean(),
+  responsible: Yup.string().when("hasSharedAccount", {
+    is: true,
+    then: Yup.string().required("Responsável é obrigatório"),
+  }),
 });

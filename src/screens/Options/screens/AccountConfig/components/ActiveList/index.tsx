@@ -11,6 +11,7 @@ import {
 import { Minus } from "phosphor-react-native";
 import React from "react";
 import { useAuth } from "../../../../../../context/Auth/AuthContext";
+import { AvatarImage } from "../../../../../../utils/AvatarImage";
 import { ActiveListProps } from "./types";
 
 export const ActiveList = ({ data, onDisable }: ActiveListProps) => {
@@ -66,7 +67,7 @@ export const ActiveList = ({ data, onDisable }: ActiveListProps) => {
                 size={"sm"}
                 color={colors.grayBrand[200]}
                 source={{
-                  uri: `https://ui-avatars.com/api/?name=${item.name}&length=1`,
+                  uri: AvatarImage(item.name),
                 }}
               />
               <VStack>

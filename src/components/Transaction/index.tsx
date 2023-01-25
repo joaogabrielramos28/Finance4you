@@ -28,6 +28,7 @@ export const Transaction = ({
   subCategory,
   type,
   description,
+  responsible,
 }: ITransaction) => {
   const [confirmationIsVisible, setConfirmationIsVisible] = useState(false);
 
@@ -47,6 +48,7 @@ export const Transaction = ({
       subCategory,
       description,
       type,
+      responsible,
     });
   };
 
