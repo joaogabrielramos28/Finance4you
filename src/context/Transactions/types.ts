@@ -13,13 +13,17 @@ export interface ICreateTransactionContext {
     category: string;
     amount: number;
     date: Date;
+    responsible: string;
     hasDateFilter: string;
+    hasResponsibleFilter: string;
   };
   handleSetFilterTransactions: (data: {
     category: string;
     amount: number;
     date: Date;
+    responsible: string;
     hasDateFilter: "yes" | "no";
+    hasResponsibleFilter: "yes" | "no";
   }) => void;
   resetFilterTransactions: () => void;
   deleteTransaction: (id: string) => Promise<void>;

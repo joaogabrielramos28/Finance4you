@@ -46,6 +46,12 @@ export const TransactionsList = () => {
         );
       }
       return true;
+    })
+    .filter((transaction) => {
+      if (filterTransactions.hasResponsibleFilter === "yes") {
+        return transaction.responsible === filterTransactions.responsible;
+      }
+      return true;
     });
 
   const id = "test-toast";

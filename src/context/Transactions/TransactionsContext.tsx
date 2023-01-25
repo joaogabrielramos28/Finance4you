@@ -19,20 +19,26 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     category: "all",
     amount: 10000,
     date: new Date(),
+    responsible: "",
     hasDateFilter: "no",
+    hasResponsibleFilter: "no",
   });
 
   const handleSetFilterTransactions = (data: {
     category: string;
     amount: number;
     date: Date;
+    responsible: string;
     hasDateFilter: string;
+    hasResponsibleFilter: string;
   }) => {
     setFilterTransactions({
       category: data.category,
       amount: data.amount,
       date: data.date,
       hasDateFilter: data.hasDateFilter,
+      hasResponsibleFilter: data.hasResponsibleFilter,
+      responsible: data.responsible,
     });
   };
 
@@ -41,7 +47,9 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       category: "all",
       amount: 10000,
       date: new Date(),
+      responsible: "",
       hasDateFilter: "no",
+      hasResponsibleFilter: "no",
     });
   };
 
