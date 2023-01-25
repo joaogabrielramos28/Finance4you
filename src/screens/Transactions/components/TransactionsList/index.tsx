@@ -13,9 +13,11 @@ import { Info } from "phosphor-react-native";
 import React, { useEffect } from "react";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { Transaction } from "../../../../components/Transaction";
+import { useAuth } from "../../../../context/Auth/AuthContext";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const TransactionsList = () => {
+  const { user } = useAuth();
   const toast = useToast();
   const { transactionsByPeriod, filterTransactions } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
@@ -49,6 +51,11 @@ export const TransactionsList = () => {
     })
     .filter((transaction) => {
       if (filterTransactions.hasResponsibleFilter === "yes") {
+        if (filterTransactions.responsible === user.name) {
+          return (
+            !transaction.responsible || transaction.responsible === user.name
+          );
+        }
         return transaction.responsible === filterTransactions.responsible;
       }
       return true;
