@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import {
-  Avatar,
   Box,
   Button,
   Heading,
@@ -10,6 +9,7 @@ import {
   Input,
   Switch,
   Text,
+  Toast,
   useTheme,
   VStack,
 } from "native-base";
@@ -23,6 +23,8 @@ import {
   setItemWhenDataIsBoolean,
 } from "../../../../helpers/AsyncStorage";
 import { AsyncStorageKeys } from "../../../../helpers/types";
+import { ActiveList } from "./components/ActiveList";
+import { DisableList } from "./components/DisableList";
 import { SharedUserList } from "./types";
 
 export const AccountConfig = () => {
@@ -72,23 +74,77 @@ export const AccountConfig = () => {
       id: String(new Date().getTime()),
       name: sharedUserName,
       type: "shared",
+      active: true,
     };
 
-    setSharedUserNameList([...sharedUserNameList, newUser]);
-    setItemToAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newUser);
-    setSharedUserName("");
+    const hasUserInList = sharedUserNameList.find(
+      (user) => user.name === newUser.name
+    );
+    if (!hasUserInList) {
+      setSharedUserNameList([...sharedUserNameList, newUser]);
+      setItemToAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newUser);
+      setSharedUserName("");
+    }
+    return Toast.show({
+      placement: "bottom",
+      duration: 3000,
+      render: () => (
+        <Box
+          bg="violetBrand.500"
+          px="2"
+          py="2"
+          rounded="sm"
+          mb={5}
+          _text={{
+            color: "grayBrand.100",
+          }}
+        >
+          Usuário ja existe na lista!
+        </Box>
+      ),
+    });
   };
 
   const handleChangeSharedUserName = (value: string) => {
     setSharedUserName(value);
   };
 
-  const handleRemoveSharedUser = (id: string) => {
-    const newList = sharedUserNameList.filter((item) => item.id !== id);
+  const handleDisableSharedUser = (id: string) => {
+    const newList = sharedUserNameList.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          active: false,
+        };
+      }
+      return item;
+    });
 
     setSharedUserNameList(newList);
     deleteItemFromAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newList);
   };
+
+  const handleActiveSharedUser = (id: string) => {
+    const newList = sharedUserNameList.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          active: true,
+        };
+      }
+      return item;
+    });
+    setSharedUserNameList(newList);
+    deleteItemFromAsyncStorage(AsyncStorageKeys.SHARED_USER_LIST, newList);
+  };
+
+  const activesSharedUsers = sharedUserNameList.filter(
+    (item) => item.active === true
+  );
+
+  const disabledSharedUsers = sharedUserNameList.filter(
+    (item) => item.active === false
+  );
   return (
     <VStack flex={1} bg={"background"} safeAreaY padding={6}>
       <HStack alignItems={"center"} space={4}>
@@ -139,76 +195,15 @@ export const AccountConfig = () => {
             />
           </HStack>
 
-          <HStack
-            mt={8}
-            borderBottomWidth={2}
-            borderColor="grayBrand.500"
-            alignItems={"center"}
-            p={2}
-            justifyContent="space-between"
-          >
-            <HStack space={4} alignItems="center">
-              <Avatar
-                size={"sm"}
-                color={colors.grayBrand[200]}
-                source={{
-                  uri: user.photo,
-                }}
-              />
-              <VStack>
-                <Text fontSize={"lg"} color={"grayBrand.300"}>
-                  {user.name}
-                </Text>
-                <Text fontSize={"sm"} color={"grayBrand.400"}>
-                  Principal
-                </Text>
-              </VStack>
-            </HStack>
-          </HStack>
+          <ActiveList
+            data={activesSharedUsers}
+            onDisable={handleDisableSharedUser}
+          />
 
-          <Box mt={8}>
-            {sharedUserNameList.map((sharedUser) => (
-              <HStack
-                borderBottomWidth={2}
-                borderColor="grayBrand.500"
-                key={sharedUser.id}
-                alignItems={"center"}
-                p={2}
-                justifyContent="space-between"
-              >
-                <HStack space={4} alignItems="center">
-                  <Avatar
-                    size={"sm"}
-                    color={colors.grayBrand[200]}
-                    source={{
-                      uri: `https://ui-avatars.com/api/?name=${sharedUser.name}&length=1`,
-                    }}
-                  />
-                  <VStack>
-                    <Text fontSize={"lg"} color={"grayBrand.300"}>
-                      {sharedUser.name}
-                    </Text>
-                    <Text fontSize={"sm"} color={"grayBrand.400"}>
-                      {sharedUser.type === "shared"
-                        ? "Compartilhado"
-                        : "Principal"}
-                    </Text>
-                  </VStack>
-                </HStack>
-
-                <IconButton
-                  onPress={() => handleRemoveSharedUser(sharedUser.id)}
-                  icon={
-                    <Minus
-                      size={20}
-                      color={colors.violetBrand[600]}
-                      weight={"bold"}
-                    />
-                  }
-                />
-              </HStack>
-            ))}
-          </Box>
+          <DisableList
+            data={disabledSharedUsers}
+            onActivate={handleActiveSharedUser}
+          />
         </VStack>
       ) : null}
     </VStack>
