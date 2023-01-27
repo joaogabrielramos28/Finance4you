@@ -31,9 +31,6 @@ export const FirstStep = ({ maxH }: IStepProps) => {
 
   return (
     <VStack alignItems={"center"} marginTop={"8px"}>
-      <Heading fontSize={"2xl"} color={"grayBrand.200"}>
-        Selecione a categoria
-      </Heading>
       <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
         <FlatList
           data={categories}

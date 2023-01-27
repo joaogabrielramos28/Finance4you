@@ -30,8 +30,9 @@ export const SharedCircularChart = () => {
     transactionsByPeriod.filter(
       (item) =>
         (item.type === "outcome" &&
-          item.responsible === sharedUserNameList[0]?.name) ||
-        ""
+        item.responsible === sharedUserNameList[0]?.name
+          ? sharedUserNameList[0]?.name
+          : null) || ""
     ) || [];
 
   useEffect(() => {
