@@ -1,25 +1,23 @@
 import React from "react";
+import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { useWindowDimensions } from "react-native";
+
 import { FirstStep } from "./components/FirstStep";
 import { SecondStep } from "./components/SecondStep";
 import { ThirdStep } from "./components/ThirdStep";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   FirstStepSchemaValidation,
   SecondStepSchemaValidation,
   ThirdStepSchemaValidation,
 } from "./validation/formValidation";
-import { useTransactions } from "../..//context/Transactions/TransactionsContext";
-
-import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
-import StepIndicator from "react-native-step-indicator";
-import { useWindowDimensions } from "react-native";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+import { StepIndicator } from "./components/StepIndicator";
 
 export const CreateTransaction = () => {
   const { step } = useTransactions();
-  const { colors } = useTheme();
-
-  const StepIndicatorFactory = Factory(StepIndicator);
   const schemaValidationByStep =
     step === 1
       ? FirstStepSchemaValidation
@@ -29,31 +27,6 @@ export const CreateTransaction = () => {
   const CreateTransactionForm = useForm<FormData>({
     resolver: yupResolver(schemaValidationByStep),
   });
-
-  const labels = ["Categoria", "Subcategoria", "Detalhes"];
-  const customStyles = {
-    stepIndicatorSize: 25,
-    currentStepIndicatorSize: 30,
-    separatorStrokeWidth: 2,
-    currentStepStrokeWidth: 3,
-    stepStrokeCurrentColor: colors.violetBrand[400],
-    stepStrokeWidth: 3,
-    stepStrokeFinishedColor: colors.violetBrand[700],
-    stepStrokeUnFinishedColor: "#aaaaaa",
-    separatorFinishedColor: colors.violetBrand[700],
-    separatorUnFinishedColor: "#aaaaaa",
-    stepIndicatorFinishedColor: colors.violetBrand[700],
-    stepIndicatorUnFinishedColor: "#ffffff",
-    stepIndicatorCurrentColor: "#ffffff",
-    stepIndicatorLabelFontSize: 13,
-    currentStepIndicatorLabelFontSize: 13,
-    stepIndicatorLabelCurrentColor: colors.violetBrand[700],
-    stepIndicatorLabelFinishedColor: "#ffffff",
-    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-    labelColor: "#999999",
-    labelSize: 13,
-    currentStepLabelColor: colors.violetBrand[700],
-  };
 
   const { height } = useWindowDimensions();
 
@@ -75,14 +48,7 @@ export const CreateTransaction = () => {
               ? "Selecione a subcategoria"
               : "Detalhes da transação"}
           </Heading>
-          <Box mt={4}>
-            <StepIndicatorFactory
-              customStyles={customStyles}
-              currentPosition={step}
-              labels={labels}
-              stepCount={3}
-            />
-          </Box>
+          <Box mt={4}></Box>
 
           {step === 0 && <FirstStep maxH={maxH} />}
           {step === 1 && <SecondStep maxH={maxH} />}
@@ -98,12 +64,7 @@ export const CreateTransaction = () => {
               Detalhes da transação
             </Heading>
             <Box mt={4}>
-              <StepIndicatorFactory
-                customStyles={customStyles}
-                currentPosition={step}
-                labels={labels}
-                stepCount={3}
-              />
+              <StepIndicator step={step} />
             </Box>
             <ThirdStep />
           </ScrollView>

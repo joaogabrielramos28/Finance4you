@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, FlatList, Heading } from "native-base";
-import { Transaction } from "../../../../components/Transaction";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+import { Transaction } from "@components/Transaction";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 export const LastTransactions = () => {
   const { transactionsByPeriod } = useTransactions();

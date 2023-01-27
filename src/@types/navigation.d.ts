@@ -3,9 +3,10 @@ export interface ITransactionDetailsScreenProps {
   category: string;
   subCategory: string;
   amount: string;
-  description: string;
+  description?: string;
   date: string;
   type: "outcome" | "income";
+  responsible?: string;
 }
 
 export declare global {
@@ -20,6 +21,8 @@ export declare global {
       Options: undefined;
       ScheduleCreate: undefined;
       ScheduleList: undefined;
+      ExportTransactions: undefined;
+      AccountConfig: undefined;
     }
   }
 }

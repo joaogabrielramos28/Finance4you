@@ -1,15 +1,16 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useTheme } from "native-base";
 import React from "react";
-import { Analytics, Home, Options, Transactions } from "../screens";
-
+import { useTheme } from "native-base";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Entypo,
   Feather,
   MaterialCommunityIcons,
   FontAwesome,
 } from "@expo/vector-icons";
-import { OptionsNavigator } from "../screens/Options/navigator";
+
+import { Analytics, Home, Transactions } from "@screens/index";
+
+import { OptionsNavigator } from "@screens/Options/navigator";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 

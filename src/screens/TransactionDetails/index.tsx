@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
+  Avatar,
   Box,
   Heading,
   HStack,
@@ -13,14 +14,23 @@ import { ArrowLeft, Calendar, ArrowCircleUp } from "phosphor-react-native";
 import React from "react";
 import { ITransactionDetailsScreenProps } from "../../@types/navigation";
 import { categories } from "../../data/category";
+import { AvatarImage } from "../../utils/AvatarImage";
 
 export const TransactionDetails = () => {
   const { params } = useRoute();
 
-  const { amount, category, date, description, subCategory, type } =
-    params as ITransactionDetailsScreenProps;
+  const {
+    amount,
+    category,
+    date,
+    description,
+    subCategory,
+    type,
+    responsible,
+  } = params as ITransactionDetailsScreenProps;
 
-  const selectedCategory = categories.find((item) => item.name === category);
+  const selectedCategory =
+    categories.find((item) => item.name === category) ?? categories[0];
 
   const { colors } = useTheme();
   const { goBack } = useNavigation();
@@ -93,11 +103,30 @@ export const TransactionDetails = () => {
             <Text
               color={type === "outcome" ? "redBrand.500" : "greenBrand.500"}
               fontSize={"xl"}
+              mt={2}
             >
               {type === "outcome" ? "-" : "+"} {amount}
             </Text>
           </HStack>
         </VStack>
+        {responsible ? (
+          <VStack alignItems={"center"} mt={4}>
+            <Heading color={"grayBrand.200"} size={"md"}>
+              Responsável
+            </Heading>
+            <HStack alignItems={"center"} space={2} mt={2}>
+              <Avatar
+                size="sm"
+                source={{
+                  uri: AvatarImage(responsible),
+                }}
+              />
+              <Text color={"grayBrand.200"} fontSize={"xl"}>
+                {responsible}
+              </Text>
+            </HStack>
+          </VStack>
+        ) : null}
 
         <VStack mt={4} space={2}>
           <Heading color={"grayBrand.200"} size={"md"}>

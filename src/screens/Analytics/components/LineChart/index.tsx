@@ -1,18 +1,15 @@
-import { format, subMonths } from "date-fns";
-import { Box, Text, useTheme } from "native-base";
 import React, { useState } from "react";
 import { Dimensions } from "react-native";
+import { format, subMonths } from "date-fns";
+import { Text } from "native-base";
 import { LineChart as LineChartNativeKit } from "react-native-chart-kit";
 import { ChartConfig } from "react-native-chart-kit/dist/HelperTypes";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+
 export const LineChart = () => {
   const screenWidth = Dimensions.get("window").width;
-  const [clickedData, setClickedData] = useState(null);
-  const [chartData, setChartData] = useState({
-    current: 0,
-    previous: 0,
-    previous2: 0,
-  });
+  const [clickedData, setClickedData] = useState(0);
 
   const { transactions } = useTransactions();
 

@@ -1,13 +1,11 @@
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addMonths, subMonths } from "date-fns";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { AsyncStorageKeys } from "@helpers/types";
 import { ICreateTransactionContext, ITransaction } from "./types";
 
 const TransactionsContext = createContext({} as ICreateTransactionContext);
-
-const TRANSACTION_KEY_STORAGE = "@finance4you:transactions";
-const CREDITCARD_KEY_STORAGE = "@finance4you:creditcards";
 
 const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [step, setStep] = useState(0);
@@ -20,15 +18,27 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [filterTransactions, setFilterTransactions] = useState({
     category: "all",
     amount: 10000,
+    date: new Date(),
+    responsible: "",
+    hasDateFilter: "no",
+    hasResponsibleFilter: "no",
   });
 
   const handleSetFilterTransactions = (data: {
     category: string;
     amount: number;
+    date: Date;
+    responsible: string;
+    hasDateFilter: string;
+    hasResponsibleFilter: string;
   }) => {
     setFilterTransactions({
       category: data.category,
       amount: data.amount,
+      date: data.date,
+      hasDateFilter: data.hasDateFilter,
+      hasResponsibleFilter: data.hasResponsibleFilter,
+      responsible: data.responsible,
     });
   };
 
@@ -36,6 +46,10 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setFilterTransactions({
       category: "all",
       amount: 10000,
+      date: new Date(),
+      responsible: "",
+      hasDateFilter: "no",
+      hasResponsibleFilter: "no",
     });
   };
 
@@ -47,11 +61,13 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createTransaction = async (transaction: ITransaction) => {
-    const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
+    const response = await AsyncStorage.getItem(
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE
+    );
     const data = response ? JSON.parse(response) : [];
 
     await AsyncStorage.setItem(
-      TRANSACTION_KEY_STORAGE,
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE,
       JSON.stringify([...data, transaction])
     );
     setTransactions([...data, transaction]);
@@ -59,13 +75,15 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const deleteTransaction = async (id: string) => {
-    const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
+    const response = await AsyncStorage.getItem(
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE
+    );
     const data = response ? JSON.parse(response) : [];
 
     const newData = data.filter((item: ITransaction) => item.id !== id);
 
     await AsyncStorage.setItem(
-      TRANSACTION_KEY_STORAGE,
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE,
       JSON.stringify(newData)
     );
     setTransactions(newData);
@@ -87,7 +105,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   const changeCreditCard = async (creditCard: "purple" | "pink" | "blue") => {
     await AsyncStorage.setItem(
-      CREDITCARD_KEY_STORAGE,
+      AsyncStorageKeys.CREDITCARD_KEY_STORAGE,
       JSON.stringify(creditCard)
     );
     setCreditCardStyle(creditCard);
@@ -95,7 +113,9 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     async function loadTransactions() {
-      const response = await AsyncStorage.getItem(TRANSACTION_KEY_STORAGE);
+      const response = await AsyncStorage.getItem(
+        AsyncStorageKeys.TRANSACTION_KEY_STORAGE
+      );
       const data = response ? JSON.parse(response) : [];
       setTransactions(data);
     }
@@ -104,7 +124,9 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     async function loadCreditCard() {
-      const response = await AsyncStorage.getItem(CREDITCARD_KEY_STORAGE);
+      const response = await AsyncStorage.getItem(
+        AsyncStorageKeys.CREDITCARD_KEY_STORAGE
+      );
       const data = response ? JSON.parse(response) : 0;
       setCreditCardStyle(data);
     }

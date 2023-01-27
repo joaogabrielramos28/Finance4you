@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-import { format } from "date-fns";
 import { useToast } from "native-base";
 import {
   Box,
@@ -13,10 +11,13 @@ import {
 } from "native-base";
 import { Info } from "phosphor-react-native";
 import React, { useEffect } from "react";
+import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { Transaction } from "../../../../components/Transaction";
+import { useAuth } from "../../../../context/Auth/AuthContext";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 
 export const TransactionsList = () => {
+  const { user } = useAuth();
   const toast = useToast();
   const { transactionsByPeriod, filterTransactions } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
@@ -35,7 +36,30 @@ export const TransactionsList = () => {
       (transaction) =>
         filterTransactions.amount === 0 ||
         Number(transaction.amountWithoutMask) / 100 <= filterTransactions.amount
-    );
+    )
+    .filter((transaction) => {
+      if (filterTransactions.hasDateFilter === "yes") {
+        const date = new Date(transaction.date);
+        const filterDate = filterTransactions.date;
+        return (
+          date.getDate() === filterDate.getDate() &&
+          date.getMonth() === filterDate.getMonth() &&
+          date.getFullYear() === filterDate.getFullYear()
+        );
+      }
+      return true;
+    })
+    .filter((transaction) => {
+      if (filterTransactions.hasResponsibleFilter === "yes") {
+        if (filterTransactions.responsible === user.name) {
+          return (
+            !transaction.responsible || transaction.responsible === user.name
+          );
+        }
+        return transaction.responsible === filterTransactions.responsible;
+      }
+      return true;
+    });
 
   const id = "test-toast";
 
@@ -82,9 +106,16 @@ export const TransactionsList = () => {
           marginTop={"24px"}
           data={filteredTransactions}
           renderItem={({ item }) => (
-            <Box marginTop={4}>
+            <Animated.View
+              layout={Layout}
+              entering={FadeIn}
+              exiting={FadeOut}
+              style={{
+                marginTop: 16,
+              }}
+            >
               <Transaction {...item} />
-            </Box>
+            </Animated.View>
           )}
           ListEmptyComponent={
             <Box flex={1} alignItems={"center"}>

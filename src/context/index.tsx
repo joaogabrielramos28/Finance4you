@@ -1,5 +1,8 @@
-import { NativeBaseProvider } from "native-base";
 import React, { ReactNode } from "react";
+import { NativeBaseProvider } from "native-base";
+import { Feather } from "@expo/vector-icons";
+import { HoldMenuProvider } from "react-native-hold-menu";
+
 import { theme } from "../styles/theme/defaultTheme";
 import { AuthProvider } from "./Auth/AuthContext";
 import { TransactionsProvider } from "./Transactions/TransactionsContext";
@@ -12,9 +15,11 @@ const inset = {
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <NativeBaseProvider theme={theme} initialWindowMetrics={inset}>
-      <AuthProvider>
-        <TransactionsProvider>{children}</TransactionsProvider>
-      </AuthProvider>
+      <HoldMenuProvider theme="dark" iconComponent={Feather}>
+        <AuthProvider>
+          <TransactionsProvider>{children}</TransactionsProvider>
+        </AuthProvider>
+      </HoldMenuProvider>
     </NativeBaseProvider>
   );
 };

@@ -1,9 +1,10 @@
-import { addMonths, format, subMonths } from "date-fns";
+import React from "react";
+import { HStack, IconButton, Text, useTheme } from "native-base";
+import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Box, HStack, IconButton, Text, useTheme } from "native-base";
 import { CaretLeft, CaretRight } from "phosphor-react-native";
-import React, { useState } from "react";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 export const MonthSelect = () => {
   const { handleChangePeriod, actualPeriod } = useTransactions();
@@ -12,7 +13,7 @@ export const MonthSelect = () => {
   return (
     <HStack alignItems={"center"} space={4}>
       <IconButton
-      testID="prev-month-button"
+        testID="prev-month-button"
         onPress={() => handleChangePeriod("prev")}
         icon={<CaretLeft size={20} color={colors.grayBrand[200]} />}
       />
@@ -20,7 +21,7 @@ export const MonthSelect = () => {
         {format(actualPeriod, "MMMM/yyyy", { locale: ptBR })}
       </Text>
       <IconButton
-         testID="next-month-button"
+        testID="next-month-button"
         isDisabled={
           actualPeriod.getMonth() === new Date().getMonth() &&
           actualPeriod.getFullYear() === new Date().getFullYear()

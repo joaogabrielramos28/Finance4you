@@ -13,12 +13,14 @@ import {
   VStack,
 } from "native-base";
 import { ArrowLeft } from "phosphor-react-native";
+import { HoldItem } from "react-native-hold-menu";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { ScheduleItem } from "./components/ScheduleItem";
-import { INotification } from "../types";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { log } from "react-native-reanimated";
+
+import { ScheduleItem } from "./components/ScheduleItem";
+import { INotification } from "../types";
+import { Header } from "@components/Header";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
@@ -33,22 +35,21 @@ export const ScheduleList = () => {
 
       setIsLoading(false);
     });
-  }, []);
+  }, [schedules]);
 
   const nextSchedule = closestIndexTo(
     new Date(),
     schedules.map((schedule) => new Date(schedule.date))
   );
 
+  const handleDeleteSchedule = (id: string) => {
+    PushNotificationIOS.removePendingNotificationRequests([id]);
+    setSchedules(schedules.filter((schedule) => schedule.id !== id));
+  };
+
   return (
     <Box flex bg="background" safeAreaY>
-      <HStack alignItems={"center"} space={4}>
-        <IconButton
-          onPress={goBack}
-          icon={<ArrowLeft size={24} color={colors.grayBrand[200]} />}
-        />
-        <Heading color={"grayBrand.200"}>Alertas criados</Heading>
-      </HStack>
+      <Header title="Listagem de alertas" onBack={goBack} />
 
       {!isLoading ? (
         <FlatList
@@ -61,7 +62,7 @@ export const ScheduleList = () => {
                       Próximo alerta{" "}
                       <Text color={"violetBrand.500"}>
                         {formatDistanceToNow(
-                          new Date(schedules[nextSchedule].date),
+                          new Date(schedules[nextSchedule || 0].date),
                           {
                             addSuffix: true,
                             locale: ptBR,
@@ -69,7 +70,10 @@ export const ScheduleList = () => {
                         )}
                       </Text>
                     </Heading>
-                    <ScheduleItem {...schedules[nextSchedule]} />
+                    <ScheduleItem
+                      hasAnimatedView={false}
+                      {...schedules[nextSchedule || 0]}
+                    />
                   </VStack>
                   <Divider mt={4} bg={"zinc.600"} />
                   <Heading mt={4} color={"grayBrand.200"}>
@@ -83,7 +87,25 @@ export const ScheduleList = () => {
           data={schedules}
           contentContainerStyle={{ paddingBottom: 32 }}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <ScheduleItem key={item.id} {...item} />}
+          renderItem={({ item }) => (
+            <HoldItem
+              activateOn="tap"
+              hapticFeedback="Light"
+              items={[
+                {
+                  text: "Deletar",
+                  isDestructive: true,
+                  icon: "trash",
+                  onPress: (id) => handleDeleteSchedule(id),
+                },
+              ]}
+              actionParams={{
+                Deletar: [item.id],
+              }}
+            >
+              <ScheduleItem key={item.id} {...item} />
+            </HoldItem>
+          )}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => (
             <Heading mt={4} color={"grayBrand.200"}>

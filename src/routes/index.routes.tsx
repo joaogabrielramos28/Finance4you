@@ -1,7 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import { useAuth } from "../context/Auth/AuthContext";
-import { SignIn } from "../screens";
+import { NavigationContainer } from "@react-navigation/native";
+
+import { useAuth } from "@context/Auth/AuthContext";
+import { SignIn } from "@screens/index";
 import { TransactionStackRoutes } from "./stack.routes";
 
 export const Routes = () => {

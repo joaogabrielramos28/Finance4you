@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import {
   Box,
   Heading,
@@ -18,8 +19,8 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import * as Yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { ModalConfirmation } from "./components/ModalConfirmation";
+import { Header } from "@components/Header";
 
 type FormData = {
   title: string;
@@ -123,13 +124,8 @@ export const ScheduleCreate = () => {
           justifyContent={"space-between"}
         >
           <Box>
-            <HStack alignItems={"center"} space={4}>
-              <IconButton
-                onPress={handleGoBack}
-                icon={<ArrowLeft size={24} color={colors.grayBrand[200]} />}
-              />
-              <Heading color={"grayBrand.200"}>Criar alerta</Heading>
-            </HStack>
+            <Header title="Criar alerta" onBack={goBack} />
+
             <Text fontSize={"lg"} color={"grayBrand.300"} mt={4}>
               Nome do alerta
             </Text>

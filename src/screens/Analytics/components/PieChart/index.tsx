@@ -1,9 +1,11 @@
+import { ITransaction } from "@context/Transactions/types";
 import { useTheme } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
 import { PieChart as PieChartNativeKit } from "react-native-chart-kit";
 import { ChartConfig } from "react-native-chart-kit/dist/HelperTypes";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+import { ITotalByCategory } from "./types";
 
 export const PieChart = () => {
   const screenWidth = Dimensions.get("window").width;
@@ -33,11 +35,15 @@ export const PieChart = () => {
     (transaction) => transaction.type === "outcome"
   );
 
-  const totalByCategory = [];
+  const totalByCategory: ITotalByCategory[] = [];
 
-  spend.map((transaction) => {
-    if (totalByCategory.some((item) => item.name === transaction.category)) {
-      totalByCategory.map((item) => {
+  spend.map((transaction: ITransaction) => {
+    if (
+      totalByCategory.some(
+        (item: ITotalByCategory) => item.name === transaction.category
+      )
+    ) {
+      totalByCategory.map((item: any) => {
         if (item.category === transaction.category) {
           item.total += Number(transaction.amountWithoutMask) / 100;
         }
@@ -46,8 +52,10 @@ export const PieChart = () => {
       totalByCategory.push({
         name: transaction.category,
         amount: Number(transaction.amountWithoutMask) / 100,
-        color: categoryColors[transaction.category],
-        legendFontColor: categoryColors[transaction.category],
+        color:
+          categoryColors[transaction.category as keyof typeof categoryColors],
+        legendFontColor:
+          categoryColors[transaction.category as keyof typeof categoryColors],
         legendFontSize: 15,
       });
     }

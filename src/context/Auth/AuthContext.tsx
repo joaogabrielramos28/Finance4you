@@ -1,16 +1,24 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
-
 import auth from "@react-native-firebase/auth";
-import { IAuthContext, IUser } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { AsyncStorageKeys } from "@helpers/types";
+import {
+  getItemFromAsyncStorage,
+  setItemWhenDataIsBoolean,
+} from "@helpers/AsyncStorage";
+import { IAuthContext, IUser, SharedUserList } from "./types";
 
 const AuthContext = React.createContext({} as IAuthContext);
 
-const USER_STORAGE_KEY = "@finance4you:user";
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(false);
+  const [hasAccountShared, setHasAccountShared] = useState(false);
+  const [sharedUserNameList, setSharedUserNameList] = useState<
+    SharedUserList[]
+  >([]);
 
   async function loginWithApple() {
     try {
@@ -44,7 +52,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userLogged);
 
         await AsyncStorage.setItem(
-          USER_STORAGE_KEY,
+          AsyncStorageKeys.USER_STORAGE_KEY,
           JSON.stringify(userLogged)
         );
         setLoading(false);
@@ -90,12 +98,24 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   async function signOut() {
     setUser({} as IUser);
 
-    await AsyncStorage.removeItem(USER_STORAGE_KEY);
+    await AsyncStorage.removeItem(AsyncStorageKeys.USER_STORAGE_KEY);
   }
+
+  const changeUserSharedList = async (userList: SharedUserList[]) => {
+    setSharedUserNameList(userList);
+  };
+
+  const changeHasAccountShared = async (hasAccountShared: boolean) => {
+    setHasAccountShared(hasAccountShared);
+
+    setItemWhenDataIsBoolean(AsyncStorageKeys.ACCOUNT_SHARED, hasAccountShared);
+  };
 
   useEffect(() => {
     async function loadUserStorageData() {
-      const response = await AsyncStorage.getItem(USER_STORAGE_KEY);
+      const response = await AsyncStorage.getItem(
+        AsyncStorageKeys.USER_STORAGE_KEY
+      );
       const data = response ? JSON.parse(response) : {};
 
       setUser(data);
@@ -103,8 +123,42 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     loadUserStorageData();
   }, []);
 
+  useEffect(() => {
+    const loadAccountShared = async () => {
+      const response = await getItemFromAsyncStorage(
+        AsyncStorageKeys.ACCOUNT_SHARED
+      );
+
+      setHasAccountShared(response.length === 0 ? false : response[0]);
+    };
+    loadAccountShared();
+  }, []);
+
+  useEffect(() => {
+    const loadSharedUserNameList = async () => {
+      const response = await getItemFromAsyncStorage(
+        AsyncStorageKeys.SHARED_USER_LIST
+      );
+
+      setSharedUserNameList(response);
+    };
+
+    loadSharedUserNameList();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ loginWithApple, user, loading, signOut }}>
+    <AuthContext.Provider
+      value={{
+        loginWithApple,
+        user,
+        loading,
+        signOut,
+        changeUserSharedList,
+        hasAccountShared,
+        sharedUserNameList,
+        changeHasAccountShared,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

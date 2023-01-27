@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import {} from "react-native";
 import {
-  Button,
+  Button as NativeBaseButton,
   Heading,
   VStack,
   useTheme,
@@ -9,15 +8,22 @@ import {
   Text,
   TextArea,
   KeyboardAvoidingView,
+  Select as SelectNativeBase,
+  Avatar,
 } from "native-base";
+import { Masks } from "react-native-mask-input";
 import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
-import { MaskInput } from "../../../../components/MaskInput";
-import { Masks } from "react-native-mask-input";
+
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+import { MaskInput } from "@components/MaskInput";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "@context/Auth/AuthContext";
+import { AvatarImage } from "@utils/AvatarImage";
+import { Select } from "@components/Select";
+import { Button } from "@components/Button";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -30,13 +36,16 @@ export const ThirdStep = () => {
   const [date, setDate] = useState(getValues("date") || new Date());
   const [description, setDescription] = useState(getValues("description"));
   const [amountWithoutMask, setAmountWithoutMask] = useState("");
+  const [responsible, setResponsible] = useState(getValues("responsible"));
 
+  const { hasAccountShared, user, sharedUserNameList } = useAuth();
   const handleCreateTransaction = () => {
     const amount = getValues("amount");
     const category = getValues("category");
     const subCategory = getValues("subCategory");
     const dateFormatted = format(date, "dd/MM/yyyy");
     const description = getValues("description");
+    const responsible = getValues("responsible");
 
     const payload = {
       id: String(new Date().getTime()),
@@ -48,6 +57,7 @@ export const ThirdStep = () => {
       date,
       type,
       description,
+      responsible,
     };
     createTransaction(payload);
     reset();
@@ -76,6 +86,13 @@ export const ThirdStep = () => {
     setValue("description", description);
   };
 
+  const handleChangeResponsible = (value: string) => {
+    setResponsible(value);
+    setValue("responsible", value);
+  };
+
+  const actives = sharedUserNameList.filter((sharedUser) => sharedUser.active);
+
   return (
     <VStack alignItems={"center"}>
       <KeyboardAvoidingView behavior="padding" enabled>
@@ -93,8 +110,8 @@ export const ThirdStep = () => {
             Tipo de transação
           </Heading>
 
-          <HStack w={"100%"} space={"16px"} justifyContent={"space-between"}>
-            <Button
+          <HStack w={"100%"} space={"16px"} justifyContent={"space-around"}>
+            <NativeBaseButton
               width={"140px"}
               padding={"16px"}
               bg={"zinc.700"}
@@ -107,9 +124,9 @@ export const ThirdStep = () => {
 
                 <Text color={"grayBrand.300"}>Entrada</Text>
               </HStack>
-            </Button>
+            </NativeBaseButton>
 
-            <Button
+            <NativeBaseButton
               width={"140px"}
               padding={"16px"}
               bg={"zinc.700"}
@@ -121,7 +138,7 @@ export const ThirdStep = () => {
                 <ArrowCircleDown color={colors.redBrand[500]} />
                 <Text color={"grayBrand.300"}>Saída</Text>
               </HStack>
-            </Button>
+            </NativeBaseButton>
           </HStack>
           <Heading color={"grayBrand.300"} size={"sm"}>
             Data da transação
@@ -136,6 +153,48 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
+          {hasAccountShared ? (
+            <VStack>
+              <Text fontSize={"md"} color={"grayBrand.100"}>
+                Responsável
+              </Text>
+              <Select
+                padding={2}
+                mt={2}
+                onValueChange={handleChangeResponsible}
+                selectedValue={responsible}
+              >
+                <SelectNativeBase.Item
+                  justifyContent={"center"}
+                  startIcon={
+                    <Avatar
+                      size={"sm"}
+                      source={{
+                        uri: user?.photo,
+                      }}
+                    />
+                  }
+                  label={user?.name!}
+                  value={user?.name!}
+                />
+                {actives.map((sharedUser) => (
+                  <SelectNativeBase.Item
+                    key={sharedUser.id}
+                    startIcon={
+                      <Avatar
+                        size={"sm"}
+                        source={{
+                          uri: AvatarImage(sharedUser.name),
+                        }}
+                      />
+                    }
+                    label={sharedUser.name}
+                    value={sharedUser.name}
+                  />
+                ))}
+              </Select>
+            </VStack>
+          ) : null}
           <HStack alignItems={"center"} space={2}>
             <Info color={colors.grayBrand[200]} size={20} />
             <Heading color={"grayBrand.300"} size={"sm"} alignItems={"center"}>
@@ -157,27 +216,16 @@ export const ThirdStep = () => {
 
           <Button
             onPress={handleCreateTransaction}
-            isDisabled={!getValues("amount") || !getValues("type")}
+            isDisabled={
+              !getValues("amount") ||
+              !getValues("type") ||
+              (!getValues("responsible") && hasAccountShared)
+            }
             marginTop={"16px"}
-            bg={"violetBrand.700"}
-            _text={{
-              color: "grayBrand.200",
-              bold: true,
-            }}
           >
             Criar transação
           </Button>
-          <Button
-            onPress={prevStep}
-            marginTop={"16px"}
-            bg={"transparent"}
-            borderColor={"violetBrand.700"}
-            borderWidth={1}
-            _text={{
-              color: "grayBrand.200",
-              bold: true,
-            }}
-          >
+          <Button variant={"outline"} onPress={prevStep} marginTop={"16px"}>
             Voltar
           </Button>
         </VStack>

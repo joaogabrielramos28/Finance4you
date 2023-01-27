@@ -1,27 +1,13 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FlatList,
-  Heading,
-  HStack,
-  IconButton,
-  Image,
-  ScrollView,
-  Text,
-  useBreakpointValue,
-  useTheme,
-  VStack,
-} from "native-base";
-
-import StepOne from "../../../../assets/step1.png";
-import { FormButton } from "../FormButton";
-import { categories } from "../../../../data/category";
+import { FlatList, Text, VStack } from "native-base";
 import { useFormContext } from "react-hook-form";
-
 import { useNavigation } from "@react-navigation/native";
-import { useTransactions } from "../../../..//context/Transactions/TransactionsContext";
+
+import { FormButton } from "../FormButton";
+import { categories } from "@data/category";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { IStepProps } from "../../types";
+import { Button } from "@components/Button";
 
 export const FirstStep = ({ maxH }: IStepProps) => {
   const { goBack } = useNavigation();
@@ -46,9 +32,6 @@ export const FirstStep = ({ maxH }: IStepProps) => {
 
   return (
     <VStack alignItems={"center"} marginTop={"8px"}>
-      <Heading fontSize={"2xl"} color={"grayBrand.200"}>
-        Selecione a categoria
-      </Heading>
       <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
         <FlatList
           data={categories}
@@ -64,29 +47,10 @@ export const FirstStep = ({ maxH }: IStepProps) => {
             />
           )}
         />
-        <Button
-          isDisabled={!getValues("category")}
-          onPress={nextStep}
-          marginTop={"16px"}
-          bg={"violetBrand.700"}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
-        >
+        <Button isDisabled={!getValues("category")} onPress={nextStep}>
           Avançar
         </Button>
-        <Button
-          onPress={handleGoBack}
-          marginTop={"16px"}
-          bg={"transparent"}
-          borderColor={"violetBrand.700"}
-          borderWidth={1}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
-        >
+        <Button onPress={handleGoBack} variant="outline" marginTop={"16px"}>
           Voltar
         </Button>
         {errors.category ? (

@@ -1,10 +1,10 @@
-import { StatusBar } from "native-base";
 import React, { useEffect, useState } from "react";
-import { AppProvider } from "./src/context";
-import { Routes } from "./src/routes/index.routes";
+import { StatusBar } from "native-base";
 import SplashScreen from "react-native-splash-screen";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { addMinutes } from "date-fns";
+
+import { AppProvider } from "@context/index";
+import { Routes } from "@routes/index.routes";
 
 export default function App() {
   const [permissions, setPermissions] = useState<0 | 2 | 1 | 3 | undefined>(
@@ -25,8 +25,6 @@ export default function App() {
           console.log(error);
         });
     }
-
-  
   }, []);
 
   useEffect(() => {

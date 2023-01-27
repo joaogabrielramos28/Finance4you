@@ -1,5 +1,5 @@
-import { Button, useTheme } from "native-base";
 import React from "react";
+import { Button, useTheme } from "native-base";
 import { MenuItemProps } from "./types";
 
 export const MenuItem = ({ onPress, text, ...rest }: MenuItemProps) => {

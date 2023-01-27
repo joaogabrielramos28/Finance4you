@@ -1,8 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
-import { Box, Button, Heading, useTheme, VStack } from "native-base";
-import { BellRinging, ListDashes } from "phosphor-react-native";
 import React from "react";
-import { useAuth } from "../../context/Auth/AuthContext";
+import { Heading, useTheme, VStack } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import {
+  BellRinging,
+  ListDashes,
+  SignOut,
+  UserGear,
+} from "phosphor-react-native";
+
+import { useAuth } from "@context/Auth/AuthContext";
 import { MenuItem } from "./components/MenuItem";
 
 export const Options = () => {
@@ -17,6 +23,10 @@ export const Options = () => {
 
   const handleGoToScheduleList = () => {
     navigate("ScheduleList");
+  };
+
+  const handleGoToAccountConfig = () => {
+    navigate("AccountConfig");
   };
   return (
     <VStack safeAreaY bg={"background"} flex padding={6}>
@@ -33,9 +43,14 @@ export const Options = () => {
           leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
         />
         <MenuItem
+          onPress={handleGoToAccountConfig}
+          text={"Configurações da conta"}
+          leftIcon={<UserGear size={24} color={colors.grayBrand[300]} />}
+        />
+        <MenuItem
           onPress={signOut}
           text={"Sair da conta"}
-          leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
+          leftIcon={<SignOut size={24} color={colors.grayBrand[300]} />}
         />
       </VStack>
     </VStack>

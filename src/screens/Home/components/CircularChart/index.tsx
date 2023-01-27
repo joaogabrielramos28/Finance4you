@@ -1,8 +1,8 @@
-import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Easing } from "react-native";
+import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 interface ITotal {
   income: {

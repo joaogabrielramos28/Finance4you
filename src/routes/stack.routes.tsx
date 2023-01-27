@@ -4,7 +4,8 @@ import {
   CreateTransaction,
   FilterTransactions,
   TransactionDetails,
-} from "../screens";
+} from "@screens/index";
+import { ExportTransactions } from "@screens/Transactions/screens/ExportTransactions";
 import { TabsRoutes } from "./tabs.routes";
 
 const { Navigator, Screen } = createStackNavigator();
@@ -20,6 +21,7 @@ export const TransactionStackRoutes = () => {
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
+      <Screen name="ExportTransactions" component={ExportTransactions} />
     </Navigator>
   );
 };
