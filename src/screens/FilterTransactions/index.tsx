@@ -1,27 +1,11 @@
 import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  Heading,
-  HStack,
-  Select as SelectNativeBase,
-  Slider,
-  Text,
-  useTheme,
-  VStack,
-} from "native-base";
+import { Box, Button, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { categories } from "@data/category";
+
 import { useTransactions } from "@context/Transactions/TransactionsContext";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
-import { useAuth } from "@context/Auth/AuthContext";
-import { AvatarImage } from "@utils/AvatarImage";
-import { Select } from "@components/Select";
+import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { Header } from "./components/Header";
+import { FilterForm } from "./components/FilterForm";
 
 export const FilterTransactions = () => {
   const {
@@ -29,8 +13,7 @@ export const FilterTransactions = () => {
     filterTransactions,
     resetFilterTransactions,
   } = useTransactions();
-  const { colors } = useTheme();
-  const { user, sharedUserNameList, hasAccountShared } = useAuth();
+
   const { goBack } = useNavigation();
   const [category, setCategory] = useState(filterTransactions.category);
   const [value, setValue] = useState(filterTransactions.amount);
@@ -56,8 +39,9 @@ export const FilterTransactions = () => {
     setValue(value);
   };
 
-  const handleChangeDate = (event: DateTimePickerEvent, date: Date) => {
-    setDate(date);
+  const handleChangeDate = (event: DateTimePickerEvent, date?: Date) => {
+    const currentDate = date || new Date();
+    setDate(currentDate);
   };
 
   const handleChangeResponsible = (value: string) => {
@@ -90,177 +74,21 @@ export const FilterTransactions = () => {
     <Box safeArea flex={1} bg={"background"}>
       <VStack flex={1} justifyContent={"space-between"}>
         <Box>
-          <HStack w={"100%"} justifyContent={"center"} alignItems={"center"}>
-            <Button
-              _pressed={{ bg: "zinc.700" }}
-              w={"container"}
-              maxW={"170px"}
-              width={"100%"}
-              variant={"ghost"}
-              onPress={handleGoBack}
-              _text={{
-                fontSize: "md",
-                color: "grayBrand.300",
-              }}
-            >
-              Cancelar
-            </Button>
-            <Heading size={"md"} color={"grayBrand.200"}>
-              Filtros
-            </Heading>
-            <Button
-              _pressed={{
-                bg: "zinc.700",
-              }}
-              onPress={handleResetFilter}
-              _text={{
-                fontSize: "md",
-                color: "grayBrand.300",
-              }}
-              maxW={"170px"}
-              width={"100%"}
-              variant={"ghost"}
-            >
-              Limpar
-            </Button>
-          </HStack>
-
-          <VStack px={4} mt={6} space={2}>
-            <Text fontSize={"md"} color={"grayBrand.200"}>
-              Categoria
-            </Text>
-
-            <Select
-              selectedValue={category}
-              onValueChange={(itemValue) => handleChangeCategory(itemValue)}
-            >
-              <SelectNativeBase.Item label="Todas" value="all" />
-              {categories.map((category) => (
-                <SelectNativeBase.Item
-                  key={category.id}
-                  label={category.name}
-                  value={category.name}
-                />
-              ))}
-            </Select>
-
-            <Divider mt={2} bg={"grayBrand.500"} />
-          </VStack>
-          <VStack px={4} mt={6}>
-            <Text fontSize={"md"} color={"grayBrand.200"}>
-              Preço até : R$ {value}
-            </Text>
-            <Slider
-              mt={2}
-              w="full"
-              maxW="full"
-              defaultValue={0}
-              value={value}
-              maxValue={10000}
-              onChange={handleChangeMaxValue}
-            >
-              <Slider.Track>
-                <Slider.FilledTrack bg={"violetBrand.400"} />
-              </Slider.Track>
-              <Slider.Thumb bg={"violetBrand.400"} />
-            </Slider>
-            <Divider mt={2} bg={"grayBrand.500"} />
-          </VStack>
-          <VStack px={4} mt={6} space={2}>
-            <Checkbox
-              onChange={(isSelected) =>
-                setShowDateFilter(isSelected ? "yes" : "no")
-              }
-              value="yes"
-              isChecked={showDateFilter === "yes"}
-              _text={{
-                color: "grayBrand.200",
-              }}
-              _checked={{
-                bg: "violetBrand.400",
-                borderColor: "transparent",
-              }}
-              _pressed={{
-                bg: "transparent",
-                opacity: 0.5,
-              }}
-            >
-              Filtrar por data
-            </Checkbox>
-
-            {showDateFilter === "yes" ? (
-              <DateTimePicker
-                accentColor={colors.violetBrand[400]}
-                maximumDate={new Date()}
-                themeVariant={"dark"}
-                value={date}
-                mode={"date"}
-                locale={"pt-Br"}
-                onChange={handleChangeDate}
-              />
-            ) : null}
-          </VStack>
-          {hasAccountShared ? (
-            <VStack px={4} mt={6} space={2}>
-              <Checkbox
-                onChange={(isSelected) =>
-                  setShowResponsibleFilter(isSelected ? "yes" : "no")
-                }
-                value="yes"
-                isChecked={showResponsibleFilter === "yes"}
-                _text={{
-                  color: "grayBrand.200",
-                }}
-                _checked={{
-                  bg: "violetBrand.400",
-                  borderColor: "transparent",
-                }}
-                _pressed={{
-                  bg: "transparent",
-                  opacity: 0.5,
-                }}
-              >
-                Filtrar por responsável
-              </Checkbox>
-
-              {showResponsibleFilter === "yes" ? (
-                <Select
-                  padding={2}
-                  mt={2}
-                  onValueChange={handleChangeResponsible}
-                  selectedValue={responsible}
-                >
-                  <SelectNativeBase.Item
-                    startIcon={
-                      <Avatar
-                        size={"sm"}
-                        source={{
-                          uri: user?.photo!,
-                        }}
-                      />
-                    }
-                    label={user?.name!}
-                    value={user?.name!}
-                  />
-                  {sharedUserNameList.map((sharedUser) => (
-                    <SelectNativeBase.Item
-                      key={sharedUser.id}
-                      startIcon={
-                        <Avatar
-                          size={"sm"}
-                          source={{
-                            uri: AvatarImage(sharedUser.name),
-                          }}
-                        />
-                      }
-                      label={sharedUser.name}
-                      value={sharedUser.name}
-                    />
-                  ))}
-                </Select>
-              ) : null}
-            </VStack>
-          ) : null}
+          <Header onBack={handleGoBack} onReset={handleResetFilter} />
+          <FilterForm
+            category={category}
+            value={value}
+            showDateFilter={showDateFilter}
+            date={date}
+            responsible={responsible}
+            showResponsibleFilter={showResponsibleFilter}
+            onChangeShowResponsibleFilter={setShowResponsibleFilter}
+            onChangeResponsible={handleChangeResponsible}
+            onChangeDate={handleChangeDate}
+            onChangeShowDateFilter={setShowDateFilter}
+            onChangeMaxValue={handleChangeMaxValue}
+            onChangeCategory={handleChangeCategory}
+          />
         </Box>
         <Box py={4}>
           <Button
