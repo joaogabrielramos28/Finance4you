@@ -7,7 +7,7 @@ import {
   Divider,
   Heading,
   HStack,
-  Select,
+  Select as SelectNativeBase,
   Slider,
   Text,
   useTheme,
@@ -22,6 +22,7 @@ import DateTimePicker, {
 } from "@react-native-community/datetimepicker";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { AvatarImage } from "../../utils/AvatarImage";
+import { Select } from "../../components/Select";
 
 export const FilterTransactions = () => {
   const {
@@ -131,35 +132,12 @@ export const FilterTransactions = () => {
             </Text>
 
             <Select
-              color={"grayBrand.200"}
-              _actionSheetBody={{
-                bg: "zinc.800",
-              }}
-              _actionSheetContent={{
-                bg: "zinc.800",
-              }}
-              dropdownIcon={
-                <Box marginRight={2}>
-                  <CaretDown size={20} color={colors.grayBrand[400]} />
-                </Box>
-              }
               selectedValue={category}
               onValueChange={(itemValue) => handleChangeCategory(itemValue)}
             >
-              <Select.Item
-                label="Todas"
-                value="all"
-                _text={{
-                  color: "grayBrand.200",
-                }}
-                bg={"zinc.800"}
-              />
+              <SelectNativeBase.Item label="Todas" value="all" />
               {categories.map((category) => (
-                <Select.Item
-                  _text={{
-                    color: "grayBrand.200",
-                  }}
-                  bg={"zinc.800"}
+                <SelectNativeBase.Item
                   key={category.id}
                   label={category.name}
                   value={category.name}
@@ -248,22 +226,12 @@ export const FilterTransactions = () => {
 
               {showResponsibleFilter === "yes" ? (
                 <Select
-                  _actionSheetContent={{
-                    backgroundColor: "background",
-                  }}
-                  _actionSheetBody={{
-                    backgroundColor: "background",
-                  }}
-                  color={"grayBrand.200"}
                   padding={2}
                   mt={2}
                   onValueChange={handleChangeResponsible}
                   selectedValue={responsible}
                 >
-                  <Select.Item
-                    _text={{ color: "grayBrand.200" }}
-                    background={"background"}
-                    justifyContent={"center"}
+                  <SelectNativeBase.Item
                     startIcon={
                       <Avatar
                         size={"sm"}
@@ -276,10 +244,8 @@ export const FilterTransactions = () => {
                     value={user.name}
                   />
                   {sharedUserNameList.map((sharedUser) => (
-                    <Select.Item
+                    <SelectNativeBase.Item
                       key={sharedUser.id}
-                      _text={{ color: "grayBrand.200" }}
-                      background={"background"}
                       startIcon={
                         <Avatar
                           size={"sm"}

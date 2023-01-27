@@ -9,7 +9,7 @@ import {
   Text,
   TextArea,
   KeyboardAvoidingView,
-  Select,
+  Select as SelectNativeBase,
   Avatar,
 } from "native-base";
 import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
@@ -22,6 +22,7 @@ import { Masks } from "react-native-mask-input";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../../../context/Auth/AuthContext";
 import { AvatarImage } from "../../../../utils/AvatarImage";
+import { Select } from "../../../../components/Select";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -157,21 +158,12 @@ export const ThirdStep = () => {
                 Responsável
               </Text>
               <Select
-                _actionSheetContent={{
-                  backgroundColor: "background",
-                }}
-                _actionSheetBody={{
-                  backgroundColor: "background",
-                }}
-                color={"grayBrand.200"}
                 padding={2}
                 mt={2}
                 onValueChange={handleChangeResponsible}
                 selectedValue={responsible}
               >
-                <Select.Item
-                  _text={{ color: "grayBrand.200" }}
-                  background={"background"}
+                <SelectNativeBase.Item
                   justifyContent={"center"}
                   startIcon={
                     <Avatar
@@ -185,10 +177,8 @@ export const ThirdStep = () => {
                   value={user.name}
                 />
                 {actives.map((sharedUser) => (
-                  <Select.Item
+                  <SelectNativeBase.Item
                     key={sharedUser.id}
-                    _text={{ color: "grayBrand.200" }}
-                    background={"background"}
                     startIcon={
                       <Avatar
                         size={"sm"}

@@ -8,7 +8,7 @@ import {
   HStack,
   IconButton,
   Modal,
-  Select,
+  Select as SelectNativeBase,
   Text,
   useTheme,
   VStack,
@@ -16,6 +16,7 @@ import {
 import { ArrowLeft } from "phosphor-react-native";
 import React, { useState } from "react";
 import { MonthYearPicker } from "../../../../components/MonthYearPicker";
+import { Select } from "../../../../components/Select";
 import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
 import { ExportInCsvService } from "../../../../services/ExportInCsv";
 import { ExportInXlsxService } from "../../../../services/ExportInXlsx";
@@ -106,26 +107,9 @@ export const ExportTransactions = () => {
             mt={4}
             selectedValue={exportType}
             onValueChange={(itemValue: ExportType) => setExportType(itemValue)}
-            color={"grayBrand.200"}
-            _actionSheetContent={{
-              backgroundColor: "background",
-            }}
-            _actionSheetBody={{
-              backgroundColor: "background",
-            }}
           >
-            <Select.Item
-              background={"background"}
-              _text={{ color: "grayBrand.200" }}
-              value={ExportTypeEnum.CSV}
-              label="CSV"
-            />
-            <Select.Item
-              background={"background"}
-              _text={{ color: "grayBrand.200" }}
-              value={ExportTypeEnum.XLSX}
-              label="XLSX"
-            />
+            <SelectNativeBase.Item value={ExportTypeEnum.CSV} label="CSV" />
+            <SelectNativeBase.Item value={ExportTypeEnum.XLSX} label="XLSX" />
           </Select>
         </Box>
       </VStack>
