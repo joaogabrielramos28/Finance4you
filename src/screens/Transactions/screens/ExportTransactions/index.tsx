@@ -1,26 +1,24 @@
-import { useNavigation } from "@react-navigation/native";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  Heading,
   HStack,
-  IconButton,
   Modal,
   Select as SelectNativeBase,
   Text,
-  useTheme,
   VStack,
 } from "native-base";
-import { ArrowLeft } from "phosphor-react-native";
-import React, { useState } from "react";
-import { MonthYearPicker } from "../../../../components/MonthYearPicker";
-import { Select } from "../../../../components/Select";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
-import { ExportInCsvService } from "../../../../services/ExportInCsv";
-import { ExportInXlsxService } from "../../../../services/ExportInXlsx";
-import { capitalize } from "../../../../utils/CapitalizeString";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { useNavigation } from "@react-navigation/native";
+
+import { Header } from "@components/Header";
+import { MonthYearPicker } from "@components/MonthYearPicker";
+import { Select } from "@components/Select";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+import { ExportInCsvService } from "@services/ExportInCsv";
+import { ExportInXlsxService } from "@services/ExportInXlsx";
+import { capitalize } from "@utils/CapitalizeString";
 
 type ExportType = "CSV" | "XLSX";
 
@@ -34,16 +32,11 @@ export const ExportTransactions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportType, setExportType] = useState<ExportType>(ExportTypeEnum.CSV);
   const { goBack } = useNavigation();
-  const { colors } = useTheme();
   const { transactions } = useTransactions();
   const [loading, setLoading] = useState(false);
 
   const handleDateChange = (date: Date) => {
     setDate(date);
-  };
-
-  const handleGoBack = () => {
-    goBack();
   };
 
   const handleToggleModal = () => {
@@ -65,13 +58,7 @@ export const ExportTransactions = () => {
 
   return (
     <VStack flex={1} bg={"background"} safeAreaY padding={6}>
-      <HStack alignItems={"center"} space={4}>
-        <IconButton
-          onPress={handleGoBack}
-          icon={<ArrowLeft size={24} color={colors.grayBrand[200]} />}
-        />
-        <Heading color={"grayBrand.200"}>Exportar transações</Heading>
-      </HStack>
+      <Header title="Exportar transações" onBack={goBack} />
       <VStack mt={4} space={4}>
         <Box>
           <Text color={"grayBrand.200"} fontSize={"lg"}>
@@ -106,7 +93,9 @@ export const ExportTransactions = () => {
           <Select
             mt={4}
             selectedValue={exportType}
-            onValueChange={(itemValue: ExportType) => setExportType(itemValue)}
+            onValueChange={(itemValue: string) =>
+              setExportType(itemValue as ExportType)
+            }
           >
             <SelectNativeBase.Item value={ExportTypeEnum.CSV} label="CSV" />
             <SelectNativeBase.Item value={ExportTypeEnum.XLSX} label="XLSX" />

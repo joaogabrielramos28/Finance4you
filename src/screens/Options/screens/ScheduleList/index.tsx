@@ -20,6 +20,7 @@ import { ptBR } from "date-fns/locale";
 
 import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
+import { Header } from "@components/Header";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
@@ -48,13 +49,7 @@ export const ScheduleList = () => {
 
   return (
     <Box flex bg="background" safeAreaY>
-      <HStack alignItems={"center"} space={4}>
-        <IconButton
-          onPress={goBack}
-          icon={<ArrowLeft size={24} color={colors.grayBrand[200]} />}
-        />
-        <Heading color={"grayBrand.200"}>Alertas criados</Heading>
-      </HStack>
+      <Header title="Listagem de alertas" onBack={goBack} />
 
       {!isLoading ? (
         <FlatList

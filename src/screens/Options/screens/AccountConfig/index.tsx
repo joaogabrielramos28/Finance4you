@@ -24,6 +24,7 @@ import {
 import { AsyncStorageKeys } from "@helpers/types";
 import { ActiveList } from "./components/ActiveList";
 import { DisableList } from "./components/DisableList";
+import { Header } from "@components/Header";
 
 export const AccountConfig = () => {
   const { colors } = useTheme();
@@ -124,13 +125,7 @@ export const AccountConfig = () => {
   );
   return (
     <VStack flex={1} bg={"background"} safeAreaY padding={6}>
-      <HStack alignItems={"center"} space={4}>
-        <IconButton
-          onPress={handleGoBack}
-          icon={<ArrowLeft size={24} color={colors.grayBrand[200]} />}
-        />
-        <Heading color={"grayBrand.200"}>Configurações da conta</Heading>
-      </HStack>
+      <Header title="Configurações da conta" onBack={goBack} />
 
       <HStack alignItems={"center"} justifyContent="space-between" mt={8}>
         <Text fontSize={"lg"} color={"grayBrand.300"}>
