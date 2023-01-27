@@ -29,7 +29,8 @@ export const TransactionDetails = () => {
     responsible,
   } = params as ITransactionDetailsScreenProps;
 
-  const selectedCategory = categories.find((item) => item.name === category);
+  const selectedCategory =
+    categories.find((item) => item.name === category) ?? categories[0];
 
   const { colors } = useTheme();
   const { goBack } = useNavigation();
