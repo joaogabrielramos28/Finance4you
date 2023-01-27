@@ -8,7 +8,7 @@ export function Select({ children, ...rest }: SelectProps) {
   return (
     <NativeBaseSelect
       {...rest}
-      _selectedItem={{
+      _item={{
         backgroundColor: "background",
         _text: { color: "grayBrand.200" },
       }}
