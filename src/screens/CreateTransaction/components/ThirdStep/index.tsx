@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Button,
+  Button as NativeBaseButton,
   Heading,
   VStack,
   useTheme,
@@ -23,6 +23,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "@context/Auth/AuthContext";
 import { AvatarImage } from "@utils/AvatarImage";
 import { Select } from "@components/Select";
+import { Button } from "@components/Button";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -109,8 +110,8 @@ export const ThirdStep = () => {
             Tipo de transação
           </Heading>
 
-          <HStack w={"100%"} space={"16px"} justifyContent={"space-between"}>
-            <Button
+          <HStack w={"100%"} space={"16px"} justifyContent={"space-around"}>
+            <NativeBaseButton
               width={"140px"}
               padding={"16px"}
               bg={"zinc.700"}
@@ -123,9 +124,9 @@ export const ThirdStep = () => {
 
                 <Text color={"grayBrand.300"}>Entrada</Text>
               </HStack>
-            </Button>
+            </NativeBaseButton>
 
-            <Button
+            <NativeBaseButton
               width={"140px"}
               padding={"16px"}
               bg={"zinc.700"}
@@ -137,7 +138,7 @@ export const ThirdStep = () => {
                 <ArrowCircleDown color={colors.redBrand[500]} />
                 <Text color={"grayBrand.300"}>Saída</Text>
               </HStack>
-            </Button>
+            </NativeBaseButton>
           </HStack>
           <Heading color={"grayBrand.300"} size={"sm"}>
             Data da transação
@@ -221,25 +222,10 @@ export const ThirdStep = () => {
               (!getValues("responsible") && hasAccountShared)
             }
             marginTop={"16px"}
-            bg={"violetBrand.700"}
-            _text={{
-              color: "grayBrand.200",
-              bold: true,
-            }}
           >
             Criar transação
           </Button>
-          <Button
-            onPress={prevStep}
-            marginTop={"16px"}
-            bg={"transparent"}
-            borderColor={"violetBrand.700"}
-            borderWidth={1}
-            _text={{
-              color: "grayBrand.200",
-              bold: true,
-            }}
-          >
+          <Button variant={"outline"} onPress={prevStep} marginTop={"16px"}>
             Voltar
           </Button>
         </VStack>

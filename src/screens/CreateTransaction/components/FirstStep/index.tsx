@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FlatList, Heading, Text, VStack } from "native-base";
+import { FlatList, Text, VStack } from "native-base";
 import { useFormContext } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 
@@ -7,6 +7,7 @@ import { FormButton } from "../FormButton";
 import { categories } from "@data/category";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { IStepProps } from "../../types";
+import { Button } from "@components/Button";
 
 export const FirstStep = ({ maxH }: IStepProps) => {
   const { goBack } = useNavigation();
@@ -46,29 +47,10 @@ export const FirstStep = ({ maxH }: IStepProps) => {
             />
           )}
         />
-        <Button
-          isDisabled={!getValues("category")}
-          onPress={nextStep}
-          marginTop={"16px"}
-          bg={"violetBrand.700"}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
-        >
+        <Button isDisabled={!getValues("category")} onPress={nextStep}>
           Avançar
         </Button>
-        <Button
-          onPress={handleGoBack}
-          marginTop={"16px"}
-          bg={"transparent"}
-          borderColor={"violetBrand.700"}
-          borderWidth={1}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
-        >
+        <Button onPress={handleGoBack} variant="outline" marginTop={"16px"}>
           Voltar
         </Button>
         {errors.category ? (

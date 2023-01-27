@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, FlatList, VStack } from "native-base";
+import { FlatList, VStack } from "native-base";
 import { useFormContext } from "react-hook-form";
 
 import { FormButton } from "../FormButton";
 import { categories } from "@data/category";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { IStepProps } from "../../types";
+import { Button } from "@components/Button";
 
 export const SecondStep = ({ maxH }: IStepProps) => {
   const { setValue, getValues } = useFormContext();
@@ -41,25 +42,10 @@ export const SecondStep = ({ maxH }: IStepProps) => {
           isDisabled={!getValues("subCategory")}
           onPress={nextStep}
           marginTop={"16px"}
-          bg={"violetBrand.700"}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
         >
           Avançar
         </Button>
-        <Button
-          onPress={prevStep}
-          marginTop={"16px"}
-          bg={"transparent"}
-          borderColor={"violetBrand.700"}
-          borderWidth={1}
-          _text={{
-            color: "grayBrand.200",
-            bold: true,
-          }}
-        >
+        <Button variant={"outline"} onPress={prevStep} marginTop={"16px"}>
           Voltar
         </Button>
       </VStack>
