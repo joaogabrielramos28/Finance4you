@@ -19,6 +19,7 @@ import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { ExportInCsvService } from "@services/ExportInCsv";
 import { ExportInXlsxService } from "@services/ExportInXlsx";
 import { capitalize } from "@utils/CapitalizeString";
+import { useAuth } from "@context/Auth/AuthContext";
 
 type ExportType = "CSV" | "XLSX";
 
@@ -28,6 +29,7 @@ enum ExportTypeEnum {
 }
 
 export const ExportTransactions = () => {
+  const { user } = useAuth();
   const [date, setDate] = useState(new Date());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [exportType, setExportType] = useState<ExportType>(ExportTypeEnum.CSV);
@@ -49,9 +51,9 @@ export const ExportTransactions = () => {
   const handleExport = () => {
     setLoading(true);
     if (exportType === ExportTypeEnum.CSV) {
-      csvService.createCsvFile(transactions, date);
+      csvService.createCsvFile(transactions, date, user?.name!);
     } else {
-      xlsxService.createXlsxFile(transactions, date);
+      xlsxService.createXlsxFile(transactions, date, user?.name!);
     }
     setLoading(false);
   };
