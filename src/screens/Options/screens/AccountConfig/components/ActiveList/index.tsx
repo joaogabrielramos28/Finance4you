@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Avatar,
   Box,
@@ -9,9 +10,9 @@ import {
   VStack,
 } from "native-base";
 import { Minus } from "phosphor-react-native";
-import React from "react";
-import { useAuth } from "../../../../../../context/Auth/AuthContext";
-import { AvatarImage } from "../../../../../../utils/AvatarImage";
+
+import { useAuth } from "@context/Auth/AuthContext";
+import { AvatarImage } from "@utils/AvatarImage";
 import { ActiveListProps } from "./types";
 
 export const ActiveList = ({ data, onDisable }: ActiveListProps) => {
@@ -39,12 +40,12 @@ export const ActiveList = ({ data, onDisable }: ActiveListProps) => {
                 size={"sm"}
                 color={colors.grayBrand[200]}
                 source={{
-                  uri: user.photo,
+                  uri: user?.photo!,
                 }}
               />
               <VStack>
                 <Text fontSize={"lg"} color={"grayBrand.300"}>
-                  {user.name}
+                  {user?.name!}
                 </Text>
                 <Text fontSize={"sm"} color={"grayBrand.400"}>
                   Principal

@@ -1,9 +1,10 @@
-import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Easing } from "react-native";
+import { Box, Heading, Text, useTheme, VStack } from "native-base";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { useAuth } from "../../../../context/Auth/AuthContext";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+
+import { useAuth } from "@context/Auth/AuthContext";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 interface ITotal {
   outcome: {
@@ -28,8 +29,9 @@ export const SharedCircularChart = () => {
   const sharedSpends =
     transactionsByPeriod.filter(
       (item) =>
-        item.type === "outcome" &&
-        item.responsible === sharedUserNameList[0].name
+        (item.type === "outcome" &&
+          item.responsible === sharedUserNameList[0]?.name) ||
+        ""
     ) || [];
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export const SharedCircularChart = () => {
               {total?.outcome?.formatted}
             </Heading>
             <Text color={"grayBrand.400"}>
-              {sharedUserNameList[0].name} gastou
+              {sharedUserNameList[0]?.name} gastou
               {"\n"} de{" "}
               {new Intl.NumberFormat("pt-BR", {
                 currency: "BRL",

@@ -1,14 +1,14 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
-
 import auth from "@react-native-firebase/auth";
-import { IAuthContext, IUser, SharedUserList } from "./types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AsyncStorageKeys } from "../../helpers/types";
+
+import { AsyncStorageKeys } from "@helpers/types";
 import {
   getItemFromAsyncStorage,
   setItemWhenDataIsBoolean,
-} from "../../helpers/AsyncStorage";
+} from "@helpers/AsyncStorage";
+import { IAuthContext, IUser, SharedUserList } from "./types";
 
 const AuthContext = React.createContext({} as IAuthContext);
 
@@ -128,7 +128,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         AsyncStorageKeys.ACCOUNT_SHARED
       );
 
-      setHasAccountShared(response);
+      setHasAccountShared(response.length === 0 ? false : response);
     };
     loadAccountShared();
   }, []);

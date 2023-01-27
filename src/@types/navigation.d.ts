@@ -3,7 +3,7 @@ export interface ITransactionDetailsScreenProps {
   category: string;
   subCategory: string;
   amount: string;
-  description: string;
+  description?: string;
   date: string;
   type: "outcome" | "income";
   responsible?: string;

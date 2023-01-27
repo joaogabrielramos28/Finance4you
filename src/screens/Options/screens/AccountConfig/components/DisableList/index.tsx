@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Avatar,
   FlatList,
@@ -9,7 +10,7 @@ import {
 } from "native-base";
 import { Box } from "native-base";
 import { Plus } from "phosphor-react-native";
-import React from "react";
+
 import { DisableListProps } from "./types";
 
 export const DisableList = ({ data, onActivate }: DisableListProps) => {

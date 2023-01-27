@@ -1,6 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { Button, Modal, Text } from "native-base";
 import React from "react";
+import { Button, Modal, Text } from "native-base";
 import { IModalConfirmation } from "./types";
 
 export const ModalConfirmation = ({
@@ -10,7 +9,6 @@ export const ModalConfirmation = ({
   onCreate,
   onCancel,
 }: IModalConfirmation) => {
-  const { navigate, reset } = useNavigation();
   const handleConfirm = () => {
     onCreate();
     onCancel();

@@ -1,19 +1,19 @@
 import React from "react";
+import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import StepIndicator from "react-native-step-indicator";
+import { useWindowDimensions } from "react-native";
+
 import { FirstStep } from "./components/FirstStep";
 import { SecondStep } from "./components/SecondStep";
 import { ThirdStep } from "./components/ThirdStep";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   FirstStepSchemaValidation,
   SecondStepSchemaValidation,
   ThirdStepSchemaValidation,
 } from "./validation/formValidation";
-import { useTransactions } from "../..//context/Transactions/TransactionsContext";
-
-import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
-import StepIndicator from "react-native-step-indicator";
-import { useWindowDimensions } from "react-native";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 export const CreateTransaction = () => {
   const { step } = useTransactions();

@@ -1,4 +1,4 @@
-import { ITransaction } from "../../context/Transactions/types";
+import { ITransaction } from "@context/Transactions/types";
 
 export interface MonthYearPickerProps {
   date: Date;

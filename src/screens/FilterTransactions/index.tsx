@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   Avatar,
   Box,
@@ -13,16 +13,15 @@ import {
   useTheme,
   VStack,
 } from "native-base";
-import { CaretDown } from "phosphor-react-native";
-import React, { useState } from "react";
-import { categories } from "../../data/category";
-import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import { useNavigation } from "@react-navigation/native";
+import { categories } from "@data/category";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import { useAuth } from "../../context/Auth/AuthContext";
-import { AvatarImage } from "../../utils/AvatarImage";
-import { Select } from "../../components/Select";
+import { useAuth } from "@context/Auth/AuthContext";
+import { AvatarImage } from "@utils/AvatarImage";
+import { Select } from "@components/Select";
 
 export const FilterTransactions = () => {
   const {
@@ -57,7 +56,7 @@ export const FilterTransactions = () => {
     setValue(value);
   };
 
-  const handleChangeDate = (event: DateTimePickerEvent, date?: Date) => {
+  const handleChangeDate = (event: DateTimePickerEvent, date: Date) => {
     setDate(date);
   };
 
@@ -236,12 +235,12 @@ export const FilterTransactions = () => {
                       <Avatar
                         size={"sm"}
                         source={{
-                          uri: user.photo,
+                          uri: user?.photo!,
                         }}
                       />
                     }
-                    label={user.name}
-                    value={user.name}
+                    label={user?.name!}
+                    value={user?.name!}
                   />
                   {sharedUserNameList.map((sharedUser) => (
                     <SelectNativeBase.Item

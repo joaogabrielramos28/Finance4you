@@ -1,11 +1,10 @@
 import React from "react";
-
-import { LinearGradient } from "expo-linear-gradient";
-import { Box, Text, Factory, Image } from "native-base";
 import { Dimensions } from "react-native";
+import { Box, Text, Factory, Image } from "native-base";
+import { LinearGradient } from "expo-linear-gradient";
 
-import Brand from "../../assets/brand.png";
-import { useTransactions } from "../../context/Transactions/TransactionsContext";
+import Brand from "@assets/brand.png";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 
 const width = Dimensions.get("window").width - 20;
 const height = 200;

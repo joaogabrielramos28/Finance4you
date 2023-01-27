@@ -1,6 +1,6 @@
 export interface IAuthContext {
   loginWithApple: () => Promise<void>;
-  user: IUser;
+  user: IUser | null;
   loading: boolean;
   sharedUserNameList: SharedUserList[];
   hasAccountShared: boolean;

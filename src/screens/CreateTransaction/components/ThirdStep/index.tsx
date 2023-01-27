@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {} from "react-native";
 import {
   Button,
   Heading,
@@ -12,17 +11,18 @@ import {
   Select as SelectNativeBase,
   Avatar,
 } from "native-base";
+import { Masks } from "react-native-mask-input";
 import { ArrowCircleDown, ArrowCircleUp, Info } from "phosphor-react-native";
 import { useFormContext } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
-import { MaskInput } from "../../../../components/MaskInput";
-import { Masks } from "react-native-mask-input";
+
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+import { MaskInput } from "@components/MaskInput";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../../../../context/Auth/AuthContext";
-import { AvatarImage } from "../../../../utils/AvatarImage";
-import { Select } from "../../../../components/Select";
+import { useAuth } from "@context/Auth/AuthContext";
+import { AvatarImage } from "@utils/AvatarImage";
+import { Select } from "@components/Select";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -169,12 +169,12 @@ export const ThirdStep = () => {
                     <Avatar
                       size={"sm"}
                       source={{
-                        uri: user.photo,
+                        uri: user?.photo,
                       }}
                     />
                   }
-                  label={user.name}
-                  value={user.name}
+                  label={user?.name!}
+                  value={user?.name!}
                 />
                 {actives.map((sharedUser) => (
                   <SelectNativeBase.Item

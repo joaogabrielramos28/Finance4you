@@ -1,6 +1,7 @@
-import { Factory } from "native-base";
 import React from "react";
+import { Factory } from "native-base";
 import MaskInputLib, { MaskInputProps } from "react-native-mask-input";
+
 const MaskInputFactory = Factory(MaskInputLib);
 
 export const MaskInput = ({

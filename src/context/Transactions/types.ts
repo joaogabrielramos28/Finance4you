@@ -3,7 +3,7 @@ export interface ICreateTransactionContext {
   prevStep: () => void;
   createTransaction: (transaction: ITransaction) => void;
   handleChangePeriod: (action: "next" | "prev") => void;
-  changeCreditCard: (creditCard: string) => Promise<void>;
+  changeCreditCard: (creditCard: "purple" | "pink" | "blue") => Promise<void>;
   step: number;
   transactions: ITransaction[];
   actualPeriod: Date;

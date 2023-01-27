@@ -1,13 +1,14 @@
+import React from "react";
+import { Heading, useTheme, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { Box, Button, Heading, useTheme, VStack } from "native-base";
 import {
   BellRinging,
   ListDashes,
   SignOut,
   UserGear,
 } from "phosphor-react-native";
-import React from "react";
-import { useAuth } from "../../context/Auth/AuthContext";
+
+import { useAuth } from "@context/Auth/AuthContext";
 import { MenuItem } from "./components/MenuItem";
 
 export const Options = () => {

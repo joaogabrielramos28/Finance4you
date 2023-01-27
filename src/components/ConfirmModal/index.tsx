@@ -1,5 +1,6 @@
-import { Button, Modal, Text } from "native-base";
 import React from "react";
+import { Button, Modal, Text } from "native-base";
+
 import { IConfirmModalProps } from "./types";
 
 export const ConfirmModal = ({

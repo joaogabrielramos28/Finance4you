@@ -1,9 +1,10 @@
+import React from "react";
+import { Box, HStack, Text, VStack } from "native-base";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Box, HStack, Skeleton, Text, VStack } from "native-base";
 import { Calendar, Clock } from "phosphor-react-native";
-import React from "react";
-import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
+import Animated, { FadeOut, Layout } from "react-native-reanimated";
+
 import { INotification } from "../../../types";
 
 export const ScheduleItem = ({

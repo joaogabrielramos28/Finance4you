@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -12,15 +12,16 @@ import {
   useTheme,
   VStack,
 } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { ArrowLeft, Plus } from "phosphor-react-native";
-import React, { useState } from "react";
-import { useAuth } from "../../../../context/Auth/AuthContext";
-import { SharedUserList } from "../../../../context/Auth/types";
+
+import { useAuth } from "@context/Auth/AuthContext";
+import { SharedUserList } from "@context/Auth/types";
 import {
   deleteItemFromAsyncStorage,
   setItemToAsyncStorage,
-} from "../../../../helpers/AsyncStorage";
-import { AsyncStorageKeys } from "../../../../helpers/types";
+} from "@helpers/AsyncStorage";
+import { AsyncStorageKeys } from "@helpers/types";
 import { ActiveList } from "./components/ActiveList";
 import { DisableList } from "./components/DisableList";
 

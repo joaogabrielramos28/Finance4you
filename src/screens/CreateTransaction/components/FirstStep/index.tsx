@@ -1,26 +1,11 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FlatList,
-  Heading,
-  HStack,
-  IconButton,
-  Image,
-  ScrollView,
-  Text,
-  useBreakpointValue,
-  useTheme,
-  VStack,
-} from "native-base";
-
-import StepOne from "../../../../assets/step1.png";
-import { FormButton } from "../FormButton";
-import { categories } from "../../../../data/category";
+import { Button, FlatList, Heading, Text, VStack } from "native-base";
 import { useFormContext } from "react-hook-form";
-
 import { useNavigation } from "@react-navigation/native";
-import { useTransactions } from "../../../..//context/Transactions/TransactionsContext";
+
+import { FormButton } from "../FormButton";
+import { categories } from "@data/category";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { IStepProps } from "../../types";
 
 export const FirstStep = ({ maxH }: IStepProps) => {

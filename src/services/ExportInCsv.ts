@@ -37,7 +37,7 @@ export class ExportInCsvService {
 
     const headerString = "Data,Categoria,Valor,Tipo\n";
     const rowString = dataFormatted
-      .map((d) => `${d[0]},${d[1]},${d[2]},${d[3]}\n`)
+      .map((d: any) => `${d[0]},${d[1]},${d[2]},${d[3]}\n`)
       .join(" ");
     const csvString = `${headerString}${rowString}`;
 

@@ -1,7 +1,6 @@
 import React from "react";
-import { Select as NativeBaseSelect, useTheme } from "native-base";
+import { Select as NativeBaseSelect, useTheme, Box } from "native-base";
 import { SelectProps } from "./types";
-import { Box } from "native-base";
 import { CaretDown } from "phosphor-react-native";
 
 export function Select({ children, ...rest }: SelectProps) {

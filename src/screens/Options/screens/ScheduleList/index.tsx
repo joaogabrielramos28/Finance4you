@@ -13,13 +13,13 @@ import {
   VStack,
 } from "native-base";
 import { ArrowLeft } from "phosphor-react-native";
+import { HoldItem } from "react-native-hold-menu";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { ScheduleItem } from "./components/ScheduleItem";
-import { INotification } from "../types";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
-import { HoldItem } from "react-native-hold-menu";
+
+import { ScheduleItem } from "./components/ScheduleItem";
+import { INotification } from "../types";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
@@ -67,7 +67,7 @@ export const ScheduleList = () => {
                       Próximo alerta{" "}
                       <Text color={"violetBrand.500"}>
                         {formatDistanceToNow(
-                          new Date(schedules[nextSchedule].date),
+                          new Date(schedules[nextSchedule || 0].date),
                           {
                             addSuffix: true,
                             locale: ptBR,
@@ -77,7 +77,7 @@ export const ScheduleList = () => {
                     </Heading>
                     <ScheduleItem
                       hasAnimatedView={false}
-                      {...schedules[nextSchedule]}
+                      {...schedules[nextSchedule || 0]}
                     />
                   </VStack>
                   <Divider mt={4} bg={"zinc.600"} />

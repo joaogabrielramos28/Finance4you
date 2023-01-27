@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Box, Button, FlatList, Heading, Image, VStack } from "native-base";
-
-import StepTwo from "../../../../assets/step2.png";
-import { FormButton } from "../FormButton";
-import { categories } from "../../../../data/category";
+import { Button, FlatList, VStack } from "native-base";
 import { useFormContext } from "react-hook-form";
-import { useTransactions } from "../../../../context/Transactions/TransactionsContext";
+
+import { FormButton } from "../FormButton";
+import { categories } from "@data/category";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { IStepProps } from "../../types";
 
 export const SecondStep = ({ maxH }: IStepProps) => {
@@ -24,7 +23,7 @@ export const SecondStep = ({ maxH }: IStepProps) => {
     <VStack alignItems={"center"} marginTop={"8px"}>
       <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
         <FlatList
-          data={selectedCategory.subCategories}
+          data={selectedCategory?.subCategories}
           maxH={maxH}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
@@ -33,7 +32,7 @@ export const SecondStep = ({ maxH }: IStepProps) => {
               variant={index % 2 === 0 ? "primary" : "secondary"}
               name={item.name}
               selected={subcategory === item.name}
-              icon={selectedCategory.icon}
+              icon={selectedCategory?.icon}
             />
           )}
         />

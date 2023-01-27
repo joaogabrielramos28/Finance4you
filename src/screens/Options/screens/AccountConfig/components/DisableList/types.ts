@@ -1,4 +1,4 @@
-import { SharedUserList } from "../../types";
+import { SharedUserList } from "@context/auth/types";
 
 export interface DisableListProps {
   data: SharedUserList[];

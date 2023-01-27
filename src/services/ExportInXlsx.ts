@@ -1,15 +1,11 @@
-import { format, getMonth, isSameMonth, isSameYear } from "date-fns";
+import { format, isSameMonth, isSameYear } from "date-fns";
 import RNBlob from "react-native-blob-util";
 import XLSX from "xlsx";
-import RNFS from "react-native-fs";
 
 import { ITransaction } from "../context/Transactions/types";
 
 export class ExportInXlsxService {
   public async createXlsxFile(data: ITransaction[], date: Date) {
-    const fileName = `${new Date().getTime()}-${
-      getMonth(date) + 1
-    }-${date.getFullYear()}.xlsx`;
     let totalValue = 0;
     const dataFormatted = data.map((transaction) => {
       const dateFormatted = format(new Date(transaction.date), "dd/MM/yyyy");

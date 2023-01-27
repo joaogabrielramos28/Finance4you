@@ -11,14 +11,14 @@ import {
 
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
-import { ITransaction } from "../../context/Transactions/types";
-import { categories } from "../../data/category";
+import { ITransaction } from "@context/Transactions/types";
+import { categories } from "@data/category";
 import { useNavigation } from "@react-navigation/native";
 import { BorderlessButton } from "react-native-gesture-handler";
 import { Trash } from "phosphor-react-native";
 import { View } from "react-native";
-import { useTransactions } from "../../context/Transactions/TransactionsContext";
-import { ConfirmModal } from "../ConfirmModal";
+import { useTransactions } from "@context/Transactions/TransactionsContext";
+import { ConfirmModal } from "@components/ConfirmModal";
 
 export const Transaction = ({
   id,

@@ -1,10 +1,11 @@
-import { NativeBaseProvider } from "native-base";
 import React, { ReactNode } from "react";
+import { NativeBaseProvider } from "native-base";
+import { Feather } from "@expo/vector-icons";
+import { HoldMenuProvider } from "react-native-hold-menu";
+
 import { theme } from "../styles/theme/defaultTheme";
 import { AuthProvider } from "./Auth/AuthContext";
 import { TransactionsProvider } from "./Transactions/TransactionsContext";
-import { HoldMenuProvider } from "react-native-hold-menu";
-import { Feather } from "@expo/vector-icons";
 
 const inset = {
   frame: { x: 0, y: 0, width: 0, height: 0 },

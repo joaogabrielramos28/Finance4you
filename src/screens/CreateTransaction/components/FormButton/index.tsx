@@ -1,6 +1,5 @@
-import { Box, Button, HStack, Text, useTheme } from "native-base";
-import { Gradient, GraduationCap } from "phosphor-react-native";
 import React from "react";
+import { Button, HStack, Text, useTheme } from "native-base";
 import { IFormButton } from "./types";
 
 export const FormButton = ({
