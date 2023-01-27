@@ -107,6 +107,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const changeHasAccountShared = async (hasAccountShared: boolean) => {
     setHasAccountShared(hasAccountShared);
+
     setItemWhenDataIsBoolean(AsyncStorageKeys.ACCOUNT_SHARED, hasAccountShared);
   };
 
@@ -128,7 +129,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         AsyncStorageKeys.ACCOUNT_SHARED
       );
 
-      setHasAccountShared(response.length === 0 ? false : response);
+      setHasAccountShared(response.length === 0 ? false : response[0]);
     };
     loadAccountShared();
   }, []);
