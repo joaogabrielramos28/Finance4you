@@ -30,11 +30,13 @@ export const SignIn = () => {
       paddingX={"32px"}
       justifyContent={"center"}
     >
-      <Animated.Image
-        source={SignInImage}
-        entering={FlipInEasyY}
-        testID={"logo"}
-      />
+      <Box alignSelf={"center"}>
+        <Animated.Image
+          source={SignInImage}
+          entering={FlipInEasyY}
+          testID={"logo"}
+        />
+      </Box>
 
       <Animated.View entering={FadeInLeft}>
         <Heading color={"grayBrand.200"} fontSize={"3xl"} marginTop={"22px"}>
