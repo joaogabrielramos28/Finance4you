@@ -179,7 +179,7 @@ export const ScheduleCreate = () => {
             }}
             onPress={toggleConfirmation}
           >
-            Criar transação
+            Criar Alerta
           </Button>
         </VStack>
       </TouchableWithoutFeedback>
