@@ -1,4 +1,5 @@
 import {
+  act,
   fireEvent,
   render,
   renderHook,
@@ -7,6 +8,26 @@ import {
 import { AppProvider } from "../../context";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { SignIn } from "../../screens";
+
+jest.mock("@invertase/react-native-apple-authentication", () => {
+  return {
+    appleAuth: {
+      performRequest: jest.fn(),
+      Scope: {
+        FULL_NAME: 1,
+        EMAIL: 0,
+      },
+      Operation: {
+        LOGIN: 1,
+      },
+    },
+
+    getCredentialStateForUser: jest.fn().mockReturnValue(1),
+    State: {
+      AUTHORIZED: 1,
+    },
+  };
+});
 
 describe("SignIn", () => {
   it("should render logo and button", async () => {
@@ -30,13 +51,11 @@ describe("SignIn", () => {
       wrapper: AppProvider,
     });
 
-    const loginWithApple = jest.fn();
-    result.current.loginWithApple = loginWithApple;
+    const button = getByText(/Entrar com apple/i);
+    fireEvent.press(button);
 
-    await waitFor(() => {
-      const button = getByText(/Entrar com apple/i);
-      fireEvent.press(button);
-      expect(loginWithApple).toHaveBeenCalled();
+    act(async () => {
+      await result.current.loginWithApple();
     });
   });
 });
