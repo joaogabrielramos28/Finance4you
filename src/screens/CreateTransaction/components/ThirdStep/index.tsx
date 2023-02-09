@@ -24,11 +24,19 @@ import { useAuth } from "@context/Auth/AuthContext";
 import { AvatarImage } from "@utils/AvatarImage";
 import { Select } from "@components/Select";
 import { Button } from "@components/Button";
+import { Checkbox } from "@components/Checkbox";
+import { Input } from "@components/Input";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
   const { createTransaction, prevStep } = useTransactions();
-  const { setValue, getValues, reset } = useFormContext();
+  const {
+    setValue,
+    getValues,
+    reset,
+    formState: { isValid },
+  } = useFormContext();
   const { navigate } = useNavigation();
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
@@ -37,6 +45,8 @@ export const ThirdStep = () => {
   const [description, setDescription] = useState(getValues("description"));
   const [amountWithoutMask, setAmountWithoutMask] = useState("");
   const [responsible, setResponsible] = useState(getValues("responsible"));
+  const [createAlert, setCreateAlert] = useState(getValues("createAlert"));
+  const [alertName, setAlertName] = useState(getValues("alertName"));
 
   const { hasAccountShared, user, sharedUserNameList } = useAuth();
   const handleCreateTransaction = () => {
@@ -60,6 +70,9 @@ export const ThirdStep = () => {
       responsible,
     };
     createTransaction(payload);
+    if (createAlert === "yes") {
+      handleCreateSchedule();
+    }
     reset();
     navigate("Transactions");
   };
@@ -89,6 +102,41 @@ export const ThirdStep = () => {
   const handleChangeResponsible = (value: string) => {
     setResponsible(value);
     setValue("responsible", value);
+  };
+
+  const handleChangeAlertCheckbox = (isSelected: "yes" | "no") => {
+    setCreateAlert(isSelected);
+    setValue("createAlert", isSelected);
+  };
+
+  const handleChangeAlertName = (text: string) => {
+    setAlertName(text);
+    setValue("alertName", text);
+  };
+
+  const handleCreateSchedule = () => {
+    try {
+      PushNotificationIOS.addNotificationRequest({
+        id: String(new Date().getTime()),
+        badge: 1,
+        body: `Ei não esqueça de pagar ${alertName}`,
+        category: alertName,
+        fireDate: date,
+        repeats: true,
+        repeatsComponent: {
+          hour: true,
+          day: true,
+          minute: true,
+          dayOfWeek: false,
+          month: false,
+          second: false,
+          year: false,
+        },
+        title: "Lembrete de pagamento",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const actives = sharedUserNameList.filter((sharedUser) => sharedUser.active);
@@ -153,11 +201,30 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
+          <Checkbox
+            onChange={(isSelected) =>
+              handleChangeAlertCheckbox(isSelected ? "yes" : "no")
+            }
+            value="yes"
+            isChecked={createAlert === "yes"}
+          >
+            Criar lembrete desse pagamento
+          </Checkbox>
+
+          {createAlert === "yes" ? (
+            <Input
+              padding={3}
+              label="Nome do alerta"
+              value={alertName}
+              onChangeText={handleChangeAlertName}
+              placeholder="Ex: Conta de luz"
+            />
+          ) : null}
           {hasAccountShared ? (
             <VStack>
-              <Text fontSize={"md"} color={"grayBrand.100"}>
+              <Heading fontSize={"md"} color={"grayBrand.100"}>
                 Responsável
-              </Text>
+              </Heading>
               <Select
                 padding={2}
                 mt={2}
@@ -219,7 +286,8 @@ export const ThirdStep = () => {
             isDisabled={
               !getValues("amount") ||
               !getValues("type") ||
-              (!getValues("responsible") && hasAccountShared)
+              (!getValues("responsible") && hasAccountShared) ||
+              (!getValues("alertName") && createAlert === "yes")
             }
             marginTop={"16px"}
           >
