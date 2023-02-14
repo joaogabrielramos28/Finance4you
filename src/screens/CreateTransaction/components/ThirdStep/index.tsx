@@ -27,6 +27,8 @@ import { Button } from "@components/Button";
 import { Checkbox } from "@components/Checkbox";
 import { Input } from "@components/Input";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { setItemToAsyncStorage } from "@helpers/AsyncStorage";
+import { AsyncStorageKeys } from "@helpers/types";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
@@ -47,6 +49,9 @@ export const ThirdStep = () => {
   const [responsible, setResponsible] = useState(getValues("responsible"));
   const [createAlert, setCreateAlert] = useState(getValues("createAlert"));
   const [alertName, setAlertName] = useState(getValues("alertName"));
+  const [hasRecurrence, setHasRecurrence] = useState(
+    getValues("hasRecurrence")
+  );
 
   const { hasAccountShared, user, sharedUserNameList } = useAuth();
   const handleCreateTransaction = () => {
@@ -69,10 +74,21 @@ export const ThirdStep = () => {
       description,
       responsible,
     };
-    createTransaction(payload);
+
     if (createAlert === "yes") {
       handleCreateSchedule();
     }
+    if (hasRecurrence === "yes") {
+      setItemToAsyncStorage(AsyncStorageKeys.RECURRENT_TRANSACTIONS, {
+        ...payload,
+        date: "--",
+        dateFormatted: "--",
+      });
+      reset();
+      navigate("Transactions");
+      return;
+    }
+    createTransaction(payload);
     reset();
     navigate("Transactions");
   };
@@ -112,6 +128,11 @@ export const ThirdStep = () => {
   const handleChangeAlertName = (text: string) => {
     setAlertName(text);
     setValue("alertName", text);
+  };
+
+  const handleChangeRecurrenceCheckbox = (isSelected: "yes" | "no") => {
+    setHasRecurrence(isSelected);
+    setValue("hasRecurrence", isSelected);
   };
 
   const handleCreateSchedule = () => {
@@ -201,25 +222,7 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
-          <Checkbox
-            onChange={(isSelected) =>
-              handleChangeAlertCheckbox(isSelected ? "yes" : "no")
-            }
-            value="yes"
-            isChecked={createAlert === "yes"}
-          >
-            Criar lembrete desse pagamento
-          </Checkbox>
 
-          {createAlert === "yes" ? (
-            <Input
-              padding={3}
-              label="Nome do alerta"
-              value={alertName}
-              onChangeText={handleChangeAlertName}
-              placeholder="Ex: Conta de luz"
-            />
-          ) : null}
           {hasAccountShared ? (
             <VStack>
               <Heading fontSize={"md"} color={"grayBrand.100"}>
@@ -280,6 +283,36 @@ export const ThirdStep = () => {
               backgroundColor: "transparent",
             }}
           />
+
+          <Checkbox
+            onChange={(isSelected) =>
+              handleChangeAlertCheckbox(isSelected ? "yes" : "no")
+            }
+            value="yes"
+            isChecked={createAlert === "yes"}
+          >
+            Criar lembrete desse pagamento
+          </Checkbox>
+
+          {createAlert === "yes" ? (
+            <Input
+              padding={3}
+              label="Nome do alerta"
+              value={alertName}
+              onChangeText={handleChangeAlertName}
+              placeholder="Ex: Conta de luz"
+            />
+          ) : null}
+
+          <Checkbox
+            onChange={(isSelected) =>
+              handleChangeRecurrenceCheckbox(isSelected ? "yes" : "no")
+            }
+            value="yes"
+            isChecked={hasRecurrence === "yes"}
+          >
+            Definir como recorrente
+          </Checkbox>
 
           <Button
             onPress={handleCreateTransaction}

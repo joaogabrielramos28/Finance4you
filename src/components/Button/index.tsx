@@ -15,6 +15,10 @@ export function Button({ variant, children, ...rest }: IButtonProps) {
         color: "grayBrand.200",
         bold: true,
       }}
+      _pressed={{
+        bg: typeVariant,
+        opacity: 0.5,
+      }}
     >
       {children}
     </ButtonNativeBase>

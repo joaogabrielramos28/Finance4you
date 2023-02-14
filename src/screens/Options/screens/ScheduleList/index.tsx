@@ -5,14 +5,11 @@ import {
   Divider,
   FlatList,
   Heading,
-  HStack,
-  IconButton,
   Spinner,
   Text,
   useTheme,
   VStack,
 } from "native-base";
-import { ArrowLeft } from "phosphor-react-native";
 import { HoldItem } from "react-native-hold-menu";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
@@ -21,6 +18,7 @@ import { ptBR } from "date-fns/locale";
 import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
 import { Header } from "@components/Header";
+import { Button } from "@components/Button";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();

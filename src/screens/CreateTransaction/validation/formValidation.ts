@@ -23,4 +23,5 @@ export const ThirdStepSchemaValidation = Yup.object().shape({
     is: true,
     then: Yup.string().required("Nome do alerta é obrigatório"),
   }),
+  hasRecurrence: Yup.boolean(),
 });

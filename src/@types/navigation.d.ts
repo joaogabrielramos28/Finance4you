@@ -23,6 +23,8 @@ export declare global {
       ScheduleList: undefined;
       ExportTransactions: undefined;
       AccountConfig: undefined;
+      RecurrentTransactionsList: undefined;
+      RecurrentTransactionsCreate: undefined;
     }
   }
 }

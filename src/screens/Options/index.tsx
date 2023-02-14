@@ -3,6 +3,7 @@ import { Heading, useTheme, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import {
   BellRinging,
+  Cardholder,
   ListDashes,
   SignOut,
   UserGear,
@@ -17,33 +18,27 @@ export const Options = () => {
 
   const { navigate } = useNavigation();
 
-  const handleGoToScheduleCreate = () => {
-    navigate("ScheduleCreate");
-  };
-
-  const handleGoToScheduleList = () => {
-    navigate("ScheduleList");
-  };
-
-  const handleGoToAccountConfig = () => {
-    navigate("AccountConfig");
-  };
   return (
     <VStack safeAreaY bg={"background"} flex padding={6}>
       <Heading color={colors.grayBrand[200]}>Opções</Heading>
       <VStack marginTop={4} space={4}>
         <MenuItem
-          onPress={handleGoToScheduleCreate}
+          onPress={() => navigate("ScheduleCreate")}
           text={"Criar alerta"}
           leftIcon={<BellRinging size={24} color={colors.grayBrand[300]} />}
         />
         <MenuItem
-          onPress={handleGoToScheduleList}
+          onPress={() => navigate("ScheduleList")}
           text={"Listagem de alertas"}
           leftIcon={<ListDashes size={24} color={colors.grayBrand[300]} />}
         />
         <MenuItem
-          onPress={handleGoToAccountConfig}
+          onPress={() => navigate("RecurrentTransactions")}
+          text={"Transações recorrentes"}
+          leftIcon={<Cardholder size={24} color={colors.grayBrand[300]} />}
+        />
+        <MenuItem
+          onPress={() => navigate("AccountConfig")}
           text={"Configurações da conta"}
           leftIcon={<UserGear size={24} color={colors.grayBrand[300]} />}
         />
