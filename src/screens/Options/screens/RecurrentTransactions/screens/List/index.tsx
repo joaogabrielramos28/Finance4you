@@ -3,7 +3,7 @@ import { Header } from "@components/Header";
 import { ITransaction } from "@context/Transactions/types";
 import { getItemFromAsyncStorage } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Box, FlatList, Text, VStack } from "native-base";
 import React, { useEffect } from "react";
 
@@ -20,12 +20,18 @@ export const RecurrentTransactionsList = () => {
     setTransactions(transactions);
   };
 
-  useEffect(() => {
-    async function loadData() {
-      await getTransactionsFromAsync();
-    }
-    loadData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      async function loadData() {
+        await getTransactionsFromAsync();
+      }
+      loadData();
+
+      return () => {
+        setTransactions([]);
+      };
+    }, [])
+  );
 
   const handleGoToCreateRecurrentTransaction = () => {
     navigate("RecurrentTransactionsCreate");

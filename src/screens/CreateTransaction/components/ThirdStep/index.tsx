@@ -166,18 +166,17 @@ export const ThirdStep = () => {
     <VStack alignItems={"center"}>
       <KeyboardAvoidingView behavior="padding" enabled>
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
-          <Heading color={"grayBrand.300"} size={"sm"}>
-            Valor
-          </Heading>
           <MaskInput
+            label="Valor"
+            bold
             value={amount}
             onChangeText={handleChangeAmount}
             mask={Masks.BRL_CURRENCY}
           />
 
-          <Heading color={"grayBrand.300"} size={"sm"}>
+          <Text color={"grayBrand.300"} fontSize={"lg"} bold>
             Tipo de transação
-          </Heading>
+          </Text>
 
           <HStack w={"100%"} space={"16px"} justifyContent={"space-around"}>
             <NativeBaseButton
@@ -209,9 +208,9 @@ export const ThirdStep = () => {
               </HStack>
             </NativeBaseButton>
           </HStack>
-          <Heading color={"grayBrand.300"} size={"sm"}>
+          <Text color={"grayBrand.300"} fontSize={"lg"} bold>
             Data da transação
-          </Heading>
+          </Text>
 
           <DateTimePicker
             accentColor={colors.violetBrand[400]}

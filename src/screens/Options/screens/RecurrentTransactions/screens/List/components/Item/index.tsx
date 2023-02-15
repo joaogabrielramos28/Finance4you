@@ -5,7 +5,12 @@ import Animated, { FadeOut, Layout } from "react-native-reanimated";
 import { ITransaction } from "@context/Transactions/types";
 import { categories } from "@data/category";
 
-export const Item = ({ category, amount, subCategory }: ITransaction) => {
+export const Item = ({
+  category,
+  amount,
+  subCategory,
+  description,
+}: ITransaction) => {
   const selectedCategory =
     categories.find((item) => item.name === category) ?? categories[0];
   const content = (
@@ -18,7 +23,7 @@ export const Item = ({ category, amount, subCategory }: ITransaction) => {
       />
 
       <Box flex={1}>
-        <Text>{subCategory}</Text>
+        <Text>{description}</Text>
 
         <HStack justifyContent={"space-between"} mt={2}>
           <HStack alignItems={"center"} space={2}>
