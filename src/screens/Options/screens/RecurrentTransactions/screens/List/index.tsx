@@ -8,25 +8,16 @@ import {
 } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import {
-  Box,
-  FlatList,
-  Heading,
-  Spinner,
-  Text,
-  useTheme,
-  VStack,
-} from "native-base";
+import { Box, FlatList, Heading, Text, VStack } from "native-base";
 
 import { isFirstDayOfMonth, formatDistanceToNow } from "date-fns";
 
 import { Item } from "./components/Item";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ptBR } from "date-fns/locale";
+import { Layout } from "@components/Layout";
 
 export const RecurrentTransactionsList = () => {
   const { goBack, navigate } = useNavigation();
-  const { colors } = useTheme();
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
   const [dateForRecurrence, setDateForRecurrence] = useState<Date>(new Date());
@@ -96,7 +87,7 @@ export const RecurrentTransactionsList = () => {
   });
 
   return (
-    <Box flex={1} bg={"background"} safeAreaY justifyContent={"space-between"}>
+    <Layout justifyContent={"space-between"}>
       <Box>
         <Header title="Transações recorrentes" onBack={goBack} />
         <VStack justifyContent={"space-between"} p={4} space={2}>
@@ -130,6 +121,6 @@ export const RecurrentTransactionsList = () => {
           Criar Transação recorrente
         </Button>
       </Box>
-    </Box>
+    </Layout>
   );
 };

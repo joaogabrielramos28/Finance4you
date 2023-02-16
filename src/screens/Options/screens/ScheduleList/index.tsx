@@ -19,6 +19,7 @@ import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
 import { Header } from "@components/Header";
 import { Button } from "@components/Button";
+import { Layout } from "@components/Layout";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
@@ -46,7 +47,7 @@ export const ScheduleList = () => {
   };
 
   return (
-    <Box flex bg="background" safeAreaY>
+    <Layout>
       <Header title="Listagem de alertas" onBack={goBack} />
 
       {!isLoading ? (
@@ -116,6 +117,6 @@ export const ScheduleList = () => {
           <Spinner size={"lg"} color={colors.violetBrand[500]} />
         </Box>
       )}
-    </Box>
+    </Layout>
   );
 };

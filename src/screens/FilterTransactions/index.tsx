@@ -6,6 +6,7 @@ import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { Header } from "./components/Header";
 import { FilterForm } from "./components/FilterForm";
+import { Layout } from "@components/Layout";
 
 export const FilterTransactions = () => {
   const {
@@ -71,7 +72,7 @@ export const FilterTransactions = () => {
   };
 
   return (
-    <Box safeArea flex={1} bg={"background"}>
+    <Layout>
       <VStack flex={1} justifyContent={"space-between"}>
         <Box>
           <Header onBack={handleGoBack} onReset={handleResetFilter} />
@@ -104,6 +105,6 @@ export const FilterTransactions = () => {
           </Button>
         </Box>
       </VStack>
-    </Box>
+    </Layout>
   );
 };

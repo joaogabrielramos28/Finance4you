@@ -25,6 +25,7 @@ export declare global {
       AccountConfig: undefined;
       RecurrentTransactionsList: undefined;
       RecurrentTransactionsCreate: undefined;
+      RecurrentTransactions: undefined;
     }
   }
 }

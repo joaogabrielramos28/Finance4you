@@ -36,7 +36,7 @@ export const Layout = ({
     );
   };
   return (
-    <VStack flex={1} bg={"background"} safeAreaY>
+    <VStack {...rest} flex={1} bg={"background"} safeAreaY>
       {hasScrollView ? (
         <NativeBaseScrollView {...rest} ref={scrollViewRef}>
           {children}

@@ -1,3 +1,4 @@
+import { Layout } from "@components/Layout";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Avatar,
@@ -39,7 +40,7 @@ export const TransactionDetails = () => {
   };
 
   return (
-    <Box flex={1} background={"background"} safeAreaY px={6}>
+    <Layout px={6}>
       <HStack alignItems={"center"} space={2}>
         <IconButton
           size={"sm"}
@@ -138,6 +139,6 @@ export const TransactionDetails = () => {
           </Text>
         </VStack>
       </VStack>
-    </Box>
+    </Layout>
   );
 };

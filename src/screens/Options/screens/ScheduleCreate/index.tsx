@@ -1,26 +1,15 @@
 import React, { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
-import {
-  Box,
-  Heading,
-  Input,
-  Text,
-  VStack,
-  useTheme,
-  Button,
-  HStack,
-  IconButton,
-  Toast,
-} from "native-base";
+import { Box, Input, Text, VStack, useTheme, Button, Toast } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
-import { ArrowLeft } from "phosphor-react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import * as Yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ModalConfirmation } from "./components/ModalConfirmation";
 import { Header } from "@components/Header";
+import { Layout } from "@components/Layout";
 
 type FormData = {
   title: string;
@@ -116,15 +105,9 @@ export const ScheduleCreate = () => {
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <VStack
-          flex={1}
-          bg={"background"}
-          safeAreaY
-          padding={6}
-          justifyContent={"space-between"}
-        >
+        <Layout padding={6} justifyContent={"space-between"}>
           <Box>
-            <Header title="Criar alerta" onBack={goBack} />
+            <Header title="Criar alerta" onBack={handleGoBack} />
 
             <Text fontSize={"lg"} color={"grayBrand.300"} mt={4}>
               Nome do alerta
@@ -181,7 +164,7 @@ export const ScheduleCreate = () => {
           >
             Criar Alerta
           </Button>
-        </VStack>
+        </Layout>
       </TouchableWithoutFeedback>
       <ModalConfirmation
         date={date}

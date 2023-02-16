@@ -25,6 +25,7 @@ import { AsyncStorageKeys } from "@helpers/types";
 import { ActiveList } from "./components/ActiveList";
 import { DisableList } from "./components/DisableList";
 import { Header } from "@components/Header";
+import { Layout } from "@components/Layout";
 
 export const AccountConfig = () => {
   const { colors } = useTheme();
@@ -37,10 +38,6 @@ export const AccountConfig = () => {
   } = useAuth();
 
   const [sharedUserName, setSharedUserName] = useState<string>("");
-
-  const handleGoBack = () => {
-    goBack();
-  };
 
   const handleChangeAccountShared = (value: boolean) => {
     changeHasAccountShared(value);
@@ -124,7 +121,7 @@ export const AccountConfig = () => {
     (item) => item.active === false
   );
   return (
-    <VStack flex={1} bg={"background"} safeAreaY padding={6}>
+    <Layout padding={6}>
       <Header title="Configurações da conta" onBack={goBack} />
 
       <HStack alignItems={"center"} justifyContent="space-between" mt={8}>
@@ -178,6 +175,6 @@ export const AccountConfig = () => {
           />
         </VStack>
       ) : null}
-    </VStack>
+    </Layout>
   );
 };

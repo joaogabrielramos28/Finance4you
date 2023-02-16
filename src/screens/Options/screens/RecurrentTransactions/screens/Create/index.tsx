@@ -23,6 +23,7 @@ import { categories } from "@data/category";
 import { setItemToAsyncStorage } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
 import { format } from "date-fns";
+import { Layout } from "@components/Layout";
 
 export const RecurrentTransactionsCreate = () => {
   const { goBack, navigate } = useNavigation();
@@ -72,7 +73,7 @@ export const RecurrentTransactionsCreate = () => {
   };
 
   return (
-    <VStack flex={1} bg={"background"} safeAreaY>
+    <Layout>
       <Header onBack={goBack} title="Criar transação recorrente" />
 
       <VStack p={4}>
@@ -182,6 +183,6 @@ export const RecurrentTransactionsCreate = () => {
           Criar
         </Button>
       </Box>
-    </VStack>
+    </Layout>
   );
 };
