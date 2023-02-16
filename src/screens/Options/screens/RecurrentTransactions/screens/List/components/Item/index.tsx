@@ -23,7 +23,7 @@ export const Item = ({
       />
 
       <Box flex={1}>
-        <Text>{description}</Text>
+        <Text>{description || subCategory}</Text>
 
         <HStack justifyContent={"space-between"} mt={2}>
           <HStack alignItems={"center"} space={2}>

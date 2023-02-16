@@ -86,7 +86,6 @@ export const ThirdStep = () => {
       });
       reset();
       navigate("Transactions");
-      return;
     }
     createTransaction(payload);
     reset();

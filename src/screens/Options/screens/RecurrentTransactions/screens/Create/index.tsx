@@ -58,7 +58,7 @@ export const RecurrentTransactionsCreate = () => {
     const payload = {
       id: new Date().getTime(),
       ...data,
-      description: data.name,
+      description: data.name || "",
       type: "outcome",
       dateFormatted: format(new Date(data.date), "dd/MM/yyyy"),
     };

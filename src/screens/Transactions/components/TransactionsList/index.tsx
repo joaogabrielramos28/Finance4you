@@ -6,7 +6,7 @@ import {
   setItemWhenDataIsOneValue,
 } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
-import { addMonths } from "date-fns";
+import { addMonths, format } from "date-fns";
 import { useToast } from "native-base";
 import {
   Box,
@@ -97,14 +97,28 @@ export const TransactionsList = () => {
   };
   const handleAddRecurrenceTransactions = async () => {
     const transactions = await getRecurrenceTransactionsFromAsync();
+    const recurrenceDate = await getRecurrenceDateFromAsync();
 
     if (transactions) {
-      await AsyncStorage.setItem(
-        AsyncStorageKeys.TRANSACTION_KEY_STORAGE,
-        JSON.stringify([...transactions, ...transactionsByPeriod])
+      const newTransactionsWithIdAndNewDate = transactions.map(
+        (transaction: ITransaction) => {
+          return {
+            ...transaction,
+            id: new Date().getTime(),
+            date: recurrenceDate,
+            dateFormatted: format(recurrenceDate, "dd/MM/yyyy"),
+          };
+        }
       );
 
-      const recurrenceDate = await getRecurrenceDateFromAsync();
+      await AsyncStorage.setItem(
+        AsyncStorageKeys.TRANSACTION_KEY_STORAGE,
+        JSON.stringify([
+          ...newTransactionsWithIdAndNewDate,
+          ...transactionsByPeriod,
+        ])
+      );
+
       const newRecurrenceDate = addMonths(new Date(recurrenceDate[0]), 1);
 
       setItemWhenDataIsOneValue(
