@@ -3,10 +3,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const setItemToAsyncStorage = async (key: string, value: any) => {
   const data = await getItemFromAsyncStorage(key);
 
-  await AsyncStorage.setItem(key, JSON.stringify([...data, value]));
+  console.log("value", value);
+
+  const finalDataFormatted = JSON.stringify([...data, value]);
+
+  await AsyncStorage.setItem(key, finalDataFormatted);
 };
 
-const setItemWhenDataIsBoolean = async (key: string, value: boolean) => {
+const setItemWhenDataIsOneValue = async (
+  key: string,
+  value: boolean | Date
+) => {
   await AsyncStorage.setItem(key, JSON.stringify([value]));
 };
 
@@ -21,6 +28,6 @@ const deleteItemFromAsyncStorage = async (key: string, value: any) => {
 export {
   setItemToAsyncStorage,
   getItemFromAsyncStorage,
-  setItemWhenDataIsBoolean,
+  setItemWhenDataIsOneValue,
   deleteItemFromAsyncStorage,
 };

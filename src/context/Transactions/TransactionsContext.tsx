@@ -111,13 +111,17 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setCreditCardStyle(creditCard);
   };
 
+  const getTransactions = async () => {
+    const response = await AsyncStorage.getItem(
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE
+    );
+    const data = response ? JSON.parse(response) : [];
+    setTransactions(data);
+  };
+
   useEffect(() => {
     async function loadTransactions() {
-      const response = await AsyncStorage.getItem(
-        AsyncStorageKeys.TRANSACTION_KEY_STORAGE
-      );
-      const data = response ? JSON.parse(response) : [];
-      setTransactions(data);
+      await getTransactions();
     }
     loadTransactions();
   }, []);
@@ -151,6 +155,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         handleSetFilterTransactions,
         resetFilterTransactions,
         deleteTransaction,
+        getTransactions,
       }}
     >
       {children}

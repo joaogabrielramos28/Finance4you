@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKeys } from "@helpers/types";
 import {
   getItemFromAsyncStorage,
-  setItemWhenDataIsBoolean,
+  setItemWhenDataIsOneValue,
 } from "@helpers/AsyncStorage";
 import { IAuthContext, IUser, SharedUserList } from "./types";
 
@@ -108,7 +108,10 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const changeHasAccountShared = async (hasAccountShared: boolean) => {
     setHasAccountShared(hasAccountShared);
 
-    setItemWhenDataIsBoolean(AsyncStorageKeys.ACCOUNT_SHARED, hasAccountShared);
+    setItemWhenDataIsOneValue(
+      AsyncStorageKeys.ACCOUNT_SHARED,
+      hasAccountShared
+    );
   };
 
   useEffect(() => {

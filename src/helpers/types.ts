@@ -5,4 +5,5 @@ export enum AsyncStorageKeys {
   USER_STORAGE_KEY = "@finance4you:user",
   SHARED_USER_LIST = "@finance4you:shareduserlist",
   RECURRENT_TRANSACTIONS = "@finance4you:recurrenttransactions",
+  RECURRENT_DATE = "@finance4you:recurrentdate",
 }
