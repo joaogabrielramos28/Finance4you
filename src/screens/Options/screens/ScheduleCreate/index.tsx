@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
-import { Box, Input, Text, VStack, useTheme, Button, Toast } from "native-base";
+import { Box, Input, Text, useTheme, Button, Toast } from "native-base";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";

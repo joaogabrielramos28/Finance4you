@@ -24,6 +24,7 @@ import { Layout } from "@components/Layout";
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
 
   const [schedules, setSchedules] = useState<INotification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,26 @@ export const ScheduleList = () => {
     PushNotificationIOS.removePendingNotificationRequests([id]);
     setSchedules(schedules.filter((schedule) => schedule.id !== id));
   };
+
+  const handleMoveToEditPage = (schedule: INotification) => {
+    navigate("ScheduleEdit", {
+      schedule,
+    });
+  };
+
+  const items = [
+    {
+      text: "Deletar",
+      isDestructive: true,
+      icon: "trash",
+      onPress: (id: string) => handleDeleteSchedule(id),
+    },
+    {
+      text: "Editar",
+      icon: "edit",
+      onPress: (schedule: INotification) => handleMoveToEditPage(schedule),
+    },
+  ];
 
   return (
     <Layout>
@@ -90,16 +111,10 @@ export const ScheduleList = () => {
             <HoldItem
               activateOn="tap"
               hapticFeedback="Light"
-              items={[
-                {
-                  text: "Deletar",
-                  isDestructive: true,
-                  icon: "trash",
-                  onPress: (id) => handleDeleteSchedule(id),
-                },
-              ]}
+              items={items}
               actionParams={{
                 Deletar: [item.id],
+                Editar: [item],
               }}
             >
               <ScheduleItem key={item.id} {...item} />
