@@ -88,6 +88,7 @@ export const TransactionsList = () => {
 
   const checkIfCanActiveRecurrenceTransactions = async () => {
     const recurrenceDate = await getRecurrenceDateFromAsync();
+
     if (recurrenceDate[0] !== undefined) {
       setCanActiveRecurrence(
         new Date().getTime() > new Date(recurrenceDate[0]).getTime()
@@ -131,6 +132,9 @@ export const TransactionsList = () => {
         AsyncStorageKeys.RECURRENT_DATE,
         newRecurrenceDate
       );
+      getTransactions();
+      setLoadingRecurrence(false);
+      checkIfCanActiveRecurrenceTransactions();
     }
   };
 
@@ -138,13 +142,13 @@ export const TransactionsList = () => {
     async function loadData() {
       await checkIfCanActiveRecurrenceTransactions();
     }
+
     loadData();
   }, []);
 
   useEffect(() => {
     getTransactions();
-    setLoadingRecurrence(false);
-  }, [transactions]);
+  }, []);
 
   return (
     <VStack marginTop={4} paddingX={"32px"}>

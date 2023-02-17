@@ -3,6 +3,7 @@ import { Button } from "@components/Button";
 import { Header } from "@components/Header";
 import { ITransaction } from "@context/Transactions/types";
 import {
+  deleteItemFromAsyncStorage,
   getItemFromAsyncStorage,
   setItemWhenDataIsOneValue,
 } from "@helpers/AsyncStorage";
@@ -15,12 +16,15 @@ import { isFirstDayOfMonth, formatDistanceToNow } from "date-fns";
 import { Item } from "./components/Item";
 import { ptBR } from "date-fns/locale";
 import { Layout } from "@components/Layout";
+import { HoldItem } from "react-native-hold-menu";
+import { MenuItemProps } from "react-native-hold-menu/lib/typescript/components/menu/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const RecurrentTransactionsList = () => {
   const { goBack, navigate } = useNavigation();
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
 
-  const [dateForRecurrence, setDateForRecurrence] = useState<Date>(new Date());
+  const [dateForRecurrence, setDateForRecurrence] = useState<Date | null>(null);
 
   const getTransactionsFromAsync = async () => {
     const transactions = await getItemFromAsyncStorage(
@@ -41,14 +45,12 @@ export const RecurrentTransactionsList = () => {
 
   const setRecurrenceTimeFirstTime = async () => {
     const asyncDate = await getRecurrenceTime();
-
+    console.log("async", asyncDate);
     if (asyncDate[0] !== undefined) {
       return;
     }
     const date = new Date();
-
     const isFirstDay = isFirstDayOfMonth(date);
-
     if (isFirstDay) {
       await setItemWhenDataIsOneValue(AsyncStorageKeys.RECURRENT_DATE, date);
     } else {
@@ -81,10 +83,21 @@ export const RecurrentTransactionsList = () => {
     navigate("RecurrentTransactionsCreate");
   };
 
-  const interval = formatDistanceToNow(new Date(dateForRecurrence), {
-    addSuffix: true,
-    locale: ptBR,
-  });
+  const interval = dateForRecurrence
+    ? formatDistanceToNow(new Date(dateForRecurrence), {
+        addSuffix: true,
+        locale: ptBR,
+      })
+    : "";
+
+  const items: MenuItemProps[] = [
+    {
+      text: "Deletar",
+      isDestructive: true,
+      icon: "trash",
+      onPress: (id: string) => () => console.log(id),
+    },
+  ];
 
   return (
     <Layout justifyContent={"space-between"}>
@@ -104,7 +117,18 @@ export const RecurrentTransactionsList = () => {
         <VStack padding={4} justifyContent={"space-between"}>
           <FlatList
             data={transactions}
-            renderItem={({ item }) => <Item {...(item as ITransaction)} />}
+            renderItem={({ item }) => (
+              <HoldItem
+                activateOn="tap"
+                hapticFeedback="Light"
+                items={items}
+                actionParams={{
+                  Deletar: [item.id],
+                }}
+              >
+                <Item {...(item as ITransaction)} />
+              </HoldItem>
+            )}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={
               <Box flex={1} justifyContent={"center"} alignItems={"center"}>

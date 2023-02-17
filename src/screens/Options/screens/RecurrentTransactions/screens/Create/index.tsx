@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  VStack,
-  Select as NativeBaseSelect,
-  Text,
-  Box,
-  useTheme,
-} from "native-base";
+import { VStack, Select as NativeBaseSelect, Text, Box } from "native-base";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
 import { Controller, useForm } from "react-hook-form";
 import { Masks } from "react-native-mask-input";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { validationSchema } from "./validation";
 import { Button } from "@components/Button";
@@ -22,12 +15,10 @@ import { Select } from "@components/Select";
 import { categories } from "@data/category";
 import { setItemToAsyncStorage } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
-import { format } from "date-fns";
 import { Layout } from "@components/Layout";
 
 export const RecurrentTransactionsCreate = () => {
   const { goBack, navigate } = useNavigation();
-  const { colors } = useTheme();
 
   const {
     control,
@@ -35,7 +26,7 @@ export const RecurrentTransactionsCreate = () => {
     reset,
     handleSubmit,
     setValue,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
     mode: "onChange",
@@ -45,7 +36,6 @@ export const RecurrentTransactionsCreate = () => {
       amountWithoutMask: "",
       category: "",
       subCategory: "",
-      date: new Date(),
     },
   });
 
@@ -61,7 +51,8 @@ export const RecurrentTransactionsCreate = () => {
       ...data,
       description: data.name || "",
       type: "outcome",
-      dateFormatted: format(new Date(data.date), "dd/MM/yyyy"),
+      dateFormatted: "--",
+      date: "--",
     };
 
     await setItemToAsyncStorage(
@@ -105,6 +96,9 @@ export const RecurrentTransactionsCreate = () => {
             />
           )}
         />
+        {errors.amount ? (
+          <Text color={"redBrand.500"}>{errors.amount.message}</Text>
+        ) : null}
 
         <Text fontSize={"lg"} color={"grayBrand.300"} mt={4} marginBottom={2}>
           Categoria
@@ -159,24 +153,6 @@ export const RecurrentTransactionsCreate = () => {
         {!category ? (
           <Text color={"redBrand.500"}>Preencha categoria!</Text>
         ) : null}
-        <Text fontSize={"lg"} color={"grayBrand.300"} mt={4} marginBottom={2}>
-          Data
-        </Text>
-        <Controller
-          control={control}
-          name="date"
-          render={({ field: { onChange, value } }) => (
-            <DateTimePicker
-              minimumDate={new Date()}
-              accentColor={colors.violetBrand[400]}
-              themeVariant={"dark"}
-              value={value}
-              mode={"date"}
-              locale={"pt-Br"}
-              onChange={(e, date) => onChange(date)}
-            />
-          )}
-        />
       </VStack>
       <Box p={4}>
         <Button isDisabled={!isValid} onPress={handleSubmit(onSubmit)}>
