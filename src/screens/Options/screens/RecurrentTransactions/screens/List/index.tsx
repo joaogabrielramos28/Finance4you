@@ -45,20 +45,12 @@ export const RecurrentTransactionsList = () => {
 
   const setRecurrenceTimeFirstTime = async () => {
     const asyncDate = await getRecurrenceTime();
-    console.log("async", asyncDate);
     if (asyncDate[0] !== undefined) {
       return;
     }
     const date = new Date();
-    const isFirstDay = isFirstDayOfMonth(date);
-    if (isFirstDay) {
-      await setItemWhenDataIsOneValue(AsyncStorageKeys.RECURRENT_DATE, date);
-    } else {
-      await setItemWhenDataIsOneValue(
-        AsyncStorageKeys.RECURRENT_DATE,
-        new Date(date.getFullYear(), date.getMonth() + 1, 1)
-      );
-    }
+
+    await setItemWhenDataIsOneValue(AsyncStorageKeys.RECURRENT_DATE, date);
   };
 
   useEffect(() => {

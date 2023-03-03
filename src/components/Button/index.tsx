@@ -1,5 +1,5 @@
 import React from "react";
-import { Button as ButtonNativeBase, IButtonProps } from "native-base";
+import { Button as ButtonNativeBase } from "native-base";
 
 export function Button({ variant, children, ...rest }: IButtonProps) {
   const typeVariant = variant === "outline" ? "transparent" : "violetBrand.700";

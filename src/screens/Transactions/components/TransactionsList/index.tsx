@@ -25,7 +25,6 @@ import { Transaction } from "@components/Transaction";
 import { useAuth } from "@context/Auth/AuthContext";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 
 export const TransactionsList = () => {
   const { user } = useAuth();
