@@ -30,6 +30,8 @@ export const RecurrentTransactionsList = () => {
     const transactions = await getItemFromAsyncStorage(
       AsyncStorageKeys.RECURRENT_TRANSACTIONS
     );
+
+    console.log(JSON.stringify(transactions, null, 2));
     setTransactions(transactions);
   };
 
@@ -75,6 +77,22 @@ export const RecurrentTransactionsList = () => {
     navigate("RecurrentTransactionsCreate");
   };
 
+  const handleDeleteItem = async (id: string) => {
+    const response = await AsyncStorage.getItem(
+      AsyncStorageKeys.RECURRENT_TRANSACTIONS
+    );
+    const data = response ? JSON.parse(response) : [];
+
+    const filteredData = data.filter((item) => item.id !== id);
+
+    await AsyncStorage.setItem(
+      AsyncStorageKeys.RECURRENT_TRANSACTIONS,
+      JSON.stringify(filteredData)
+    );
+
+    getTransactionsFromAsync();
+  };
+
   const interval = dateForRecurrence
     ? formatDistanceToNow(new Date(dateForRecurrence), {
         addSuffix: true,
@@ -87,7 +105,7 @@ export const RecurrentTransactionsList = () => {
       text: "Deletar",
       isDestructive: true,
       icon: "trash",
-      onPress: (id: string) => () => console.log(id),
+      onPress: (id: string) => handleDeleteItem(id),
     },
   ];
 
