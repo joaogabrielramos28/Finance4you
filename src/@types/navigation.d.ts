@@ -1,3 +1,5 @@
+import { INotification } from "@screens/Options/screens/types";
+
 export interface ITransactionDetailsScreenProps {
   id: string;
   category: string;
@@ -7,6 +9,11 @@ export interface ITransactionDetailsScreenProps {
   date: string;
   type: "outcome" | "income";
   responsible?: string;
+  amountWithoutMask: string;
+}
+
+export interface IScheduleEditScreenProps {
+  schedule: INotification;
 }
 
 export declare global {
@@ -18,11 +25,16 @@ export declare global {
       CreateTransaction: undefined;
       FilterTransactions: undefined;
       TransactionDetails: ITransactionDetailsScreenProps;
+      EditTransaction: ITransactionDetailsScreenProps;
       Options: undefined;
       ScheduleCreate: undefined;
       ScheduleList: undefined;
+      ScheduleEdit: IScheduleEditScreenProps;
       ExportTransactions: undefined;
       AccountConfig: undefined;
+      RecurrentTransactionsList: undefined;
+      RecurrentTransactionsCreate: undefined;
+      RecurrentTransactions: undefined;
     }
   }
 }

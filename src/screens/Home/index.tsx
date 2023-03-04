@@ -8,6 +8,7 @@ import { LastTransactions } from "./components/LastTransactions";
 import { MonthSelect } from "./components/MonthSelect";
 import { SharedCircularChart } from "./components/SharedCircularChart";
 import { useAuth } from "@context/Auth/AuthContext";
+import { Layout } from "@components/Layout";
 
 const AnimatedView = Factory(Animated.View);
 
@@ -38,7 +39,7 @@ export const Home = () => {
   ]);
 
   return (
-    <VStack flex={1} bg={"background"} safeAreaTop alignItems={"center"}>
+    <Layout alignItems={"center"}>
       <AnimatedView entering={FadeInLeft}>
         <VStack space={4} alignItems={"center"}>
           <Heading color={"grayBrand.200"} testID="teste">
@@ -79,6 +80,6 @@ export const Home = () => {
           <LastTransactions />
         </VStack>
       </AnimatedView>
-    </VStack>
+    </Layout>
   );
 };

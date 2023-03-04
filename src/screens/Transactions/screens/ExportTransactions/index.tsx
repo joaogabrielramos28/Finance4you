@@ -20,6 +20,7 @@ import { ExportInCsvService } from "@services/ExportInCsv";
 import { ExportInXlsxService } from "@services/ExportInXlsx";
 import { capitalize } from "@utils/CapitalizeString";
 import { useAuth } from "@context/Auth/AuthContext";
+import { Layout } from "@components/Layout";
 
 type ExportType = "CSV" | "XLSX";
 
@@ -59,7 +60,7 @@ export const ExportTransactions = () => {
   };
 
   return (
-    <VStack flex={1} bg={"background"} safeAreaY padding={6}>
+    <Layout padding={6}>
       <Header title="Exportar transações" onBack={goBack} />
       <VStack mt={4} space={4}>
         <Box>
@@ -124,6 +125,6 @@ export const ExportTransactions = () => {
           changeDate={handleDateChange}
         />
       </Modal>
-    </VStack>
+    </Layout>
   );
 };

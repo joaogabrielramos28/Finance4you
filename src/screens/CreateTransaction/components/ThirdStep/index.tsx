@@ -24,11 +24,21 @@ import { useAuth } from "@context/Auth/AuthContext";
 import { AvatarImage } from "@utils/AvatarImage";
 import { Select } from "@components/Select";
 import { Button } from "@components/Button";
+import { Checkbox } from "@components/Checkbox";
+import { Input } from "@components/Input";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { setItemToAsyncStorage } from "@helpers/AsyncStorage";
+import { AsyncStorageKeys } from "@helpers/types";
 
 export const ThirdStep = () => {
   const { colors } = useTheme();
   const { createTransaction, prevStep } = useTransactions();
-  const { setValue, getValues, reset } = useFormContext();
+  const {
+    setValue,
+    getValues,
+    reset,
+    formState: { isValid },
+  } = useFormContext();
   const { navigate } = useNavigation();
 
   const [type, setType] = useState<"income" | "outcome">(getValues("type"));
@@ -37,6 +47,11 @@ export const ThirdStep = () => {
   const [description, setDescription] = useState(getValues("description"));
   const [amountWithoutMask, setAmountWithoutMask] = useState("");
   const [responsible, setResponsible] = useState(getValues("responsible"));
+  const [createAlert, setCreateAlert] = useState(getValues("createAlert"));
+  const [alertName, setAlertName] = useState(getValues("alertName"));
+  const [hasRecurrence, setHasRecurrence] = useState(
+    getValues("hasRecurrence")
+  );
 
   const { hasAccountShared, user, sharedUserNameList } = useAuth();
   const handleCreateTransaction = () => {
@@ -59,6 +74,19 @@ export const ThirdStep = () => {
       description,
       responsible,
     };
+
+    if (createAlert === "yes") {
+      handleCreateSchedule();
+    }
+    if (hasRecurrence === "yes") {
+      setItemToAsyncStorage(AsyncStorageKeys.RECURRENT_TRANSACTIONS, {
+        ...payload,
+        date: "--",
+        dateFormatted: "--",
+      });
+      reset();
+      navigate("Transactions");
+    }
     createTransaction(payload);
     reset();
     navigate("Transactions");
@@ -91,24 +119,63 @@ export const ThirdStep = () => {
     setValue("responsible", value);
   };
 
+  const handleChangeAlertCheckbox = (isSelected: "yes" | "no") => {
+    setCreateAlert(isSelected);
+    setValue("createAlert", isSelected);
+  };
+
+  const handleChangeAlertName = (text: string) => {
+    setAlertName(text);
+    setValue("alertName", text);
+  };
+
+  const handleChangeRecurrenceCheckbox = (isSelected: "yes" | "no") => {
+    setHasRecurrence(isSelected);
+    setValue("hasRecurrence", isSelected);
+  };
+
+  const handleCreateSchedule = () => {
+    try {
+      PushNotificationIOS.addNotificationRequest({
+        id: String(new Date().getTime()),
+        badge: 1,
+        body: `Ei não esqueça de pagar ${alertName}`,
+        category: alertName,
+        fireDate: date,
+        repeats: true,
+        repeatsComponent: {
+          hour: true,
+          day: true,
+          minute: true,
+          dayOfWeek: false,
+          month: false,
+          second: false,
+          year: false,
+        },
+        title: "Lembrete de pagamento",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const actives = sharedUserNameList.filter((sharedUser) => sharedUser.active);
 
   return (
     <VStack alignItems={"center"}>
       <KeyboardAvoidingView behavior="padding" enabled>
         <VStack w={"100%"} paddingX={"32px"} marginTop={"16px"} space={"16px"}>
-          <Heading color={"grayBrand.300"} size={"sm"}>
-            Valor
-          </Heading>
           <MaskInput
+            label="Valor"
+            bold
             value={amount}
             onChangeText={handleChangeAmount}
             mask={Masks.BRL_CURRENCY}
           />
 
-          <Heading color={"grayBrand.300"} size={"sm"}>
+          <Text color={"grayBrand.300"} fontSize={"lg"} bold>
             Tipo de transação
-          </Heading>
+          </Text>
 
           <HStack w={"100%"} space={"16px"} justifyContent={"space-around"}>
             <NativeBaseButton
@@ -140,9 +207,9 @@ export const ThirdStep = () => {
               </HStack>
             </NativeBaseButton>
           </HStack>
-          <Heading color={"grayBrand.300"} size={"sm"}>
+          <Text color={"grayBrand.300"} fontSize={"lg"} bold>
             Data da transação
-          </Heading>
+          </Text>
 
           <DateTimePicker
             accentColor={colors.violetBrand[400]}
@@ -153,11 +220,12 @@ export const ThirdStep = () => {
             locale={"pt-Br"}
             onChange={handleDateChange}
           />
+
           {hasAccountShared ? (
             <VStack>
-              <Text fontSize={"md"} color={"grayBrand.100"}>
+              <Heading fontSize={"md"} color={"grayBrand.100"}>
                 Responsável
-              </Text>
+              </Heading>
               <Select
                 padding={2}
                 mt={2}
@@ -214,12 +282,43 @@ export const ThirdStep = () => {
             }}
           />
 
+          <Checkbox
+            onChange={(isSelected) =>
+              handleChangeAlertCheckbox(isSelected ? "yes" : "no")
+            }
+            value="yes"
+            isChecked={createAlert === "yes"}
+          >
+            Criar lembrete desse pagamento
+          </Checkbox>
+
+          {createAlert === "yes" ? (
+            <Input
+              padding={3}
+              label="Nome do alerta"
+              value={alertName}
+              onChangeText={handleChangeAlertName}
+              placeholder="Ex: Conta de luz"
+            />
+          ) : null}
+
+          <Checkbox
+            onChange={(isSelected) =>
+              handleChangeRecurrenceCheckbox(isSelected ? "yes" : "no")
+            }
+            value="yes"
+            isChecked={hasRecurrence === "yes"}
+          >
+            Definir como recorrente
+          </Checkbox>
+
           <Button
             onPress={handleCreateTransaction}
             isDisabled={
               !getValues("amount") ||
               !getValues("type") ||
-              (!getValues("responsible") && hasAccountShared)
+              (!getValues("responsible") && hasAccountShared) ||
+              (!getValues("alertName") && createAlert === "yes")
             }
             marginTop={"16px"}
           >

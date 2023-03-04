@@ -4,6 +4,7 @@ import { addMonths, subMonths } from "date-fns";
 
 import { AsyncStorageKeys } from "@helpers/types";
 import { ICreateTransactionContext, ITransaction } from "./types";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionsContext = createContext({} as ICreateTransactionContext);
 
@@ -111,13 +112,17 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     setCreditCardStyle(creditCard);
   };
 
+  const getTransactions = async () => {
+    const response = await AsyncStorage.getItem(
+      AsyncStorageKeys.TRANSACTION_KEY_STORAGE
+    );
+    const data = response ? JSON.parse(response) : [];
+    setTransactions(data);
+  };
+
   useEffect(() => {
     async function loadTransactions() {
-      const response = await AsyncStorage.getItem(
-        AsyncStorageKeys.TRANSACTION_KEY_STORAGE
-      );
-      const data = response ? JSON.parse(response) : [];
-      setTransactions(data);
+      await getTransactions();
     }
     loadTransactions();
   }, []);
@@ -151,6 +156,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         handleSetFilterTransactions,
         resetFilterTransactions,
         deleteTransaction,
+        getTransactions,
       }}
     >
       {children}

@@ -6,12 +6,13 @@ import { ptBR } from "date-fns/locale";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { PieChart } from "./components/PieChart";
 import { LineChart } from "./components/LineChart";
+import { Layout } from "@components/Layout";
 
 export const Analytics = () => {
   const { actualPeriod } = useTransactions();
 
   return (
-    <ScrollView flex={1} bg={"background"}>
+    <Layout hasScrollView>
       <Box safeAreaY>
         <Heading textAlign={"center"} color={"grayBrand.200"}>
           {format(actualPeriod, "MMMM/yyyy", { locale: ptBR })}
@@ -24,6 +25,6 @@ export const Analytics = () => {
           <LineChart />
         </VStack>
       </Box>
-    </ScrollView>
+    </Layout>
   );
 };

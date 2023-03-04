@@ -9,3 +9,16 @@ jest.mock("@invertase/react-native-apple-authentication", () => {
     },
   };
 });
+
+jest.mock("@react-native-firebase/auth", () => {
+  return {
+    auth: {
+      signInWithCredential: jest.fn(),
+    },
+  };
+});
+
+global.__reanimatedWorkletInit = () => {};
+jest.mock("react-native-reanimated", () =>
+  require("react-native-reanimated/mock")
+);

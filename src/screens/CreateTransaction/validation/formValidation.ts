@@ -18,4 +18,10 @@ export const ThirdStepSchemaValidation = Yup.object().shape({
     is: true,
     then: Yup.string().required("Responsável é obrigatório"),
   }),
+  createAlert: Yup.string(),
+  alertName: Yup.string().when("createAlert", {
+    is: true,
+    then: Yup.string().required("Nome do alerta é obrigatório"),
+  }),
+  hasRecurrence: Yup.boolean(),
 });

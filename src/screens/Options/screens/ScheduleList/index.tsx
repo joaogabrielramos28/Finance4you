@@ -5,14 +5,11 @@ import {
   Divider,
   FlatList,
   Heading,
-  HStack,
-  IconButton,
   Spinner,
   Text,
   useTheme,
   VStack,
 } from "native-base";
-import { ArrowLeft } from "phosphor-react-native";
 import { HoldItem } from "react-native-hold-menu";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { formatDistanceToNow, closestIndexTo } from "date-fns";
@@ -21,10 +18,13 @@ import { ptBR } from "date-fns/locale";
 import { ScheduleItem } from "./components/ScheduleItem";
 import { INotification } from "../types";
 import { Header } from "@components/Header";
+import { Button } from "@components/Button";
+import { Layout } from "@components/Layout";
 
 export const ScheduleList = () => {
   const { goBack } = useNavigation();
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
 
   const [schedules, setSchedules] = useState<INotification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,8 +47,28 @@ export const ScheduleList = () => {
     setSchedules(schedules.filter((schedule) => schedule.id !== id));
   };
 
+  const handleMoveToEditPage = (schedule: INotification) => {
+    navigate("ScheduleEdit", {
+      schedule,
+    });
+  };
+
+  const items = [
+    {
+      text: "Deletar",
+      isDestructive: true,
+      icon: "trash",
+      onPress: (id: string) => handleDeleteSchedule(id),
+    },
+    {
+      text: "Editar",
+      icon: "edit",
+      onPress: (schedule: INotification) => handleMoveToEditPage(schedule),
+    },
+  ];
+
   return (
-    <Box flex bg="background" safeAreaY>
+    <Layout>
       <Header title="Listagem de alertas" onBack={goBack} />
 
       {!isLoading ? (
@@ -91,16 +111,10 @@ export const ScheduleList = () => {
             <HoldItem
               activateOn="tap"
               hapticFeedback="Light"
-              items={[
-                {
-                  text: "Deletar",
-                  isDestructive: true,
-                  icon: "trash",
-                  onPress: (id) => handleDeleteSchedule(id),
-                },
-              ]}
+              items={items}
               actionParams={{
                 Deletar: [item.id],
+                Editar: [item],
               }}
             >
               <ScheduleItem key={item.id} {...item} />
@@ -118,6 +132,6 @@ export const ScheduleList = () => {
           <Spinner size={"lg"} color={colors.violetBrand[500]} />
         </Box>
       )}
-    </Box>
+    </Layout>
   );
 };

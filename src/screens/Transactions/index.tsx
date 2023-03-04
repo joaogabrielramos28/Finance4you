@@ -13,6 +13,7 @@ import Animated, {
 import { useNavigation } from "@react-navigation/native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Funnel } from "phosphor-react-native";
+import { Layout } from "@components/Layout";
 
 const FabAnimated = Animated.createAnimatedComponent(Fab);
 
@@ -73,7 +74,7 @@ export const Transactions = () => {
     });
   }, []);
   return (
-    <Box bg={"background"} flex={1} safeAreaY>
+    <Layout>
       <Animated.View style={animatedStyle}>
         <Box alignItems={"center"} zIndex={-1}>
           <CreditCard />
@@ -98,6 +99,6 @@ export const Transactions = () => {
           icon={<Funnel weight="fill" size={20} color={colors.white} />}
         />
       </PanGestureHandler>
-    </Box>
+    </Layout>
   );
 };
