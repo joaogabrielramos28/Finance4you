@@ -170,10 +170,6 @@ export const EditTransactions = () => {
             name="subCategory"
             render={({ field: { onChange, value } }) => (
               <Select
-                _disabled={{
-                  bg: "zinc.600",
-                }}
-                isDisabled={!subCategories}
                 p={"12px"}
                 fontSize="md"
                 onValueChange={onChange}
