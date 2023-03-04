@@ -29,6 +29,7 @@ export const Transaction = ({
   type,
   description,
   responsible,
+  amountWithoutMask,
 }: ITransaction) => {
   const [confirmationIsVisible, setConfirmationIsVisible] = useState(false);
 
@@ -49,6 +50,7 @@ export const Transaction = ({
       description,
       type,
       responsible,
+      amountWithoutMask,
     });
   };
 

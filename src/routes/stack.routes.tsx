@@ -7,6 +7,7 @@ import {
 } from "@screens/index";
 import { ExportTransactions } from "@screens/Transactions/screens/ExportTransactions";
 import { TabsRoutes } from "./tabs.routes";
+import { EditTransactions } from "@screens/EditTransactions";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,6 +22,7 @@ export const TransactionStackRoutes = () => {
       <Screen name="CreateTransaction" component={CreateTransaction} />
       <Screen name="FilterTransactions" component={FilterTransactions} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
+      <Screen name="EditTransaction" component={EditTransactions} />
       <Screen name="ExportTransactions" component={ExportTransactions} />
     </Navigator>
   );
@@ -35,6 +37,7 @@ export const HomeStackRoutes = () => {
     >
       <Screen name="HomeStack" component={TabsRoutes} />
       <Screen name="TransactionDetails" component={TransactionDetails} />
+      <Screen name="EditTransaction" component={EditTransactions} />
     </Navigator>
   );
 };

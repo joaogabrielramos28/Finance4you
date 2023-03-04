@@ -4,6 +4,7 @@ import { addMonths, subMonths } from "date-fns";
 
 import { AsyncStorageKeys } from "@helpers/types";
 import { ICreateTransactionContext, ITransaction } from "./types";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionsContext = createContext({} as ICreateTransactionContext);
 

@@ -9,6 +9,7 @@ export interface ITransactionDetailsScreenProps {
   date: string;
   type: "outcome" | "income";
   responsible?: string;
+  amountWithoutMask: string;
 }
 
 export interface IScheduleEditScreenProps {
@@ -24,6 +25,7 @@ export declare global {
       CreateTransaction: undefined;
       FilterTransactions: undefined;
       TransactionDetails: ITransactionDetailsScreenProps;
+      EditTransaction: ITransactionDetailsScreenProps;
       Options: undefined;
       ScheduleCreate: undefined;
       ScheduleList: undefined;
