@@ -32,7 +32,6 @@ export const RecurrentTransactionsList = () => {
       AsyncStorageKeys.RECURRENT_TRANSACTIONS
     );
 
-    console.log(JSON.stringify(transactions, null, 2));
     setTransactions(transactions);
   };
 
