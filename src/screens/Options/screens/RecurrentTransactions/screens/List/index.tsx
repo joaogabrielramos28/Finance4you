@@ -19,6 +19,7 @@ import { Layout } from "@components/Layout";
 import { HoldItem } from "react-native-hold-menu";
 import { MenuItemProps } from "react-native-hold-menu/lib/typescript/components/menu/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useWindowDimensions } from "react-native";
 
 export const RecurrentTransactionsList = () => {
   const { goBack, navigate } = useNavigation();
@@ -109,6 +110,12 @@ export const RecurrentTransactionsList = () => {
     },
   ];
 
+  const { height } = useWindowDimensions();
+
+  const isMd = height > 700;
+
+  const maxH = isMd ? 360 : 280;
+
   return (
     <Layout justifyContent={"space-between"}>
       <Box>
@@ -126,18 +133,23 @@ export const RecurrentTransactionsList = () => {
 
         <VStack padding={4} justifyContent={"space-between"}>
           <FlatList
+            style={{
+              maxHeight: maxH,
+            }}
             data={transactions}
             renderItem={({ item }) => (
-              <HoldItem
-                activateOn="tap"
-                hapticFeedback="Light"
-                items={items}
-                actionParams={{
-                  Deletar: [item.id],
-                }}
-              >
-                <Item {...(item as ITransaction)} />
-              </HoldItem>
+              <Box flex={1}>
+                <HoldItem
+                  activateOn="tap"
+                  hapticFeedback="Light"
+                  items={items}
+                  actionParams={{
+                    Deletar: [item.id],
+                  }}
+                >
+                  <Item {...(item as ITransaction)} />
+                </HoldItem>
+              </Box>
             )}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={
