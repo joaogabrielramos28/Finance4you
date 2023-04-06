@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 const TransactionsContext = createContext({} as ICreateTransactionContext);
 
 const TransactionsProvider = ({ children }: { children: ReactNode }) => {
-  const [step, setStep] = useState(0);
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [actualPeriod, setActualPeriod] = useState(new Date());
   const [creditCardStyle, setCreditCardStyle] = useState<
@@ -54,13 +53,6 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const nextStep = () => {
-    setStep((prevState) => prevState + 1);
-  };
-  const prevStep = () => {
-    setStep((prevState) => prevState - 1);
-  };
-
   const createTransaction = async (transaction: ITransaction) => {
     const response = await AsyncStorage.getItem(
       AsyncStorageKeys.TRANSACTION_KEY_STORAGE
@@ -72,7 +64,6 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       JSON.stringify([...data, transaction])
     );
     setTransactions([...data, transaction]);
-    setStep(0);
   };
 
   const deleteTransaction = async (id: string) => {
@@ -142,9 +133,6 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   return (
     <TransactionsContext.Provider
       value={{
-        nextStep,
-        prevStep,
-        step,
         createTransaction,
         transactions,
         actualPeriod,

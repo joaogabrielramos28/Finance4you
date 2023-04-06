@@ -29,10 +29,11 @@ import { Input } from "@components/Input";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { setItemToAsyncStorage } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
+import { IThirdStepProps } from "@screens/CreateTransaction/types";
 
-export const ThirdStep = () => {
+export const ThirdStep = ({ prevStep, resetStep }: IThirdStepProps) => {
   const { colors } = useTheme();
-  const { createTransaction, prevStep } = useTransactions();
+  const { createTransaction } = useTransactions();
   const {
     setValue,
     getValues,
@@ -88,6 +89,7 @@ export const ThirdStep = () => {
       navigate("Transactions");
     }
     createTransaction(payload);
+    resetStep();
     reset();
     navigate("Transactions");
   };

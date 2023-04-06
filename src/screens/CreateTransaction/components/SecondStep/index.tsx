@@ -4,13 +4,11 @@ import { useFormContext } from "react-hook-form";
 
 import { FormButton } from "../FormButton";
 import { categories } from "@data/category";
-import { useTransactions } from "@context/Transactions/TransactionsContext";
-import { IStepProps } from "../../types";
+import { ISecondStepProps } from "../../types";
 import { Button } from "@components/Button";
 
-export const SecondStep = ({ maxH }: IStepProps) => {
+export const SecondStep = ({ maxH, nextStep, prevStep }: ISecondStepProps) => {
   const { setValue, getValues } = useFormContext();
-  const { nextStep, prevStep } = useTransactions();
   const [subcategory, setSubCategory] = useState(getValues("subCategory"));
   const category = getValues("category");
   const selectedCategory = categories.find((item) => item.name === category);

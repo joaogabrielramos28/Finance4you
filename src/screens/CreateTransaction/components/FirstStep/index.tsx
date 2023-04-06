@@ -6,10 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 import { FormButton } from "../FormButton";
 import { categories } from "@data/category";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
-import { IStepProps } from "../../types";
+import { IFirstStepProps } from "../../types";
 import { Button } from "@components/Button";
 
-export const FirstStep = ({ maxH }: IStepProps) => {
+export const FirstStep = ({ maxH, nextStep }: IFirstStepProps) => {
   const { goBack } = useNavigation();
   const {
     setValue,
@@ -17,8 +17,6 @@ export const FirstStep = ({ maxH }: IStepProps) => {
     formState: { errors },
   } = useFormContext();
   const [category, setCategory] = useState(getValues("category"));
-
-  const { nextStep } = useTransactions();
 
   const handleAddCategory = (category: string) => {
     setCategory(category);

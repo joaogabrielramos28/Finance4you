@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Heading, ScrollView, useTheme, Factory } from "native-base";
+import React, { useState } from "react";
+import { Box, Heading, ScrollView } from "native-base";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -17,7 +17,8 @@ import { useTransactions } from "@context/Transactions/TransactionsContext";
 import { StepIndicator } from "./components/StepIndicator";
 
 export const CreateTransaction = () => {
-  const { step } = useTransactions();
+  const [step, setStep] = useState(0);
+
   const schemaValidationByStep =
     step === 1
       ? FirstStepSchemaValidation
@@ -33,6 +34,18 @@ export const CreateTransaction = () => {
   const isMd = height > 700;
 
   const maxH = isMd ? "360px" : "280px";
+
+  const nextStep = () => {
+    setStep((prevState) => prevState + 1);
+  };
+  const prevStep = () => {
+    setStep((prevState) => prevState - 1);
+  };
+
+  const resetStep = () => {
+    setStep(0);
+  };
+
   return (
     <FormProvider {...CreateTransactionForm}>
       {step !== 2 ? (
@@ -50,8 +63,10 @@ export const CreateTransaction = () => {
           </Heading>
           <Box mt={4}></Box>
 
-          {step === 0 && <FirstStep maxH={maxH} />}
-          {step === 1 && <SecondStep maxH={maxH} />}
+          {step === 0 ? <FirstStep nextStep={nextStep} maxH={maxH} /> : null}
+          {step === 1 ? (
+            <SecondStep nextStep={nextStep} prevStep={prevStep} maxH={maxH} />
+          ) : null}
         </Box>
       ) : (
         <Box flex={1} bg={"background"} safeAreaY>
@@ -66,7 +81,7 @@ export const CreateTransaction = () => {
             <Box mt={4}>
               <StepIndicator step={step} />
             </Box>
-            <ThirdStep />
+            <ThirdStep prevStep={prevStep} resetStep={resetStep} />
           </ScrollView>
         </Box>
       )}
