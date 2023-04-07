@@ -62,7 +62,7 @@ export const CircularChart = () => {
       <AnimatedCircularProgress
         duration={1500}
         easing={Easing.in(Easing.ease)}
-        size={220}
+        size={250}
         width={15}
         backgroundWidth={5}
         fill={total.percentage || 0}

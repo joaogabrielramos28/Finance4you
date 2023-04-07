@@ -11,7 +11,7 @@ import { AsyncStorageKeys } from "@helpers/types";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Box, FlatList, Heading, Text, VStack } from "native-base";
 
-import { isFirstDayOfMonth, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 
 import { Item } from "./components/Item";
 import { ptBR } from "date-fns/locale";

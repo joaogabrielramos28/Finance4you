@@ -63,38 +63,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // const loginWithApple = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const credential = await AppleAuthentication.signInAsync({
-  //       requestedScopes: [
-  //         AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-  //         AppleAuthentication.AppleAuthenticationScope.EMAIL,
-  //       ],
-  //     });
-
-  //     if (credential) {
-  //       const name = credential.fullName!.givenName!;
-  //       const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
-  //       const userLogged = {
-  //         id: String(credential.user),
-  //         email: credential.email!,
-  //         name,
-  //         photo,
-  //       };
-  //       setUser(userLogged);
-  //       await AsyncStorage.setItem(
-  //         USER_STORAGE_KEY,
-  //         JSON.stringify(userLogged)
-  //       );
-  //       setLoading(false);
-  //     }
-  //   } catch (error: any) {
-  //     setLoading(false);
-  //     throw new Error(error);
-  //   }
-  // };
-
   async function signOut() {
     setUser({} as IUser);
 
