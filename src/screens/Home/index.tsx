@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   AddIcon,
   Box,
@@ -31,7 +31,7 @@ import { HoldItem } from "react-native-hold-menu";
 const FabAnimated = Animated.createAnimatedComponent(Fab);
 
 export const Home = () => {
-  const { navigate, goBack } = useNavigation();
+  const { navigate } = useNavigation();
 
   const [schedules, setSchedules] = useState<INotification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -108,6 +108,25 @@ export const Home = () => {
       setIsLoading(false);
     });
   }, [schedules]);
+
+  const _renderItem = useCallback(
+    ({ item, index }: { item: any; index: number }) => {
+      return (
+        <HoldItem
+          activateOn="tap"
+          hapticFeedback="Light"
+          items={items}
+          actionParams={{
+            Deletar: [item.id],
+            Editar: [item],
+          }}
+        >
+          <ScheduleItem key={item.id} {...item} />
+        </HoldItem>
+      );
+    },
+    []
+  );
   return (
     <Layout>
       {!isLoading ? (
@@ -144,21 +163,9 @@ export const Home = () => {
           )}
           padding={4}
           data={schedules}
+          removeClippedSubviews={true}
           contentContainerStyle={{ paddingBottom: 32 }}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <HoldItem
-              activateOn="tap"
-              hapticFeedback="Light"
-              items={items}
-              actionParams={{
-                Deletar: [item.id],
-                Editar: [item],
-              }}
-            >
-              <ScheduleItem key={item.id} {...item} />
-            </HoldItem>
-          )}
+          renderItem={_renderItem}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={() => (
             <Heading mt={4} color={"grayBrand.200"}>
