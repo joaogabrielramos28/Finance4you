@@ -473,6 +473,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppCenter
+    - AppCenterReactNativeShared
     - Firebase
     - FirebaseAuth
     - FirebaseCore

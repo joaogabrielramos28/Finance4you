@@ -1,32 +1,11 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import {
-  CreateTransaction,
-  FilterTransactions,
-  TransactionDetails,
-} from "@screens/index";
-import { ExportTransactions } from "@screens/Transactions/screens/ExportTransactions";
-import { TabsRoutes } from "./tabs.routes";
-import { EditTransactions } from "@screens/EditTransactions";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import { Home } from "@screens/index";
+import { ScheduleCreate } from "@screens/Home/screens/ScheduleCreate";
+import { ScheduleEdit } from "@screens/Home/screens/ScheduleEdit";
 
 const { Navigator, Screen } = createStackNavigator();
-
-export const TransactionStackRoutes = () => {
-  return (
-    <Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Screen name="Transactions" component={TabsRoutes} />
-      <Screen name="CreateTransaction" component={CreateTransaction} />
-      <Screen name="FilterTransactions" component={FilterTransactions} />
-      <Screen name="TransactionDetails" component={TransactionDetails} />
-      <Screen name="EditTransaction" component={EditTransactions} />
-      <Screen name="ExportTransactions" component={ExportTransactions} />
-    </Navigator>
-  );
-};
 
 export const HomeStackRoutes = () => {
   return (
@@ -35,9 +14,9 @@ export const HomeStackRoutes = () => {
         headerShown: false,
       }}
     >
-      <Screen name="HomeStack" component={TabsRoutes} />
-      <Screen name="TransactionDetails" component={TransactionDetails} />
-      <Screen name="EditTransaction" component={EditTransactions} />
+      <Screen name="Home" component={Home} />
+      <Screen name="ScheduleCreate" component={ScheduleCreate} />
+      <Screen name="ScheduleEdit" component={ScheduleEdit} />
     </Navigator>
   );
 };

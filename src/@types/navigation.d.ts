@@ -21,20 +21,8 @@ export declare global {
     interface RootParamList {
       SignIn: undefined;
       Home: undefined;
-      Transactions: undefined;
-      CreateTransaction: undefined;
-      FilterTransactions: undefined;
-      TransactionDetails: ITransactionDetailsScreenProps;
-      EditTransaction: ITransactionDetailsScreenProps;
-      Options: undefined;
       ScheduleCreate: undefined;
-      ScheduleList: undefined;
       ScheduleEdit: IScheduleEditScreenProps;
-      ExportTransactions: undefined;
-      AccountConfig: undefined;
-      RecurrentTransactionsList: undefined;
-      RecurrentTransactionsCreate: undefined;
-      RecurrentTransactions: undefined;
     }
   }
 }

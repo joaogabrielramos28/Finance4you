@@ -5,7 +5,6 @@ import { HoldMenuProvider } from "react-native-hold-menu";
 
 import { theme } from "../styles/theme/defaultTheme";
 import { AuthProvider } from "./Auth/AuthContext";
-import { TransactionsProvider } from "./Transactions/TransactionsContext";
 
 const inset = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -16,9 +15,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <NativeBaseProvider theme={theme} initialWindowMetrics={inset}>
       <HoldMenuProvider theme="dark" iconComponent={Feather}>
-        <AuthProvider>
-          <TransactionsProvider>{children}</TransactionsProvider>
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </HoldMenuProvider>
     </NativeBaseProvider>
   );
