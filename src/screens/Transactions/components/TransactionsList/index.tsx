@@ -7,7 +7,7 @@ import {
 } from "@helpers/AsyncStorage";
 import { AsyncStorageKeys } from "@helpers/types";
 import { addMonths, format } from "date-fns";
-import { useToast } from "native-base";
+import { Spinner, useToast } from "native-base";
 import {
   Box,
   FlatList,
@@ -18,22 +18,29 @@ import {
   useTheme,
   VStack,
 } from "native-base";
-import { Info } from "phosphor-react-native";
-import React, { useEffect, useState } from "react";
+import { ArrowFatLinesLeft, Info } from "phosphor-react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import Animated, { FadeIn, FadeOut, Layout } from "react-native-reanimated";
 import { Transaction } from "@components/Transaction";
 import { useAuth } from "@context/Auth/AuthContext";
 import { useTransactions } from "@context/Transactions/TransactionsContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const TransactionsList = () => {
   const { user } = useAuth();
   const toast = useToast();
-  const { transactionsByPeriod, filterTransactions, getTransactions } =
-    useTransactions();
+  const {
+    transactionsByPeriod,
+    filterTransactions,
+    getTransactions,
+    transactions,
+  } = useTransactions();
   const orderedTransactions = transactionsByPeriod.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
+
+  const [loadingRecurrence, setLoadingRecurrence] = useState(false);
   const [canActiveRecurrence, setCanActiveRecurrence] = useState(false);
 
   const { colors } = useTheme();
@@ -95,28 +102,27 @@ export const TransactionsList = () => {
       AsyncStorageKeys.RECURRENT_TRANSACTIONS
     );
   };
+
   const handleAddRecurrenceTransactions = async () => {
-    const transactions = await getRecurrenceTransactionsFromAsync();
+    const transactionsRecurrence = await getRecurrenceTransactionsFromAsync();
     const recurrenceDate = await getRecurrenceDateFromAsync();
 
-    if (transactions) {
-      const newTransactionsWithIdAndNewDate = transactions.map(
-        (transaction: ITransaction) => {
+    if (transactionsRecurrence) {
+      setLoadingRecurrence(true);
+      const newTransactionsWithIdAndNewDate = transactionsRecurrence.map(
+        (transaction: ITransaction, index: number) => {
           return {
             ...transaction,
-            id: new Date().getTime(),
-            date: recurrenceDate,
-            dateFormatted: format(recurrenceDate, "dd/MM/yyyy"),
+            id: new Date().getTime() + (index + 1),
+            date: new Date(recurrenceDate),
+            dateFormatted: format(new Date(recurrenceDate), "dd/MM/yyyy"),
           };
         }
       );
 
       await AsyncStorage.setItem(
         AsyncStorageKeys.TRANSACTION_KEY_STORAGE,
-        JSON.stringify([
-          ...newTransactionsWithIdAndNewDate,
-          ...transactionsByPeriod,
-        ])
+        JSON.stringify([...newTransactionsWithIdAndNewDate, ...transactions])
       );
 
       const newRecurrenceDate = addMonths(new Date(recurrenceDate[0]), 1);
@@ -134,6 +140,11 @@ export const TransactionsList = () => {
     }
     loadData();
   }, []);
+
+  useEffect(() => {
+    getTransactions();
+    setLoadingRecurrence(false);
+  }, [transactions]);
 
   return (
     <VStack marginTop={4} paddingX={"32px"}>
@@ -176,6 +187,8 @@ export const TransactionsList = () => {
       </HStack>
 
       <Box safeAreaBottom>
+        {loadingRecurrence ? <Spinner size={"sm"} color="violet.700" /> : null}
+
         <FlatList
           contentContainerStyle={{
             paddingBottom: 86,
